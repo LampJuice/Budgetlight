@@ -77,4 +77,4 @@ fun HomeScreen() {
             TransactionItem(transaction = it)
         }
     }
-    }
+}

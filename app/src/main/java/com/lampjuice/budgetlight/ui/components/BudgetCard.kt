@@ -53,7 +53,4 @@ private fun BudgetCardPreview() {
             amount = 42580.0
         )
     }
-
-
-
 }

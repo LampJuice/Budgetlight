@@ -1,0 +1,20 @@
+build:
+  maxIssues: 0
+
+style:
+  MagicNumber:
+    active: false
+
+  WildcardImport:
+    active: false
+
+complexity:
+  LongMethod:
+    active: false
+
+  TooManyFunctions:
+    active: false
+
+naming:
+  FunctionNaming:
+    active: false
