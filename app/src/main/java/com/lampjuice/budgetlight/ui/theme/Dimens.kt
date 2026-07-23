@@ -14,4 +14,6 @@ object Dimens {
 
     val CardCorner = 20.dp
 
+    val CardElevation = 4.dp
+
 }
