@@ -7,9 +7,10 @@ plugins {
 android {
     namespace = "com.lampjuice.budgetlight"
     compileSdk {
-        version = release(36) {
-            minorApiLevel = 1
-        }
+        version =
+            release(36) {
+                minorApiLevel = 1
+            }
     }
 
     defaultConfig {
@@ -60,8 +61,10 @@ dependencies {
 
 detekt {
 
-    config.setFrom(
-        files("$rootDir/detekt.yml")
-    )
+    buildUponDefaultConfig = true
+    allRules = false
 
+    config.setFrom(
+        files("$rootDir/detekt.yml"),
+    )
 }

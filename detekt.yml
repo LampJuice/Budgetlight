@@ -8,6 +8,11 @@ style:
   WildcardImport:
     active: false
 
+  UnusedPrivateMember:
+    ignoreAnnotated:
+      - Preview
+
+
 complexity:
   LongMethod:
     active: false
