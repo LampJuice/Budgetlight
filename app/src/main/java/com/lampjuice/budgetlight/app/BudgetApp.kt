@@ -1,12 +1,9 @@
 package com.lampjuice.budgetlight.app
 
-import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
-import com.lampjuice.budgetlight.ui.home.HomeScreen
+import com.lampjuice.budgetlight.navigation.AppNavHost
 
 @Composable
 fun BudgetApp() {
-    Surface() {
-        HomeScreen()
-    }
+    AppNavHost()
 }
