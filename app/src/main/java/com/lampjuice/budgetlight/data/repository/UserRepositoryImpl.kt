@@ -11,7 +11,7 @@ class UserRepositoryImpl @Inject constructor(
     private val userDao: UserDao,
 ) : UserRepository {
 
-    override suspend fun getOrCreateUser(): User {
+    override suspend fun getUser(): User {
         return userDao.observeUser()
             .first()
             ?.toDomain()
