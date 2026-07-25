@@ -2,11 +2,13 @@ package com.lampjuice.budgetlight.data.local.entity
 
 import androidx.room.Entity
 import androidx.room.ForeignKey
+import androidx.room.Index
 import androidx.room.PrimaryKey
+import java.time.LocalDate
 
 
 @Entity(
-    tableName = "transaction",
+    tableName = "transactions",
     foreignKeys = [
         ForeignKey(
             entity = AccountEntity::class,
@@ -15,16 +17,17 @@ import androidx.room.PrimaryKey
             onDelete = ForeignKey.CASCADE,
         ),
     ],
+    indices = [
+        Index(value = ["accountId"])
+    ]
 )
 data class TransactionEntity(
-    @PrimaryKey(autoGenerate = true) val id: Long = 0,
-
+    @PrimaryKey(autoGenerate = true)
+    val id: Long = 0,
     val accountId: Long,
+    val title: String,
     val amount: Long,
-    val type: String,
     val category: String,
-    val description: String? = null,
-    val createdAt: Long,
-
-
-    )
+    val date: LocalDate,
+    val type: String
+)

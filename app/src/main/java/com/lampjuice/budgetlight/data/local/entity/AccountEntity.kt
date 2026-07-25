@@ -2,6 +2,7 @@ package com.lampjuice.budgetlight.data.local.entity
 
 import androidx.room.Entity
 import androidx.room.ForeignKey
+import androidx.room.Index
 import androidx.room.PrimaryKey
 
 
@@ -15,10 +16,13 @@ import androidx.room.PrimaryKey
             onDelete = ForeignKey.CASCADE,
         ),
     ],
+    indices = [
+        Index(value = ["userId"])
+    ]
 )
 data class AccountEntity(
-    @PrimaryKey(autoGenerate = true) val id: Long,
+    @PrimaryKey(autoGenerate = true)
+    val id: Long = 0,
     val userId: Long,
-    val name: String,
-    val currency: String = "RUB"
+    val name: String
 )
