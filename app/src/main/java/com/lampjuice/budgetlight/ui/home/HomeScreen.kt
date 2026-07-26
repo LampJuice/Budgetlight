@@ -8,6 +8,8 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.lampjuice.budgetlight.ui.components.BudgetCard
 import com.lampjuice.budgetlight.ui.components.MoneyText
 import com.lampjuice.budgetlight.ui.components.SectionHeader
@@ -16,7 +18,11 @@ import com.lampjuice.budgetlight.ui.theme.GreenIncome
 import com.lampjuice.budgetlight.ui.theme.RedExpense
 
 @Composable
-fun HomeScreen() {
+fun HomeScreen(
+    viewModel: HomeViewModel = hiltViewModel(),
+) {
+    val state = viewModel.state.collectAsStateWithLifecycle()
+
     val transactions = listOf(
         TransactionUi(
             title = "Перевод",
