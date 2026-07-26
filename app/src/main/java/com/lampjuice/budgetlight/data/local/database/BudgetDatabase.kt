@@ -25,6 +25,8 @@ import com.lampjuice.budgetlight.data.local.entity.UserEntity
 )
 abstract class BudgetDatabase : RoomDatabase() {
     abstract fun userDao(): UserDao
+
     abstract fun accountDao(): AccountDao
+
     abstract fun transactionDao(): TransactionDao
 }

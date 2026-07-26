@@ -9,12 +9,11 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface AccountDao {
-
     @Query(
         """
             SELECT * FROM accounts
             WHERE userId = :userId
-        """
+        """,
     )
     fun observeAccounts(userId: Long): Flow<List<AccountEntity>>
 

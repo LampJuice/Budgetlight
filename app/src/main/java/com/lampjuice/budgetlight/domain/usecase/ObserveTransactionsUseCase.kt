@@ -5,8 +5,10 @@ import com.lampjuice.budgetlight.domain.repository.TransactionRepository
 import jakarta.inject.Inject
 import kotlinx.coroutines.flow.Flow
 
-class ObserveTransactionsUseCase @Inject constructor(
-private val repository: TransactionRepository
-){
+class ObserveTransactionsUseCase
+@Inject
+constructor(
+    private val repository: TransactionRepository,
+) {
     operator fun invoke(accountId: Long): Flow<List<Transaction>> = repository.observeTransactions(accountId)
 }

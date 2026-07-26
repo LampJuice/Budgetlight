@@ -1,6 +1,5 @@
 package com.lampjuice.budgetlight.ui.components
 
-import android.content.res.Resources
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -14,13 +13,13 @@ fun MoneyText(
     modifier: Modifier = Modifier,
     amount: Double,
     color: Color = MaterialTheme.colorScheme.onBackground,
-    style: TextStyle = MaterialTheme.typography.bodyLarge
+    style: TextStyle = MaterialTheme.typography.bodyLarge,
 ) {
     Text(
         modifier = modifier,
         text = "%.2f  ₽".format(amount),
         color = color,
-        style = style
+        style = style,
     )
 }
 

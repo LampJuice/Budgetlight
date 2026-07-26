@@ -9,13 +9,13 @@ import androidx.compose.ui.tooling.preview.Preview
 @Composable
 fun SectionHeader(
     text: String,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Text(
         text = text,
         modifier = modifier,
         style = MaterialTheme.typography.titleLarge,
-        color = MaterialTheme.colorScheme.onBackground
+        color = MaterialTheme.colorScheme.onBackground,
     )
 }
 

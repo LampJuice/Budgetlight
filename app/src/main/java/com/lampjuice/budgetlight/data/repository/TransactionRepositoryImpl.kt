@@ -9,15 +9,16 @@ import jakarta.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-class TransactionRepositoryImpl @Inject constructor(
-    private val dao: TransactionDao
+class TransactionRepositoryImpl
+@Inject
+constructor(
+    private val dao: TransactionDao,
 ) : TransactionRepository {
-    override fun observeTransactions(accountId: Long): Flow<List<Transaction>> {
-        return dao.observeTransactions(accountId)
-            .map { list ->
-                list.map { it.toDomain() }
-            }
-    }
+    override fun observeTransactions(accountId: Long): Flow<List<Transaction>> = dao
+        .observeTransactions(accountId)
+        .map { list ->
+            list.map { it.toDomain() }
+        }
 
     override suspend fun addTransaction(transaction: Transaction) {
         dao.insertTransaction(transaction.toEntity())

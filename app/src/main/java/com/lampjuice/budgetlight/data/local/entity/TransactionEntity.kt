@@ -6,7 +6,6 @@ import androidx.room.Index
 import androidx.room.PrimaryKey
 import java.time.LocalDate
 
-
 @Entity(
     tableName = "transactions",
     foreignKeys = [
@@ -18,8 +17,8 @@ import java.time.LocalDate
         ),
     ],
     indices = [
-        Index(value = ["accountId"])
-    ]
+        Index(value = ["accountId"]),
+    ],
 )
 data class TransactionEntity(
     @PrimaryKey(autoGenerate = true)
@@ -29,5 +28,5 @@ data class TransactionEntity(
     val amount: Long,
     val category: String,
     val date: LocalDate,
-    val type: String
+    val type: String,
 )

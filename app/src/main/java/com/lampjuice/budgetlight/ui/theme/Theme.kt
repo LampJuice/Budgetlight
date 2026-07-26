@@ -15,7 +15,7 @@ private val DarkColorScheme = darkColorScheme(
     background = GrayBackground,
     surface = CardColor,
     onBackground = TextPrimary,
-    onSurface = TextPrimary
+    onSurface = TextPrimary,
 )
 
 private val LightColorScheme = lightColorScheme(
@@ -23,7 +23,7 @@ private val LightColorScheme = lightColorScheme(
     background = GrayBackground,
     surface = CardColor,
     onBackground = TextPrimary,
-    onSurface = TextPrimary
+    onSurface = TextPrimary,
 
 )
 
@@ -31,7 +31,7 @@ private val LightColorScheme = lightColorScheme(
 fun BudgetLightTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     dynamicColor: Boolean = true,
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
 ) {
     val colorScheme = when {
         dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
@@ -46,6 +46,6 @@ fun BudgetLightTheme(
     MaterialTheme(
         colorScheme = colorScheme,
         typography = AppTypography,
-        content = content
+        content = content,
     )
 }

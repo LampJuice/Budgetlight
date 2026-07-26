@@ -9,13 +9,12 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface TransactionDao {
-
     @Query(
         """
             SELECT * FROM transactions
             WHERE accountId = :accountId
             ORDER BY date DESC
-        """
+        """,
     )
     fun observeTransactions(accountId: Long): Flow<List<TransactionEntity>>
 
@@ -26,7 +25,7 @@ interface TransactionDao {
         """
             DELETE FROM transactions
             WHERE id = :id
-        """
+        """,
     )
     suspend fun deleteTransaction(id: Long)
 }

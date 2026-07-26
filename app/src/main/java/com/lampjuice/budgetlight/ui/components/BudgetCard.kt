@@ -16,7 +16,7 @@ import com.lampjuice.budgetlight.ui.theme.Dimens
 @Composable
 fun BudgetCard(
     modifier: Modifier = Modifier,
-    content: @Composable ColumnScope.() -> Unit
+    content: @Composable ColumnScope.() -> Unit,
 ) {
     Card(
         modifier = modifier
@@ -25,20 +25,19 @@ fun BudgetCard(
         shape = AppShapes.medium,
 
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surface
+            containerColor = MaterialTheme.colorScheme.surface,
         ),
 
         elevation = CardDefaults.cardElevation(
-            defaultElevation = Dimens.CardElevation
-        )
+            defaultElevation = Dimens.CardElevation,
+        ),
 
     ) {
         Column(
             modifier = Modifier.padding(Dimens.CardPadding),
-            content = content
+            content = content,
         )
     }
-
 }
 
 @Preview(showBackground = true)
@@ -46,11 +45,11 @@ fun BudgetCard(
 private fun BudgetCardPreview() {
     BudgetCard {
         SectionHeader(
-            text = "Баланс"
+            text = "Баланс",
         )
 
         MoneyText(
-            amount = 42580.0
+            amount = 42580.0,
         )
     }
 }

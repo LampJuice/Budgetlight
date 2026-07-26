@@ -6,6 +6,7 @@ import com.lampjuice.budgetlight.data.local.database.BudgetDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import jakarta.inject.Singleton
 
@@ -15,14 +16,13 @@ object DatabaseModule {
     @Provides
     @Singleton
     fun provideDatabase(
-        context: Context,
-    ): BudgetDatabase {
-        return Room.databaseBuilder(
+        @ApplicationContext context: Context,
+    ): BudgetDatabase = Room
+        .databaseBuilder(
             context,
             BudgetDatabase::class.java,
             "budget_database",
         ).build()
-    }
 
     @Provides
     fun provideUserDao(database: BudgetDatabase) = database.userDao()

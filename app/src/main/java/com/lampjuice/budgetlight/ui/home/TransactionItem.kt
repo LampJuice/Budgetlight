@@ -21,38 +21,37 @@ import com.lampjuice.budgetlight.ui.theme.RedExpense
 
 @Composable
 fun TransactionItem(
-    transaction: TransactionUi
+    transaction: TransactionUi,
 ) {
-    BudgetCard() {
+    BudgetCard {
         Row(
             modifier = Modifier.fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically
+            verticalAlignment = Alignment.CenterVertically,
         ) {
             Icon(
                 imageVector = Icons.Default.AccountBalanceWallet,
-                contentDescription = null
+                contentDescription = null,
             )
             Spacer(
-                modifier = Modifier.width(Dimens.ItemSpacing)
+                modifier = Modifier.width(Dimens.ItemSpacing),
             )
             Column(
-                modifier = Modifier.weight(1f)
+                modifier = Modifier.weight(1f),
             ) {
                 Text(
                     text = transaction.title,
-                    style = MaterialTheme.typography.titleMedium
+                    style = MaterialTheme.typography.titleMedium,
                 )
 
                 Text(
                     text = transaction.date,
-                    style = MaterialTheme.typography.bodySmall
+                    style = MaterialTheme.typography.bodySmall,
                 )
-
             }
             MoneyText(
                 amount = transaction.amount,
                 color = RedExpense,
-                style = MaterialTheme.typography.titleMedium
+                style = MaterialTheme.typography.titleMedium,
             )
         }
     }
@@ -64,8 +63,8 @@ private fun TransactionItemPreview(
     transaction: TransactionUi = TransactionUi(
         title = "Перевод",
         amount = 750.5,
-        date = "12.02.2023"
-    )
+        date = "12.02.2023",
+    ),
 ) {
     TransactionItem(transaction = transaction)
 }

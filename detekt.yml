@@ -11,6 +11,8 @@ style:
   UnusedPrivateMember:
     ignoreAnnotated:
       - Preview
+  UnusedImports:
+    active: true
 
 
 complexity:
@@ -23,3 +25,16 @@ complexity:
 naming:
   FunctionNaming:
     active: false
+
+
+formatting:
+  active: true
+
+  Indentation:
+    active: true
+
+  NoWildcardImports:
+    active: false
+
+  MaximumLineLength:
+    maxLineLength: 120

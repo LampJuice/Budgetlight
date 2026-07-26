@@ -9,5 +9,5 @@ data class Transaction(
     val amount: Long,
     val category: String,
     val date: LocalDate,
-    val type: TransactionType
+    val type: TransactionType,
 )

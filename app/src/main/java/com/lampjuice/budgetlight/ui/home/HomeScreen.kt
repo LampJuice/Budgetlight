@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.lampjuice.budgetlight.ui.components.BudgetCard
@@ -16,25 +15,24 @@ import com.lampjuice.budgetlight.ui.theme.Dimens
 import com.lampjuice.budgetlight.ui.theme.GreenIncome
 import com.lampjuice.budgetlight.ui.theme.RedExpense
 
-
 @Composable
 fun HomeScreen() {
     val transactions = listOf(
         TransactionUi(
             title = "Перевод",
             amount = 750.5,
-            date = "05.06.2023"
+            date = "05.06.2023",
         ),
         TransactionUi(
             title = "Зарплата",
             amount = 75000.0,
-            date = "12.02.2023"
+            date = "12.02.2023",
         ),
         TransactionUi(
             title = "Топливо",
             amount = -4444.5,
-            date = "12.02.2023"
-        )
+            date = "12.02.2023",
+        ),
     )
 
     Column(
@@ -42,36 +40,36 @@ fun HomeScreen() {
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
             .padding(Dimens.ScreenPadding),
-        verticalArrangement = Arrangement.spacedBy(Dimens.ItemSpacing)
+        verticalArrangement = Arrangement.spacedBy(Dimens.ItemSpacing),
     ) {
         SectionHeader(
-            text = "Добро пожаловать! \uD83D\uDC4B"
+            text = "Добро пожаловать! \uD83D\uDC4B",
         )
-        BudgetCard() {
+        BudgetCard {
             SectionHeader(
-                text = "Баланс"
+                text = "Баланс",
             )
             MoneyText(
-                amount = 42580.0
+                amount = 42580.0,
             )
         }
 
-        BudgetCard() {
+        BudgetCard {
             SectionHeader(
-                text = "Статистика"
+                text = "Статистика",
             )
             MoneyText(
                 amount = 72580.0,
-                color = GreenIncome
+                color = GreenIncome,
 
             )
             MoneyText(
                 amount = -12580.0,
-                color = RedExpense
+                color = RedExpense,
             )
         }
         SectionHeader(
-            text = "Последние транзакции"
+            text = "Последние транзакции",
         )
         transactions.forEach {
             TransactionItem(transaction = it)

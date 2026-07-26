@@ -1,9 +1,10 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.compose)
-    id("io.gitlab.arturbosch.detekt")
     alias(libs.plugins.ksp)
     alias(libs.plugins.hilt)
+    alias(libs.plugins.detekt)
+    alias(libs.plugins.spotless)
 }
 
 android {
@@ -67,6 +68,8 @@ dependencies {
 
     ksp(libs.hilt.compiler)
     ksp(libs.androidx.room.compiler)
+
+    detektPlugins(libs.detekt.formatting)
 }
 
 detekt {
@@ -77,4 +80,20 @@ detekt {
     config.setFrom(
         files("$rootDir/detekt.yml"),
     )
+}
+
+spotless {
+    kotlin {
+        target("**/*.kt")
+
+        ktlint("1.4.1")
+            .editorConfigOverride(
+                mapOf(
+                    "ktlint_standard_function-naming" to "disabled"
+                )
+            )
+
+        trimTrailingWhitespace()
+        endWithNewline()
+    }
 }
