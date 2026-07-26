@@ -1,6 +1,7 @@
 package com.lampjuice.budgetlight.data.repository
 
 import com.lampjuice.budgetlight.data.local.dao.UserDao
+import com.lampjuice.budgetlight.data.local.entity.UserEntity
 import com.lampjuice.budgetlight.data.mapper.toDomain
 import com.lampjuice.budgetlight.domain.model.User
 import com.lampjuice.budgetlight.domain.repository.UserRepository
@@ -11,11 +12,21 @@ class UserRepositoryImpl @Inject constructor(
     private val userDao: UserDao,
 ) : UserRepository {
 
-    override suspend fun getUser(): User {
-        return userDao.observeUser()
+    override suspend fun getOrCreateUser(): User {
+        val existingUser = userDao.observeUser()
             .first()
-            ?.toDomain()
-            ?: error("User not found")
+
+        if (existingUser != null) {
+            return existingUser.toDomain()
+        }
+        val newUser = UserEntity(
+            name = "User"
+        )
+        val id = userDao.insertUser(newUser)
+
+        return newUser
+            .copy(id = id)
+            .toDomain()
     }
 
 }
