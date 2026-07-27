@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -21,25 +22,7 @@ import com.lampjuice.budgetlight.ui.theme.RedExpense
 fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel(),
 ) {
-    val state = viewModel.state.collectAsStateWithLifecycle()
-
-    val transactions = listOf(
-        TransactionUi(
-            title = "Перевод",
-            amount = 750.5,
-            date = "05.06.2023",
-        ),
-        TransactionUi(
-            title = "Зарплата",
-            amount = 75000.0,
-            date = "12.02.2023",
-        ),
-        TransactionUi(
-            title = "Топливо",
-            amount = -4444.5,
-            date = "12.02.2023",
-        ),
-    )
+    val state by viewModel.state.collectAsStateWithLifecycle()
 
     Column(
         modifier = Modifier
@@ -56,7 +39,7 @@ fun HomeScreen(
                 text = "Баланс",
             )
             MoneyText(
-                amount = 42580.0,
+                amount = state.balance.toDouble(),
             )
         }
 
@@ -65,20 +48,22 @@ fun HomeScreen(
                 text = "Статистика",
             )
             MoneyText(
-                amount = 72580.0,
+                amount = state.income.toDouble(),
                 color = GreenIncome,
 
             )
             MoneyText(
-                amount = -12580.0,
+                amount = state.expense.toDouble(),
                 color = RedExpense,
             )
         }
         SectionHeader(
             text = "Последние транзакции",
         )
-        transactions.forEach {
-            TransactionItem(transaction = it)
+        state.transactions.forEach { transaction ->
+            TransactionItem(
+                transaction = transaction,
+            )
         }
     }
 }

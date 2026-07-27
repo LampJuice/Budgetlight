@@ -1,9 +1,9 @@
 package com.lampjuice.budgetlight.ui.home
 
-import com.lampjuice.budgetlight.domain.model.Transaction
-
 data class HomeState(
     val balance: Long = 0,
-    val transactions: List<Transaction> = emptyList(),
+    val income: Long = 0,
+    val expense: Long = 0,
+    val transactions: List<TransactionUi> = emptyList(),
     val isLoading: Boolean = true,
 )

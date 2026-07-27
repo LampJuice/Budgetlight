@@ -20,7 +20,5 @@ constructor(
             list.map { it.toDomain() }
         }
 
-    override suspend fun addAccount(account: Account) {
-        dao.insertAccount(account.toEntity())
-    }
+    override suspend fun addAccount(account: Account): Long = dao.insertAccount(account.toEntity())
 }

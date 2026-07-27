@@ -1,7 +1,10 @@
 package com.lampjuice.budgetlight.ui.home
 
+import com.lampjuice.budgetlight.domain.model.TransactionType
+
 data class TransactionUi(
     val title: String,
-    val amount: Double,
+    val amount: Long,
     val date: String,
+    val type: TransactionType,
 )

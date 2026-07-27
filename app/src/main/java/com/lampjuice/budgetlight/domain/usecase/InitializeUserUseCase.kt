@@ -1,5 +1,6 @@
 package com.lampjuice.budgetlight.domain.usecase
 
+import com.lampjuice.budgetlight.domain.model.User
 import com.lampjuice.budgetlight.domain.repository.UserRepository
 import jakarta.inject.Inject
 
@@ -8,7 +9,5 @@ class InitializeUserUseCase
 constructor(
     private val userRepository: UserRepository,
 ) {
-    suspend operator fun invoke() {
-        userRepository.getOrCreateUser()
-    }
+    suspend operator fun invoke(): User = userRepository.getOrCreateUser()
 }

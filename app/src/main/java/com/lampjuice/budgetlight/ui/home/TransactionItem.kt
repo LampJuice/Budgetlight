@@ -14,6 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.lampjuice.budgetlight.domain.model.TransactionType
 import com.lampjuice.budgetlight.ui.components.BudgetCard
 import com.lampjuice.budgetlight.ui.components.MoneyText
 import com.lampjuice.budgetlight.ui.theme.Dimens
@@ -49,7 +50,7 @@ fun TransactionItem(
                 )
             }
             MoneyText(
-                amount = transaction.amount,
+                amount = transaction.amount.toDouble(),
                 color = RedExpense,
                 style = MaterialTheme.typography.titleMedium,
             )
@@ -62,8 +63,9 @@ fun TransactionItem(
 private fun TransactionItemPreview(
     transaction: TransactionUi = TransactionUi(
         title = "Перевод",
-        amount = 750.5,
+        amount = 7505,
         date = "12.02.2023",
+        type = TransactionType.INCOME,
     ),
 ) {
     TransactionItem(transaction = transaction)
