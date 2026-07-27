@@ -49,7 +49,7 @@ private fun BudgetCardPreview() {
         )
 
         MoneyText(
-            amount = 42580.0,
+            amount = 42580,
         )
     }
 }

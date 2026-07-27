@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lampjuice.budgetlight.domain.usecase.CalculateBalanceUseCase
 import com.lampjuice.budgetlight.domain.usecase.ObserveTransactionsUseCase
+import com.lampjuice.budgetlight.ui.mapper.toUi
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jakarta.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow

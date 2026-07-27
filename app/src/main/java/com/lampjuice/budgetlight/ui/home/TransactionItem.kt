@@ -18,12 +18,22 @@ import com.lampjuice.budgetlight.domain.model.TransactionType
 import com.lampjuice.budgetlight.ui.components.BudgetCard
 import com.lampjuice.budgetlight.ui.components.MoneyText
 import com.lampjuice.budgetlight.ui.theme.Dimens
+import com.lampjuice.budgetlight.ui.theme.GreenIncome
 import com.lampjuice.budgetlight.ui.theme.RedExpense
 
 @Composable
 fun TransactionItem(
     transaction: TransactionUi,
 ) {
+    val amountColor = when (transaction.type) {
+        TransactionType.INCOME -> GreenIncome
+        TransactionType.EXPENSE -> RedExpense
+    }
+
+    val amountPrefix = when (transaction.type) {
+        TransactionType.INCOME -> "+"
+        TransactionType.EXPENSE -> "-"
+    }
     BudgetCard {
         Row(
             modifier = Modifier.fillMaxWidth(),
@@ -50,8 +60,9 @@ fun TransactionItem(
                 )
             }
             MoneyText(
-                amount = transaction.amount.toDouble(),
-                color = RedExpense,
+                amount = transaction.amount,
+                prefix = amountPrefix,
+                color = amountColor,
                 style = MaterialTheme.typography.titleMedium,
             )
         }

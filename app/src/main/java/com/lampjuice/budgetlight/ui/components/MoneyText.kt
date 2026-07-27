@@ -7,17 +7,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
+import com.lampjuice.budgetlight.ui.util.formatMoney
 
 @Composable
 fun MoneyText(
     modifier: Modifier = Modifier,
-    amount: Double,
+    amount: Long,
     color: Color = MaterialTheme.colorScheme.onBackground,
+    prefix: String = "",
     style: TextStyle = MaterialTheme.typography.bodyLarge,
 ) {
     Text(
         modifier = modifier,
-        text = "%.2f  ₽".format(amount),
+        text = "$prefix${amount.formatMoney()} ₽",
         color = color,
         style = style,
     )
@@ -26,5 +28,5 @@ fun MoneyText(
 @Preview(showBackground = true)
 @Composable
 private fun MoneyTextPreview() {
-    MoneyText(amount = 100.0)
+    MoneyText(amount = 100)
 }
