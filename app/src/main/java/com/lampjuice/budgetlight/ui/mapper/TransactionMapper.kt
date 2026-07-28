@@ -1,7 +1,7 @@
 package com.lampjuice.budgetlight.ui.mapper
 
 import com.lampjuice.budgetlight.domain.model.Transaction
-import com.lampjuice.budgetlight.ui.home.TransactionUi
+import com.lampjuice.budgetlight.ui.home.model.TransactionUi
 
 fun Transaction.toUi(): TransactionUi = TransactionUi(
     title = title,

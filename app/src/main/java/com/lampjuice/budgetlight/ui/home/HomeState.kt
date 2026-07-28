@@ -1,5 +1,7 @@
 package com.lampjuice.budgetlight.ui.home
 
+import com.lampjuice.budgetlight.ui.home.model.TransactionUi
+
 data class HomeState(
     val balance: Long = 0,
     val income: Long = 0,

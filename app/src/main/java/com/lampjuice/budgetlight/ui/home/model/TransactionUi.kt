@@ -1,4 +1,4 @@
-package com.lampjuice.budgetlight.ui.home
+package com.lampjuice.budgetlight.ui.home.model
 
 import com.lampjuice.budgetlight.domain.model.TransactionType
 

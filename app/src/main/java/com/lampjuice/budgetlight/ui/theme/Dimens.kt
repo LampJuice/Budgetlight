@@ -14,4 +14,8 @@ object Dimens {
     val CardCorner = 20.dp
 
     val CardElevation = 4.dp
+
+    val IconPadding = 10.dp
+
+    val FabBottomPadding = 80.dp
 }

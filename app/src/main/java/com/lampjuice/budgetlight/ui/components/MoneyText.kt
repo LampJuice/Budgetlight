@@ -19,7 +19,7 @@ fun MoneyText(
 ) {
     Text(
         modifier = modifier,
-        text = "$prefix${amount.formatMoney()} ₽",
+        text = "$prefix${amount.formatMoney()}",
         color = color,
         style = style,
     )
