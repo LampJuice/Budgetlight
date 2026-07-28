@@ -7,7 +7,7 @@ import jakarta.inject.Inject
 class AddTransactionUseCase @Inject constructor(
     private val transactionRepository: TransactionRepository,
 ) {
-    suspend operator fun invoke(transactions: Transaction) {
-        transactionRepository.addTransaction(transactions)
+    suspend operator fun invoke(transaction: Transaction) {
+        transactionRepository.addTransaction(transaction)
     }
 }

@@ -6,5 +6,6 @@ import kotlinx.coroutines.flow.Flow
 interface AccountRepository {
     fun observeAccounts(userId: Long): Flow<List<Account>>
 
+    fun observeCurrentAccount(userId: Long): Flow<Account?>
     suspend fun addAccount(account: Account): Long
 }

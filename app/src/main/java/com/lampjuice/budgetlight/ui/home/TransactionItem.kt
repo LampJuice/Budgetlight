@@ -76,6 +76,7 @@ private fun TransactionItemPreview(
         title = "Перевод",
         amount = 7505,
         date = "12.02.2023",
+        category = "Работа",
         type = TransactionType.INCOME,
     ),
 ) {

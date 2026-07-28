@@ -20,5 +20,10 @@ constructor(
             list.map { it.toDomain() }
         }
 
+    override fun observeCurrentAccount(userId: Long): Flow<Account?> = observeAccounts(userId)
+        .map { accounts ->
+            accounts.firstOrNull()
+        }
+
     override suspend fun addAccount(account: Account): Long = dao.insertAccount(account.toEntity())
 }

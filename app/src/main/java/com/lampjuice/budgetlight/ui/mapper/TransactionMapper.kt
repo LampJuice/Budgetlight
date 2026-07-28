@@ -8,4 +8,5 @@ fun Transaction.toUi(): TransactionUi = TransactionUi(
     amount = amount,
     date = date.toString(),
     type = type,
+    category = category,
 )

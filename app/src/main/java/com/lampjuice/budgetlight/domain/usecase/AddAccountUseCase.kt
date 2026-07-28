@@ -7,7 +7,5 @@ import jakarta.inject.Inject
 class AddAccountUseCase @Inject constructor(
     private val accountRepository: AccountRepository,
 ) {
-    suspend operator fun invoke(account: Account) {
-        accountRepository.addAccount(account)
-    }
+    suspend operator fun invoke(account: Account): Long = accountRepository.addAccount(account)
 }
