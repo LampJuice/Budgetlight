@@ -1,6 +1,5 @@
 package com.lampjuice.budgetlight.ui.home.components
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -14,6 +13,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.lampjuice.budgetlight.ui.theme.Dimens
+import com.lampjuice.budgetlight.ui.theme.GreenIncome
 
 @Composable
 fun BudgetSummaryCard(
@@ -58,7 +58,7 @@ fun BudgetSummaryCard(
                 BudgetValueRow(
                     title = "Осталось",
                     value = "67 000 P",
-                    color = MaterialTheme.colorScheme.primary,
+                    color = GreenIncome,
                 )
             }
         }

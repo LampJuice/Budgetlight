@@ -1,55 +1,117 @@
 # BudgetLight
 
-BudgetLight — приложение для управления личным бюджетом и контроля финансов.
+BudgetLight — приложение для планирования личного бюджета, контроля расходов и управления личными финансами.
+
+Основная идея приложения — помочь пользователю не только учитывать фактические расходы, но и заранее планировать бюджет, устанавливать лимиты по категориям и контролировать выполнение финансового плана.
 
 Проект разрабатывается на Kotlin с использованием современных Android-технологий и архитектурных подходов.
 
-## Этап 1 — подготовка архитектуры и слоя данных
+---
 
-На первом этапе была подготовлена базовая архитектура приложения:
+# Этап 1 — подготовка архитектуры и слоя данных
 
-- создана структура проекта с разделением на слои Clean Architecture;
-- добавлены domain-модели приложения;
-- реализована локальная база данных через Room;
-- настроена Dependency Injection через Hilt;
-- реализованы Repository интерфейсы и их реализации;
-- добавлены mapper'ы для преобразования Entity ↔ Domain;
-- настроена работа с Kotlin Coroutines и Flow;
-- реализован базовый жизненный цикл запуска приложения;
-- добавлена инициализация пользователя при старте приложения;
-- реализован экран загрузки приложения.
+На первом этапе была подготовлена базовая архитектура приложения.
 
-## Этап 2 — подключение бизнес-логики и состояния UI
+Выполнено:
 
-На втором этапе реализована связь между слоями приложения:
+* создана структура проекта с разделением на слои Clean Architecture;
+* добавлены основные domain-модели;
+* реализована локальная база данных через Room;
+* настроена Dependency Injection через Hilt;
+* реализованы Repository интерфейсы и их реализации;
+* добавлены mapper'ы Entity ↔ Domain;
+* настроена работа с Kotlin Coroutines и Flow;
+* реализована инициализация пользователя при первом запуске;
+* добавлен базовый жизненный цикл приложения;
+* реализован экран загрузки приложения.
 
-- добавлен UseCase слой;
-- реализована работа приложения через бизнес-логику;
-- добавлена автоматическая инициализация пользователя при первом запуске;
-- реализовано получение данных из Room через Flow;
-- создано состояние экранов через StateFlow;
-- добавлена HomeViewModel;
-- подготовлено получение транзакций и расчёт текущего баланса.
+---
 
-## Используемые технологии
+# Этап 2 — бизнес-логика и состояние приложения
 
-- Kotlin
-- Jetpack Compose
-- Room Database
-- Hilt Dependency Injection
-- Kotlin Coroutines
-- Flow
-- StateFlow
-- KSP
-- Detekt
-- Spotless
-- ktlint
-- Android Lint
-- Gradle Version Catalog
+На втором этапе реализована связь между слоями приложения.
 
-## Архитектура проекта
+Выполнено:
 
-Проект разделён на основные слои:
+* добавлен UseCase слой;
+* реализована работа через бизнес-логику приложения;
+* добавлена автоматическая инициализация пользователя;
+* реализовано получение данных из Room через Flow;
+* создано состояние экранов через StateFlow;
+* добавлен AppViewModel;
+* добавлена HomeViewModel;
+* реализован расчёт текущего баланса;
+* подготовлено получение транзакций из локальной базы данных.
+
+---
+
+# Этап 3 — Home Dashboard UI
+
+На третьем этапе главный экран был переработан из обычного экрана учёта операций в полноценный финансовый дашборд.
+
+Основная концепция:
+
+```
+План бюджета
+      ↓
+Контроль категорий
+      ↓
+Фактические расходы
+      ↓
+Анализ результата
+```
+
+Выполнено:
+
+* обновлён дизайн HomeScreen;
+* создана компонентная структура Jetpack Compose UI;
+* добавлен переиспользуемый BudgetScaffold;
+* реализована карточка бюджета месяца;
+* добавлено отображение категорий бюджета;
+* создан блок последних операций;
+* переработан дизайн TransactionItem;
+* добавлен Floating Action Button для будущего добавления операций.
+
+Структура HomeScreen:
+
+```
+HomeScreen
+
+ ├── GreetingSection
+ │
+ ├── BudgetSummaryCard
+ │
+ ├── CategorySection
+ │       └── CategoryBudgetItem
+ │
+ └── RecentTransactionsSection
+         └── TransactionItem
+```
+
+---
+
+# Используемые технологии
+
+* Kotlin
+* Jetpack Compose
+* Material 3
+* Room Database
+* Hilt Dependency Injection
+* Kotlin Coroutines
+* Flow
+* StateFlow
+* KSP
+* Detekt
+* Spotless
+* ktlint
+* Android Lint
+* Gradle Version Catalog
+
+---
+
+# Архитектура проекта
+
+Проект построен на принципах Clean Architecture:
 
 ```
 ui
@@ -59,78 +121,119 @@ domain
 data
 ```
 
-### UI слой
+Каждый слой имеет собственную ответственность и не зависит от деталей реализации нижних уровней.
+
+---
+
+# UI слой
 
 Отвечает за отображение данных и управление состоянием интерфейса.
 
 Используются:
 
-- Jetpack Compose;
-- ViewModel;
-- StateFlow;
-- UI State модели.
+* Jetpack Compose;
+* ViewModel;
+* StateFlow;
+* UI-модели;
+* переиспользуемые Compose-компоненты.
 
-Реализованы:
+Основные элементы:
 
-- AppViewModel;
-- HomeViewModel;
-- AppState;
-- HomeState;
-- LoadingScreen.
+```
+ui
+├── app
+│   ├── AppState
+│   └── AppViewModel
+│
+├── home
+│   ├── HomeScreen
+│   ├── HomeViewModel
+│   ├── HomeState
+│   │
+│   ├── components
+│   │   ├── GreetingSection
+│   │   ├── BudgetSummaryCard
+│   │   ├── CategorySection
+│   │   ├── CategoryBudgetItem
+│   │   ├── RecentTransactionsSection
+│   │   └── TransactionItem
+│   │
+│   └── model
+│       ├── BudgetSummaryUi
+│       ├── CategoryBudgetUi
+│       └── TransactionUi
+```
 
-### Domain слой
+---
+
+# Domain слой
 
 Содержит бизнес-логику приложения, модели данных и контракты.
 
 Модели:
 
-- User
-- Account
-- Transaction
-- TransactionType
+* User
+* Account
+* Transaction
+* TransactionType
+* Balance
 
 Repository интерфейсы:
 
-- UserRepository
-- AccountRepository
-- TransactionRepository
+* UserRepository
+* AccountRepository
+* TransactionRepository
 
 UseCase:
 
-- InitializeUserUseCase
-- AddAccountUseCase
-- AddTransactionUseCase
-- ObserveAccountsUseCase
-- ObserveTransactionsUseCase
+* InitializeUserUseCase
+* AddAccountUseCase
+* AddTransactionUseCase
+* ObserveAccountsUseCase
+* ObserveTransactionsUseCase
+* ObserveCurrentAccountUseCase
+* CalculateBalanceUseCase
 
 Domain слой не зависит от реализации хранения данных.
 
-### Data слой
+---
 
-Отвечает за работу с данными и взаимодействие с локальным хранилищем.
+# Data слой
 
-## Room Database
+Отвечает за работу с данными и локальным хранилищем.
+
+Используется:
+
+* Room Database;
+* DAO;
+* Entity;
+* Repository implementations;
+* Mapper слой.
+
+---
+
+# Room Database
 
 Созданы Entity:
 
-- UserEntity
-- AccountEntity
-- TransactionEntity
+* UserEntity
+* AccountEntity
+* TransactionEntity
 
-Созданы DAO:
+DAO:
 
-- UserDao
-- AccountDao
-- TransactionDao
+* UserDao
+* AccountDao
+* TransactionDao
 
 Настроены:
 
-- Room Database;
-- TypeConverter для работы с LocalDate;
-- внешние ключи между таблицами;
-- индексы для связей ForeignKey.
+* Room Database;
+* TypeConverter для LocalDate;
+* ForeignKey связи;
+* индексы.
 
-Структура связей:
+Текущая структура данных:
 
 ```
 User
@@ -140,46 +243,43 @@ User
         └── Transaction
 ```
 
-## Repository слой
-
-Созданы реализации Repository:
-
-- UserRepositoryImpl
-- AccountRepositoryImpl
-- TransactionRepositoryImpl
-
-Реализованы операции:
-
-- получение пользователя;
-- создание пользователя при первом запуске;
-- получение списка счетов;
-- получение списка транзакций;
-- добавление счетов;
-- добавление транзакций;
-- удаление транзакций.
-
-## Mapper слой
-
-Добавлены преобразования между слоями:
+В дальнейшем структура будет расширена для планирования бюджета:
 
 ```
-Entity → Domain
-Domain → Entity
+Budget
+ |
+ └── BudgetCategory
+          |
+          └── Category
 ```
 
-Реализованы mapper'ы:
+---
 
-- UserMapper
-- AccountMapper
-- TransactionMapper
+# Repository слой
 
-Mapper слой отвечает за преобразование моделей базы данных в бизнес-модели приложения.
+Реализованы:
 
-## Dependency Injection
+* UserRepositoryImpl
+* AccountRepositoryImpl
+* TransactionRepositoryImpl
 
-Настроен Hilt.
+Поддерживаются операции:
 
-Добавлены модули:
+* создание пользователя;
+* получение пользователя;
+* получение счетов;
+* получение транзакций;
+* добавление счетов;
+* добавление транзакций;
+* удаление транзакций.
+
+---
+
+# Dependency Injection
+
+Используется Hilt.
+
+Модули:
 
 ```
 di
@@ -189,15 +289,16 @@ di
 
 Через Hilt предоставляются:
 
-- Room Database;
-- DAO;
-- Repository implementations;
-- UseCase зависимости;
-- ViewModel зависимости.
+* Room Database;
+* DAO;
+* Repository реализации;
+* зависимости приложения.
 
-## Application flow
+---
 
-Добавлена базовая логика запуска приложения:
+# Application Flow
+
+Запуск приложения:
 
 ```
 Application start
@@ -217,13 +318,15 @@ Navigation
 
 Добавлен экран загрузки:
 
-- LoadingScreen;
-- управление состоянием приложения через StateFlow;
-- ожидание инициализации данных перед открытием основного интерфейса.
+* LoadingScreen;
+* управление состоянием через StateFlow;
+* ожидание инициализации данных перед открытием интерфейса.
 
-## Home flow
+---
 
-Реализована подготовка основного экрана приложения:
+# Home Flow
+
+Текущая логика HomeScreen:
 
 ```
 HomeScreen
@@ -234,11 +337,11 @@ HomeViewModel
 
       ↓
 
-ObserveTransactionsUseCase
+UseCases
 
       ↓
 
-TransactionRepository
+Repository
 
       ↓
 
@@ -247,105 +350,135 @@ Room Database
 
 HomeViewModel:
 
-- получает список транзакций;
-- хранит состояние экрана через StateFlow;
-- рассчитывает текущий баланс;
-- подготавливает данные для отображения в Compose.
+* получает данные приложения;
+* хранит состояние через StateFlow;
+* рассчитывает текущий баланс;
+* подготавливает UI-модели для Compose.
 
-## Инструменты качества кода
+---
 
-В проект подключены инструменты автоматического контроля качества кода.
+# Инструменты качества кода
 
-### Detekt
+## Detekt
 
 Используется для:
 
-- статического анализа Kotlin-кода;
-- проверки сложности методов;
-- поиска потенциальных проблем;
-- контроля качества кода.
+* статического анализа Kotlin-кода;
+* проверки сложности методов;
+* поиска потенциальных проблем;
+* контроля качества кода.
 
-### Spotless + ktlint
+---
 
-Используются для автоматического форматирования Kotlin-кода.
+## Spotless + ktlint
+
+Используются для автоматического форматирования и проверки стиля Kotlin-кода.
 
 Возможности:
 
-- форматирование отступов;
-- удаление лишних импортов;
-- исправление стиля кода;
-- единый формат проекта.
+* единый формат проекта;
+* контроль импортов;
+* проверка форматирования;
+* поддержание единого code style.
 
-Команда форматирования:
+Команды:
 
-```
-./gradlew spotlessApply
-```
+Форматирование:
 
-### Android Lint
-
-Используется для проверки Android-специфичных проблем:
-
-- ресурсы;
-- Manifest;
-- Compose рекомендации;
-- Android API проверки.
-
-## Проверка проекта
-
-Перед коммитом рекомендуется выполнить:
-
-```
-./gradlew spotlessApply
+```bash
+./gradlew format
 ```
 
-После форматирования выполнить проверку:
+---
+
+## Android Lint
+
+Используется для проверки:
+
+* Android API;
+* ресурсов;
+* Manifest;
+* Compose рекомендаций;
+* Android-specific проблем.
+
+---
+
+# Проверка проекта
+
+Перед коммитом выполняются:
+
+```bash
+./gradlew format
+./gradlew verify
+```
+
+Где:
 
 ```
-./gradlew detekt
-./gradlew lintDebug
-./gradlew build
+format
+ ↓
+spotlessApply
+
+
+verify
+ ↓
+spotlessCheck
+detekt
+lintDebug
+build
 ```
 
-Проверки выполняют:
+---
 
-- статический анализ Kotlin-кода;
-- проверку Android Lint;
-- сборку проекта.
+# Текущее состояние проекта
 
-## Текущее состояние проекта
+Реализовано:
 
-На текущем этапе реализована базовая инфраструктура приложения:
+✅ Clean Architecture
+✅ Room Database
+✅ Hilt Dependency Injection
+✅ Repository слой
+✅ Domain слой
+✅ UseCase слой
+✅ Coroutines + Flow
+✅ StateFlow
+✅ Инициализация пользователя
+✅ LoadingScreen
+✅ AppViewModel
+✅ HomeViewModel
+✅ Расчёт баланса
+✅ Новый Home Dashboard UI
+✅ BudgetSummaryCard
+✅ CategorySection
+✅ CategoryBudgetItem
+✅ RecentTransactionsSection
+✅ Обновлённый TransactionItem
+✅ BudgetScaffold
+✅ Floating Action Button
+✅ Detekt
+✅ Spotless + ktlint
+✅ Android Lint
+✅ Gradle verification tasks
+✅ Проект успешно собирается
 
-✅ настроена архитектура Clean Architecture
-✅ подключена Room Database
-✅ реализованы DAO
-✅ настроен Hilt
-✅ реализован Repository слой
-✅ добавлены Entity и Domain модели
-✅ реализованы Mapper'ы
-✅ добавлен UseCase слой
-✅ реализована инициализация пользователя
-✅ добавлен LoadingScreen
-✅ добавлен AppViewModel
-✅ добавлен HomeViewModel
-✅ реализовано получение данных через Flow
-✅ реализован расчёт баланса
-✅ настроен Detekt
-✅ настроен Spotless + ktlint
-✅ подключен Android Lint
-✅ настроен pipeline проверки качества кода
-✅ проект успешно собирается
+---
 
-## Следующие этапы разработки
+# Следующие этапы разработки
 
-План дальнейшей разработки:
+План дальнейшего развития:
 
-1. Подключение HomeScreen к HomeViewModel.
-2. Отображение текущего баланса.
-3. Отображение списка транзакций.
-4. Добавление активного счёта пользователя.
-5. Добавление создания доходов и расходов.
-6. Реализация категорий операций.
-7. Добавление аналитики бюджета.
-8. Улучшение UI и пользовательского сценария.
+1. Подключение HomeScreen к реальным данным.
+2. Создание сущностей:
+
+    * Category;
+    * Budget;
+    * BudgetCategory.
+3. Реализация планирования бюджета на месяц.
+4. Добавление лимитов расходов по категориям.
+5. Экран управления бюджетом.
+6. Экран счетов пользователя.
+7. Полноценный экран транзакций.
+8. Добавление фильтрации и поиска операций.
+9. Аналитика расходов.
+10. Прогнозирование выполнения бюджета.
+11. Улучшение UX и добавление Material 3 Motion.
