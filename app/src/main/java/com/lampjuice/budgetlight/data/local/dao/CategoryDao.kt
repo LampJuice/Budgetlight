@@ -17,4 +17,7 @@ interface CategoryDao {
 
     @Insert
     suspend fun insertAll(categories: List<CategoryEntity>)
+
+    @Query("SELECT COUNT(*) FROM categories")
+    suspend fun getCount(): Int
 }

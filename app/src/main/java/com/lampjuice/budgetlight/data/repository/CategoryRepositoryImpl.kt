@@ -25,4 +25,6 @@ class CategoryRepositoryImpl(
     override suspend fun insertAll(categories: List<Category>) {
         categoryDao.insertAll(categories.map { it.toEntity() })
     }
+
+    override suspend fun getCount(): Int = categoryDao.getCount()
 }
