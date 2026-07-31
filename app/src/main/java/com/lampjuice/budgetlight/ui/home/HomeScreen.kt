@@ -13,14 +13,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.lampjuice.budgetlight.domain.model.TransactionType
 import com.lampjuice.budgetlight.ui.components.scaffold.BudgetScaffold
 import com.lampjuice.budgetlight.ui.home.components.BudgetSummaryCard
 import com.lampjuice.budgetlight.ui.home.components.CategorySection
 import com.lampjuice.budgetlight.ui.home.components.GreetingSection
 import com.lampjuice.budgetlight.ui.home.components.RecentTransactionSection
-import com.lampjuice.budgetlight.ui.home.model.CategoryBudgetUi
-import com.lampjuice.budgetlight.ui.home.model.TransactionUi
 import com.lampjuice.budgetlight.ui.theme.Dimens
 
 @Composable
@@ -50,56 +47,26 @@ fun HomeScreen(
             verticalArrangement = Arrangement.spacedBy(Dimens.ItemSpacing),
         ) {
             item {
-                GreetingSection()
+                GreetingSection(
+                    userName = state.userName,
+                )
             }
             item {
-                BudgetSummaryCard()
+                state.budget?.let { budget ->
+                    BudgetSummaryCard(
+                        budget = budget,
+                    )
+                }
             }
             item {
                 CategorySection(
-                    categories = listOf(
-                        CategoryBudgetUi(
-                            id = 1,
-                            icon = "🍔",
-                            title = "Еда",
-                            spent = 18_400,
-                            limit = 25_000,
-                        ),
-                        CategoryBudgetUi(
-                            id = 2,
-                            icon = "⛽",
-                            title = "Авто",
-                            spent = 9_800,
-                            limit = 12_000,
-                        ),
-                        CategoryBudgetUi(
-                            id = 3,
-                            icon = "🏠",
-                            title = "Дом",
-                            spent = 8_000,
-                            limit = 8_000,
-                        ),
-                    ),
+                    categories = state.categories,
+
                 )
             }
             item {
                 RecentTransactionSection(
-                    transactions = listOf(
-                        TransactionUi(
-                            title = "Зарплата",
-                            amount = 75_000,
-                            date = "Сегодня",
-                            category = "Работа",
-                            type = TransactionType.INCOME,
-                        ),
-                        TransactionUi(
-                            title = "Продукты",
-                            amount = 850,
-                            date = "Сегодня",
-                            category = "Еда",
-                            type = TransactionType.EXPENSE,
-                        ),
-                    ),
+                    transactions = state.recentTransactions,
                 )
             }
         }

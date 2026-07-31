@@ -12,11 +12,14 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import com.lampjuice.budgetlight.ui.home.model.BudgetSummaryUi
 import com.lampjuice.budgetlight.ui.theme.Dimens
 import com.lampjuice.budgetlight.ui.theme.GreenIncome
+import com.lampjuice.budgetlight.ui.util.formatMoney
 
 @Composable
 fun BudgetSummaryCard(
+    budget: BudgetSummaryUi,
     modifier: Modifier = Modifier,
 ) {
     Card(
@@ -36,12 +39,12 @@ fun BudgetSummaryCard(
                 style = MaterialTheme.typography.titleMedium,
             )
             Text(
-                text = "150 000 P",
+                text = budget.budget.formatMoney(),
                 style = MaterialTheme.typography.headlineLarge,
             )
 
             LinearProgressIndicator(
-                progress = { 0.55f },
+                progress = { budget.progress },
 
                 modifier = Modifier
                     .fillMaxWidth()
@@ -52,12 +55,12 @@ fun BudgetSummaryCard(
             ) {
                 BudgetValueRow(
                     title = "Потрачено",
-                    value = "83 300 P",
+                    value = budget.spent.formatMoney(),
                     color = MaterialTheme.colorScheme.onSurface,
                 )
                 BudgetValueRow(
                     title = "Осталось",
-                    value = "67 000 P",
+                    value = budget.remaining.formatMoney(),
                     color = GreenIncome,
                 )
             }

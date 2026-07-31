@@ -2,7 +2,6 @@ package com.lampjuice.budgetlight.ui.home.model
 
 data class CategoryBudgetUi(
     val id: Long,
-    val icon: String,
     val title: String,
     val spent: Long,
     val limit: Long,

@@ -39,10 +39,6 @@ fun CategoryBudgetItem(
                 horizontalArrangement = Arrangement.spacedBy(Dimens.ItemSpacing),
             ) {
                 Text(
-                    text = category.icon,
-                    style = MaterialTheme.typography.titleLarge,
-                )
-                Text(
                     text = category.title,
                     style = MaterialTheme.typography.titleMedium,
                 )
@@ -73,7 +69,6 @@ private fun CategoryBudgetItemPreview() {
         CategoryBudgetItem(
             category = CategoryBudgetUi(
                 id = 1,
-                icon = "🍔",
                 title = "Еда",
                 spent = 18_400,
                 limit = 25_000,
@@ -89,7 +84,6 @@ private fun CategoryBudgetItemOverBudgetPreview() {
         CategoryBudgetItem(
             category = CategoryBudgetUi(
                 id = 2,
-                icon = "🏠",
                 title = "ЖКХ",
                 spent = 10_500,
                 limit = 8_000,
