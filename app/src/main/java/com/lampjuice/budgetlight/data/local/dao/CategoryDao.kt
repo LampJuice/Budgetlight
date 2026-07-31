@@ -1,0 +1,20 @@
+package com.lampjuice.budgetlight.data.local.dao
+
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.Query
+import com.lampjuice.budgetlight.data.local.entity.CategoryEntity
+import kotlinx.coroutines.flow.Flow
+
+@Dao
+interface CategoryDao {
+
+    @Query("SELECT * FROM categories ORDER BY name")
+    fun observeCategories(): Flow<List<CategoryEntity>>
+
+    @Insert
+    suspend fun insert(category: CategoryEntity)
+
+    @Insert
+    suspend fun insertAll(categories: List<CategoryEntity>)
+}
