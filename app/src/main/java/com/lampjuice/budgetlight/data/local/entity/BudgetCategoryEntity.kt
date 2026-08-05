@@ -28,7 +28,7 @@ import androidx.room.PrimaryKey
 )
 data class BudgetCategoryEntity(
     @PrimaryKey(autoGenerate = true)
-    val id: Long,
+    val id: Long = 0,
     val budgetId: Long,
     val categoryId: Long,
     val plannedAmount: Long,
