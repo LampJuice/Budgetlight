@@ -53,11 +53,11 @@ fun CategoryBudgetItem(
                     progress = { category.progress },
                     modifier = Modifier.fillMaxWidth(),
                     color =
-                        if (category.isOverBudget) {
-                            MaterialTheme.colorScheme.error
-                        } else {
-                            MaterialTheme.colorScheme.primary
-                        },
+                    if (category.isOverBudget) {
+                        MaterialTheme.colorScheme.error
+                    } else {
+                        MaterialTheme.colorScheme.primary
+                    },
                 )
             } else {
                 Text(
@@ -65,8 +65,7 @@ fun CategoryBudgetItem(
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
 
-
-                    )
+                )
             }
         }
     }

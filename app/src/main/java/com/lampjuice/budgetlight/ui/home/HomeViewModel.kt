@@ -52,8 +52,7 @@ class HomeViewModel @Inject constructor(
                 transactionsFlow,
                 observeCategoriesUseCase(),
 
-                )
-            { transactions, categories ->
+            ) { transactions, categories ->
                 val balance = calculateBalanceUseCase(transactions)
                 HomeState(
                     budget = createBudgetSummary(balance),
@@ -64,9 +63,8 @@ class HomeViewModel @Inject constructor(
                     isLoading = false,
                 )
             }
-                .collect{ newState ->
+                .collect { newState ->
                     _state.value = newState
-
                 }
         }
     }

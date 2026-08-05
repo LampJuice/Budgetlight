@@ -3,6 +3,8 @@ package com.lampjuice.budgetlight.di
 import android.content.Context
 import androidx.room.Room
 import com.lampjuice.budgetlight.data.local.dao.AccountDao
+import com.lampjuice.budgetlight.data.local.dao.BudgetCategoryDao
+import com.lampjuice.budgetlight.data.local.dao.BudgetDao
 import com.lampjuice.budgetlight.data.local.dao.CategoryDao
 import com.lampjuice.budgetlight.data.local.dao.TransactionDao
 import com.lampjuice.budgetlight.data.local.dao.UserDao
@@ -41,4 +43,10 @@ object DatabaseModule {
 
     @Provides
     fun provideCategoryDao(database: BudgetDatabase): CategoryDao = database.categoryDao()
+
+    @Provides
+    fun provideBudgetDao(database: BudgetDatabase): BudgetDao = database.budgetDao()
+
+    @Provides
+    fun provideBudgetCategoryDao(database: BudgetDatabase): BudgetCategoryDao = database.budgetCategoryDao()
 }
