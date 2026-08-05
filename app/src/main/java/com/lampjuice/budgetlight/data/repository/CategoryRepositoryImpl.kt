@@ -5,10 +5,11 @@ import com.lampjuice.budgetlight.data.mapper.toDomain
 import com.lampjuice.budgetlight.data.mapper.toEntity
 import com.lampjuice.budgetlight.domain.model.Category
 import com.lampjuice.budgetlight.domain.repository.CategoryRepository
+import jakarta.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-class CategoryRepositoryImpl(
+class CategoryRepositoryImpl @Inject constructor(
     private val categoryDao: CategoryDao,
 ) : CategoryRepository {
     override fun observeCategories(): Flow<List<Category>> {

@@ -48,16 +48,26 @@ fun CategoryBudgetItem(
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
-            LinearProgressIndicator(
-                progress = { category.progress },
-                modifier = Modifier.fillMaxWidth(),
-                color =
-                if (category.isOverBudget) {
-                    MaterialTheme.colorScheme.error
-                } else {
-                    MaterialTheme.colorScheme.primary
-                },
-            )
+            if (category.limit > 0) {
+                LinearProgressIndicator(
+                    progress = { category.progress },
+                    modifier = Modifier.fillMaxWidth(),
+                    color =
+                        if (category.isOverBudget) {
+                            MaterialTheme.colorScheme.error
+                        } else {
+                            MaterialTheme.colorScheme.primary
+                        },
+                )
+            } else {
+                Text(
+                    text = "Бюджет не задан",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+
+
+                    )
+            }
         }
     }
 }
