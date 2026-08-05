@@ -3,7 +3,7 @@ package com.lampjuice.budgetlight.ui.app
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lampjuice.budgetlight.domain.usecase.InitializeUserUseCase
-import com.lampjuice.budgetlight.domain.usecase.SeedDatabaseUseCase
+import com.lampjuice.budgetlight.domain.usecase.SeedApplicationDataUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jakarta.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -15,7 +15,7 @@ class AppViewModel
 @Inject
 constructor(
     private val initializeUserUseCase: InitializeUserUseCase,
-    private val seedDatabaseUseCase: SeedDatabaseUseCase,
+    private val seedApplicationDataUseCase: SeedApplicationDataUseCase,
 ) : ViewModel() {
     private val _state = MutableStateFlow<AppState>(AppState.Loading)
 
@@ -29,7 +29,9 @@ constructor(
         viewModelScope.launch {
             val user = initializeUserUseCase()
 
-            seedDatabaseUseCase(user.id)
+            seedApplicationDataUseCase(
+                userId = user.id,
+            )
 
             _state.value = AppState.Ready
         }

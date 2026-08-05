@@ -19,7 +19,7 @@ interface BudgetCategoryDao {
     fun observeBudgetCategories(budgetId: Long): Flow<List<BudgetCategoryEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(budgetCategory: BudgetCategoryEntity)
+    suspend fun insert(budgetCategory: BudgetCategoryEntity): Long
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(budgetCategories: List<BudgetCategoryEntity>)

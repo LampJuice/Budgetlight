@@ -18,9 +18,9 @@ class BudgetCategoryRepositoryImpl @Inject constructor(
         list.map { it.toDomain() }
     }
 
-    override suspend fun insertBudgetCategory(budgetCategory: BudgetCategory) {
-        dao.insert(budgetCategory.toEntity())
-    }
+    override suspend fun insertBudgetCategory(budgetCategory: BudgetCategory): Long = dao.insert(
+        budgetCategory.toEntity(),
+    )
 
     override suspend fun insertAll(budgetCategories: List<BudgetCategory>) {
         dao.insertAll(budgetCategories.map { it.toEntity() })

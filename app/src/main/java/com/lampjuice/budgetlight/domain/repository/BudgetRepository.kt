@@ -6,5 +6,11 @@ import kotlinx.coroutines.flow.Flow
 interface BudgetRepository {
     fun observeCurrentBudget(userId: Long): Flow<Budget?>
 
-    suspend fun insertBudget(budget: Budget)
+    suspend fun insert(budget: Budget): Long
+
+    fun observeBudget(
+        userId: Long,
+        year: Int,
+        month: Int,
+    ): Flow<Budget?>
 }

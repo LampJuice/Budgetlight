@@ -16,7 +16,14 @@ class BudgetRepositoryImpl @Inject constructor(
         userId: Long,
     ): Flow<Budget?> = dao.observeCurrentBudget(userId).map { it?.toDomain() }
 
-    override suspend fun insertBudget(budget: Budget) {
-        dao.insertBudget(budget.toEntity())
-    }
+    override suspend fun insert(budget: Budget): Long = dao.insert(budget.toEntity())
+    override fun observeBudget(
+        userId: Long,
+        year: Int,
+        month: Int,
+    ): Flow<Budget?> = dao.observeBudget(
+        userId,
+        year,
+        month,
+    ).map { it?.toDomain() }
 }
