@@ -5,8 +5,11 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Category
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Icon
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -38,6 +41,10 @@ fun CategoryBudgetItem(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(Dimens.ItemSpacing),
             ) {
+                Icon(
+                    imageVector = Icons.Default.Category,
+                    contentDescription = "Категория",
+                )
                 Text(
                     text = category.title,
                     style = MaterialTheme.typography.titleMedium,
@@ -78,6 +85,7 @@ private fun CategoryBudgetItemPreview() {
         CategoryBudgetItem(
             category = CategoryBudgetUi(
                 id = 1,
+                icon = "FOOD",
                 title = "Еда",
                 spent = 18_400,
                 limit = 25_000,
@@ -93,6 +101,7 @@ private fun CategoryBudgetItemOverBudgetPreview() {
         CategoryBudgetItem(
             category = CategoryBudgetUi(
                 id = 2,
+                icon = "HOME",
                 title = "ЖКХ",
                 spent = 10_500,
                 limit = 8_000,
