@@ -1,10 +1,12 @@
 package com.lampjuice.budgetlight.di
 
 import com.lampjuice.budgetlight.data.repository.AccountRepositoryImpl
+import com.lampjuice.budgetlight.data.repository.BudgetRepositoryImpl
 import com.lampjuice.budgetlight.data.repository.CategoryRepositoryImpl
 import com.lampjuice.budgetlight.data.repository.TransactionRepositoryImpl
 import com.lampjuice.budgetlight.data.repository.UserRepositoryImpl
 import com.lampjuice.budgetlight.domain.repository.AccountRepository
+import com.lampjuice.budgetlight.domain.repository.BudgetRepository
 import com.lampjuice.budgetlight.domain.repository.CategoryRepository
 import com.lampjuice.budgetlight.domain.repository.TransactionRepository
 import com.lampjuice.budgetlight.domain.repository.UserRepository
@@ -32,4 +34,8 @@ abstract class RepositoryModule {
     @Binds
     @Singleton
     abstract fun bindCategoryRepository(impl: CategoryRepositoryImpl): CategoryRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindBudgetRepository(impl: BudgetRepositoryImpl): BudgetRepository
 }

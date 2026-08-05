@@ -1,6 +1,8 @@
 package com.lampjuice.budgetlight.data.local.dao
 
 import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.lampjuice.budgetlight.data.local.entity.BudgetEntity
 import kotlinx.coroutines.flow.Flow
@@ -18,4 +20,7 @@ interface BudgetDao {
         """,
     )
     fun observeCurrentBudget(userId: Long): Flow<BudgetEntity?>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertBudget(budget: BudgetEntity)
 }
