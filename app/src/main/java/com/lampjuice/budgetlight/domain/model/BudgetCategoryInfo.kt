@@ -5,4 +5,5 @@ data class BudgetCategoryInfo(
     val name: String,
     val icon: CategoryIcon,
     val plannedAmount: Long,
+    val spentAmount: Long,
 )

@@ -9,4 +9,8 @@ interface TransactionRepository {
     suspend fun addTransaction(transaction: Transaction)
 
     suspend fun deleteTransaction(id: Long)
+
+    fun observeTransactionByCategory(accountId: Long, categoryId: Long): Flow<List<Transaction>>
+
+    fun observeExpenses(accountId: Long): Flow<List<Transaction>>
 }

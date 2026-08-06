@@ -32,7 +32,7 @@ object DefaultBudgetFactory {
                 id = 0,
                 budgetId = budgetId,
                 categoryId = category.id,
-                plannedAmount = 0,
+                plannedAmount = DefaultBudgetCategories.limits[category.icon] ?: 0L,
             )
         }
 }

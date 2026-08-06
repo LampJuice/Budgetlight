@@ -43,7 +43,9 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch {
             val user = initializeUserUseCase()
             val budgetFlow = observeCurrentBudgetUseCase(user.id)
-            val transactionsFlow = observeCurrentAccountUseCase(user.id)
+
+            val accountFlow = observeCurrentAccountUseCase(user.id)
+            val transactionsFlow = accountFlow
                 .flatMapLatest { account ->
                     if (account == null) {
                         flowOf(emptyList())
@@ -51,14 +53,18 @@ class HomeViewModel @Inject constructor(
                         observeTransactionsUseCase(account.id)
                     }
                 }
-            val budgetCategoriesFlow = budgetFlow
-                .flatMapLatest { budget ->
-                    if (budget == null) {
-                        flowOf(emptyList())
-                    } else {
-                        observeBudgetCategoryInfoUseCase(budget.id)
-                    }
+            val budgetCategoriesFlow = combine(
+                budgetFlow,
+                accountFlow,
+            ) { budget, account ->
+                budget to account
+            }.flatMapLatest { (budget, account) ->
+                if (budget == null || account == null) {
+                    flowOf(emptyList())
+                } else {
+                    observeBudgetCategoryInfoUseCase(budget.id, account.id)
                 }
+            }
             combine(
                 budgetFlow,
                 transactionsFlow,

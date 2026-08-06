@@ -7,6 +7,6 @@ fun BudgetCategoryInfo.toUi(): CategoryBudgetUi = CategoryBudgetUi(
     id = categoryId,
     icon = icon.name,
     title = name,
-    spent = 0,
+    spent = spentAmount,
     limit = plannedAmount,
 )

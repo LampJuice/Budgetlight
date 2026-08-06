@@ -27,4 +27,16 @@ constructor(
     override suspend fun deleteTransaction(id: Long) {
         dao.deleteTransaction(id)
     }
+
+    override fun observeTransactionByCategory(accountId: Long, categoryId: Long): Flow<List<Transaction>> = dao
+        .observeTransactionByCategory(accountId, categoryId)
+        .map { list ->
+            list.map { it.toDomain() }
+        }
+
+    override fun observeExpenses(accountId: Long): Flow<List<Transaction>> = dao
+        .observeExpenses(accountId)
+        .map { list ->
+            list.map { it.toDomain() }
+        }
 }

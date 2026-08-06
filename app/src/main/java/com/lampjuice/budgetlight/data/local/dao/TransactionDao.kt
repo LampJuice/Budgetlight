@@ -28,4 +28,27 @@ interface TransactionDao {
         """,
     )
     suspend fun deleteTransaction(id: Long)
+
+    @Query(
+        """
+            SELECT *
+            FROM transactions
+            WHERE accountId = :accountId
+            AND categoryId = :categoryId
+            AND type = 'EXPENSE'
+            ORDER BY date DESC
+        """,
+    )
+    fun observeTransactionByCategory(accountId: Long, categoryId: Long): Flow<List<TransactionEntity>>
+
+    @Query(
+        """
+            SELECT *
+            FROM transactions
+            WHERE accountId = :accountId
+            AND type = 'EXPENSE'
+            ORDER BY date DESC
+        """,
+    )
+    fun observeExpenses(accountId: Long): Flow<List<TransactionEntity>>
 }
