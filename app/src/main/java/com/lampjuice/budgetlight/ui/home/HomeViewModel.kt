@@ -7,6 +7,7 @@ import com.lampjuice.budgetlight.domain.usecase.CalculateBalanceUseCase
 import com.lampjuice.budgetlight.domain.usecase.InitializeUserUseCase
 import com.lampjuice.budgetlight.domain.usecase.ObserveCategoriesUseCase
 import com.lampjuice.budgetlight.domain.usecase.ObserveCurrentAccountUseCase
+import com.lampjuice.budgetlight.domain.usecase.ObserveCurrentBudgetUseCase
 import com.lampjuice.budgetlight.domain.usecase.ObserveTransactionsUseCase
 import com.lampjuice.budgetlight.ui.home.model.BudgetSummaryUi
 import com.lampjuice.budgetlight.ui.mapper.toUi
@@ -26,6 +27,7 @@ class HomeViewModel @Inject constructor(
     private val observeTransactionsUseCase: ObserveTransactionsUseCase,
     private val calculateBalanceUseCase: CalculateBalanceUseCase,
     private val observeCurrentAccountUseCase: ObserveCurrentAccountUseCase,
+    private val observeCurrentBudgetUseCase: ObserveCurrentBudgetUseCase,
     private val initializeUserUseCase: InitializeUserUseCase,
     private val observeCategoriesUseCase: ObserveCategoriesUseCase,
 ) : ViewModel() {
@@ -40,6 +42,7 @@ class HomeViewModel @Inject constructor(
     private fun observeHomeData() {
         viewModelScope.launch {
             val user = initializeUserUseCase()
+            val budgetFlow = observeCurrentBudgetUseCase(user.id)
             val transactionsFlow = observeCurrentAccountUseCase(user.id)
                 .flatMapLatest { account ->
                     if (account == null) {
@@ -49,13 +52,14 @@ class HomeViewModel @Inject constructor(
                     }
                 }
             combine(
+                budgetFlow,
                 transactionsFlow,
                 observeCategoriesUseCase(),
 
-            ) { transactions, categories ->
+            ) { budget, transactions, categories ->
                 val balance = calculateBalanceUseCase(transactions)
                 HomeState(
-                    budget = createBudgetSummary(balance),
+                    budget = budget?.let { createBudgetSummary(balance) },
                     categories = categories.map { it.toUi() },
                     recentTransactions = transactions
                         .take(5)

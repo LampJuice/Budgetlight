@@ -4,7 +4,9 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Transaction
 import com.lampjuice.budgetlight.data.local.entity.BudgetCategoryEntity
+import com.lampjuice.budgetlight.data.local.entity.BudgetCategoryWithCategoryEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -23,4 +25,16 @@ interface BudgetCategoryDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(budgetCategories: List<BudgetCategoryEntity>)
+
+    @Transaction
+    @Query(
+        """
+            SELECT *
+            FROM budget_categories
+            WHERE budgetId = :budgetId
+        """,
+    )
+    fun observeBudgetCategoriesWithCategory(
+        budgetId: Long,
+    ): Flow<List<BudgetCategoryWithCategoryEntity>>
 }

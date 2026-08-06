@@ -9,7 +9,7 @@ fun TransactionEntity.toDomain(): Transaction = Transaction(
     accountId = accountId,
     title = title,
     amount = amount,
-    category = category,
+    categoryId = categoryId,
     date = date,
     type = TransactionType.valueOf(type),
 )
@@ -19,7 +19,7 @@ fun Transaction.toEntity(): TransactionEntity = TransactionEntity(
     accountId = accountId,
     title = title,
     amount = amount,
-    category = category,
+    categoryId = categoryId,
     date = date,
     type = type.name,
 )

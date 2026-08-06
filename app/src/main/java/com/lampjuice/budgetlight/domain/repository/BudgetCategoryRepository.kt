@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.Flow
 interface BudgetCategoryRepository {
     fun observeBudgetCategories(budgetId: Long): Flow<List<BudgetCategory>>
 
-    suspend fun insertBudgetCategory(budgetCategory: BudgetCategory): Long
+    suspend fun insert(budgetCategory: BudgetCategory): Long
 
     suspend fun insertAll(budgetCategories: List<BudgetCategory>)
 }

@@ -1,9 +1,11 @@
 package com.lampjuice.budgetlight.domain.usecase
 
 import com.lampjuice.budgetlight.domain.model.Account
+import com.lampjuice.budgetlight.domain.model.CategoryIcon
 import com.lampjuice.budgetlight.domain.model.Transaction
 import com.lampjuice.budgetlight.domain.model.TransactionType
 import com.lampjuice.budgetlight.domain.repository.AccountRepository
+import com.lampjuice.budgetlight.domain.repository.CategoryRepository
 import com.lampjuice.budgetlight.domain.repository.TransactionRepository
 import jakarta.inject.Inject
 import kotlinx.coroutines.flow.first
@@ -12,6 +14,7 @@ import java.time.LocalDate
 class SeedDatabaseUseCase @Inject constructor(
     private val accountRepository: AccountRepository,
     private val transactionRepository: TransactionRepository,
+    private val categoryRepository: CategoryRepository,
 ) {
 
     suspend operator fun invoke(userId: Long) {
@@ -28,6 +31,19 @@ class SeedDatabaseUseCase @Inject constructor(
                 name = "Основной счет",
             ),
         )
+        val categories = categoryRepository.observeCategories().first()
+
+        val salaryCategoryId = categories.first {
+            it.icon == CategoryIcon.SALARY
+        }.id
+
+        val carCategoryId = categories.first {
+            it.icon == CategoryIcon.CAR
+        }.id
+
+        val foodCategoryId = categories.first {
+            it.icon == CategoryIcon.FOOD
+        }.id
 
         transactionRepository.addTransaction(
             Transaction(
@@ -35,7 +51,7 @@ class SeedDatabaseUseCase @Inject constructor(
                 accountId = accountId,
                 title = "Зарплата",
                 amount = 75000,
-                category = "Работа",
+                categoryId = salaryCategoryId,
                 date = LocalDate.now(),
                 type = TransactionType.INCOME,
             ),
@@ -47,7 +63,7 @@ class SeedDatabaseUseCase @Inject constructor(
                 accountId = accountId,
                 title = "Топливо",
                 amount = 3000,
-                category = "Авто",
+                categoryId = carCategoryId,
                 date = LocalDate.now().minusDays(1),
                 type = TransactionType.EXPENSE,
             ),
@@ -59,7 +75,7 @@ class SeedDatabaseUseCase @Inject constructor(
                 accountId = accountId,
                 title = "Продукты",
                 amount = 850,
-                category = "Еда",
+                categoryId = foodCategoryId,
                 date = LocalDate.now(),
                 type = TransactionType.EXPENSE,
             ),

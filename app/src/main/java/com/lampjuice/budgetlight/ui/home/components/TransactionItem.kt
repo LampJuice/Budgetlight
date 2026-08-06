@@ -87,7 +87,7 @@ private fun TransactionItemPreview(
         title = "Перевод",
         amount = 75_005,
         date = "Today",
-        category = "Работа",
+        categoryId = 8,
         type = TransactionType.INCOME,
     ),
 ) {
@@ -101,7 +101,7 @@ private fun TransactionItemPreview2(
         title = "ПРодукты",
         amount = 800,
         date = "Today",
-        category = "Работа",
+        categoryId = 8,
         type = TransactionType.EXPENSE,
     ),
 ) {

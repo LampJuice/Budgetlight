@@ -7,7 +7,7 @@ data class Transaction(
     val accountId: Long,
     val title: String,
     val amount: Long,
-    val category: String,
+    val categoryId: Long,
     val date: LocalDate,
     val type: TransactionType,
 )
