@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.lampjuice.budgetlight.domain.model.Balance
 import com.lampjuice.budgetlight.domain.usecase.CalculateBalanceUseCase
 import com.lampjuice.budgetlight.domain.usecase.InitializeUserUseCase
-import com.lampjuice.budgetlight.domain.usecase.ObserveCategoriesUseCase
+import com.lampjuice.budgetlight.domain.usecase.ObserveBudgetCategoryInfoUseCase
 import com.lampjuice.budgetlight.domain.usecase.ObserveCurrentAccountUseCase
 import com.lampjuice.budgetlight.domain.usecase.ObserveCurrentBudgetUseCase
 import com.lampjuice.budgetlight.domain.usecase.ObserveTransactionsUseCase
@@ -29,7 +29,7 @@ class HomeViewModel @Inject constructor(
     private val observeCurrentAccountUseCase: ObserveCurrentAccountUseCase,
     private val observeCurrentBudgetUseCase: ObserveCurrentBudgetUseCase,
     private val initializeUserUseCase: InitializeUserUseCase,
-    private val observeCategoriesUseCase: ObserveCategoriesUseCase,
+    private val observeBudgetCategoryInfoUseCase: ObserveBudgetCategoryInfoUseCase,
 ) : ViewModel() {
     private val _state = MutableStateFlow(HomeState())
     val state = _state.asStateFlow()
@@ -51,10 +51,18 @@ class HomeViewModel @Inject constructor(
                         observeTransactionsUseCase(account.id)
                     }
                 }
+            val budgetCategoriesFlow = budgetFlow
+                .flatMapLatest { budget ->
+                    if (budget == null) {
+                        flowOf(emptyList())
+                    } else {
+                        observeBudgetCategoryInfoUseCase(budget.id)
+                    }
+                }
             combine(
                 budgetFlow,
                 transactionsFlow,
-                observeCategoriesUseCase(),
+                budgetCategoriesFlow,
 
             ) { budget, transactions, categories ->
                 val balance = calculateBalanceUseCase(transactions)
