@@ -21,7 +21,7 @@ fun CategorySection(
         verticalArrangement = Arrangement.spacedBy(Dimens.ItemSpacing),
     ) {
         Text(
-            text = "Категории",
+            text = "Категории (${categories.size})",
             style = MaterialTheme.typography.titleLarge,
         )
         categories.forEach { category ->
