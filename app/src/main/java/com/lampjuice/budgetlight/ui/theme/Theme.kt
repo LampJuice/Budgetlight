@@ -12,6 +12,7 @@ import androidx.compose.ui.platform.LocalContext
 
 private val DarkColorScheme = darkColorScheme(
     primary = GreenPrimary,
+    primaryContainer = GreenContainer,
     background = GrayBackground,
     surface = CardColor,
     onBackground = TextPrimary,
@@ -21,6 +22,7 @@ private val DarkColorScheme = darkColorScheme(
 private val LightColorScheme = lightColorScheme(
     primary = GreenPrimary,
     background = GrayBackground,
+    primaryContainer = GreenContainer,
     surface = CardColor,
     onBackground = TextPrimary,
     onSurface = TextPrimary,
@@ -30,7 +32,7 @@ private val LightColorScheme = lightColorScheme(
 @Composable
 fun BudgetLightTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
-    dynamicColor: Boolean = true,
+    dynamicColor: Boolean = false,
     content: @Composable () -> Unit,
 ) {
     val colorScheme = when {

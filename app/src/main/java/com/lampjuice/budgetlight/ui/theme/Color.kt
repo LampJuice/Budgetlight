@@ -15,3 +15,5 @@ val CardColor = Color(0xFFFFFFFF)
 val TextPrimary = Color(0xFF212121)
 
 val TextSecondary = Color(0xFF757575)
+
+val GreenContainer = Color(0xFFE8F5E9)

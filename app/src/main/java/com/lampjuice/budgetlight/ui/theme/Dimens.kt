@@ -20,4 +20,7 @@ object Dimens {
     val IconPadding = 10.dp
 
     val FabBottomPadding = 80.dp
+
+    val SmallProgressBarHeight = 5.dp
+    val CategoryIconSize = 44.dp
 }
