@@ -18,8 +18,7 @@ fun CategorySection(
 ) {
     Column(
         modifier = modifier
-            .fillMaxWidth()
-            .padding(horizontal = Dimens.CardCorner),
+            .fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(Dimens.ItemSpacing),
     ) {
         Text(

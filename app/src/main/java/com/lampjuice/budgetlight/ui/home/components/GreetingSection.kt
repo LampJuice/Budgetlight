@@ -18,7 +18,6 @@ fun GreetingSection(
         modifier = Modifier
             .fillMaxWidth()
             .padding(
-                horizontal = Dimens.CardCorner,
                 vertical = Dimens.LargeSpacing,
 
             ),

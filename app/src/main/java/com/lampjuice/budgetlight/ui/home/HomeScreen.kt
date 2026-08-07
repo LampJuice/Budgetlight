@@ -43,6 +43,8 @@ fun HomeScreen(
             contentPadding = PaddingValues(
                 top = paddingValues.calculateTopPadding(),
                 bottom = paddingValues.calculateBottomPadding() + Dimens.FabBottomPadding,
+                start = Dimens.CardCorner,
+                end = Dimens.CardCorner,
             ),
             verticalArrangement = Arrangement.spacedBy(Dimens.ItemSpacing),
         ) {
