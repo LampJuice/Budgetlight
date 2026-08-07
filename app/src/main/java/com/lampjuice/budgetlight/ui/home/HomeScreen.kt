@@ -20,7 +20,6 @@ import com.lampjuice.budgetlight.ui.home.components.BudgetSummaryCard
 import com.lampjuice.budgetlight.ui.home.components.CategorySection
 import com.lampjuice.budgetlight.ui.home.components.GreetingSection
 import com.lampjuice.budgetlight.ui.home.components.RecentTransactionSection
-import com.lampjuice.budgetlight.ui.loadingscreen.LoadingScreen
 import com.lampjuice.budgetlight.ui.theme.Dimens
 
 @Composable

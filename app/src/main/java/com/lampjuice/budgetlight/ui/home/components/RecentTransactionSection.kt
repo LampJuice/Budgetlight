@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -28,7 +29,7 @@ fun RecentTransactionSection(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Text(
-                text = "Последние транзакции",
+                text = "Последние операции",
                 style = MaterialTheme.typography.titleLarge,
                 modifier = Modifier.weight(1f),
             )
@@ -39,8 +40,12 @@ fun RecentTransactionSection(
                 color = MaterialTheme.colorScheme.primary,
             )
         }
-        transactions.forEach { transaction ->
+        transactions.forEachIndexed { index, transaction ->
             TransactionItem(transaction = transaction)
+
+            if (index != transactions.lastIndex) {
+                HorizontalDivider()
+            }
         }
     }
 }

@@ -8,6 +8,7 @@ import com.lampjuice.budgetlight.domain.usecase.InitializeUserUseCase
 import com.lampjuice.budgetlight.domain.usecase.ObserveBudgetCategoryInfoUseCase
 import com.lampjuice.budgetlight.domain.usecase.ObserveCurrentAccountUseCase
 import com.lampjuice.budgetlight.domain.usecase.ObserveCurrentBudgetUseCase
+import com.lampjuice.budgetlight.domain.usecase.ObserveTransactionInfoUseCase
 import com.lampjuice.budgetlight.domain.usecase.ObserveTransactionsUseCase
 import com.lampjuice.budgetlight.ui.home.model.BudgetSummaryUi
 import com.lampjuice.budgetlight.ui.mapper.toUi
@@ -29,6 +30,7 @@ class HomeViewModel @Inject constructor(
     private val observeCurrentBudgetUseCase: ObserveCurrentBudgetUseCase,
     private val initializeUserUseCase: InitializeUserUseCase,
     private val observeBudgetCategoryInfoUseCase: ObserveBudgetCategoryInfoUseCase,
+    private val observeTransactionInfoUseCase: ObserveTransactionInfoUseCase,
 ) : ViewModel() {
     private val _state = MutableStateFlow(HomeState())
     val state = _state.asStateFlow()
@@ -52,6 +54,14 @@ class HomeViewModel @Inject constructor(
                         observeTransactionsUseCase(account.id)
                     }
                 }
+            val transactionsInfoFlow = accountFlow
+                .flatMapLatest { account ->
+                    if (account == null) {
+                        flowOf(emptyList())
+                    } else {
+                        observeTransactionInfoUseCase(account.id)
+                    }
+                }
             val budgetCategoriesFlow = combine(
                 budgetFlow,
                 accountFlow,
@@ -67,14 +77,15 @@ class HomeViewModel @Inject constructor(
             combine(
                 budgetFlow,
                 transactionsFlow,
+                transactionsInfoFlow,
                 budgetCategoriesFlow,
 
-            ) { budget, transactions, categories ->
+            ) { budget, transactions, transactionsInfo, categories ->
                 val balance = calculateBalanceUseCase(transactions)
                 HomeState(
                     budget = budget?.let { createBudgetSummary(balance) },
                     categories = categories.map { it.toUi() },
-                    recentTransactions = transactions
+                    recentTransactions = transactionsInfo
                         .take(5)
                         .map { it.toUi() },
                     isLoading = false,

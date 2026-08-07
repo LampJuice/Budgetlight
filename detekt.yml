@@ -22,6 +22,10 @@ complexity:
   TooManyFunctions:
     active: false
 
+  LongParameterList:
+    active: true
+    constructorThreshold: 8
+
 naming:
   FunctionNaming:
     active: false

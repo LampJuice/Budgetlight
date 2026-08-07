@@ -23,7 +23,7 @@ fun GreetingSection(
             .padding(
                 vertical = Dimens.ItemSpacing,
 
-                ),
+            ),
     ) {
         Text(
             text = "Добро пожаловать \uD83D\uDC4B",

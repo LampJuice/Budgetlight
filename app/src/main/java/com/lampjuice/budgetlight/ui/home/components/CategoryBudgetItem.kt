@@ -22,7 +22,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import com.lampjuice.budgetlight.domain.model.CategoryIcon
 import com.lampjuice.budgetlight.ui.home.model.CategoryBudgetUi
 import com.lampjuice.budgetlight.ui.mapper.toImageVector
@@ -48,7 +47,7 @@ fun CategoryBudgetItem(
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
-            ){
+            ) {
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.spacedBy(Dimens.ItemSpacing),
@@ -84,11 +83,11 @@ fun CategoryBudgetItem(
                         .fillMaxWidth()
                         .height(Dimens.SmallProgressBarHeight),
                     color =
-                        if (category.isOverBudget) {
-                            MaterialTheme.colorScheme.error
-                        } else {
-                            MaterialTheme.colorScheme.primary
-                        },
+                    if (category.isOverBudget) {
+                        MaterialTheme.colorScheme.error
+                    } else {
+                        MaterialTheme.colorScheme.primary
+                    },
 
                 )
             } else {
@@ -97,7 +96,7 @@ fun CategoryBudgetItem(
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
 
-                    )
+                )
             }
         }
     }

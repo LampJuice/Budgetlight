@@ -4,22 +4,20 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AccountBalanceWallet
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.lampjuice.budgetlight.domain.model.CategoryIcon
 import com.lampjuice.budgetlight.domain.model.TransactionType
 import com.lampjuice.budgetlight.ui.components.MoneyText
 import com.lampjuice.budgetlight.ui.home.model.TransactionUi
+import com.lampjuice.budgetlight.ui.mapper.toImageVector
 import com.lampjuice.budgetlight.ui.theme.Dimens
 import com.lampjuice.budgetlight.ui.theme.GreenIncome
 import com.lampjuice.budgetlight.ui.theme.RedExpense
@@ -40,20 +38,17 @@ fun TransactionItem(
     }
     Row(
         modifier = modifier
-            .fillMaxWidth()
-            .padding(vertical = Dimens.ItemSpacing),
+            .fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        Surface(
-            shape = CircleShape,
-            color = MaterialTheme.colorScheme.surfaceVariant,
-        ) {
-            Icon(
-                imageVector = Icons.Default.AccountBalanceWallet,
-                contentDescription = null,
-                modifier = Modifier.padding(Dimens.IconPadding),
-            )
-        }
+        Icon(
+            imageVector = transaction.categoryIcon.toImageVector(),
+            contentDescription = null,
+            modifier = Modifier
+                .size(Dimens.IconSize),
+            tint = MaterialTheme.colorScheme.primary,
+        )
+
         Spacer(
             modifier = Modifier.width(Dimens.ItemSpacing),
         )
@@ -87,8 +82,9 @@ private fun TransactionItemPreview(
         title = "Перевод",
         amount = 75_005,
         date = "Today",
-        categoryId = 8,
         type = TransactionType.INCOME,
+        categoryName = "Заплата",
+        categoryIcon = CategoryIcon.SALARY,
     ),
 ) {
     TransactionItem(transaction = transaction)
@@ -101,8 +97,9 @@ private fun TransactionItemPreview2(
         title = "ПРодукты",
         amount = 800,
         date = "Today",
-        categoryId = 8,
         type = TransactionType.EXPENSE,
+        categoryName = "ЕДа",
+        categoryIcon = CategoryIcon.FOOD,
     ),
 ) {
     TransactionItem(transaction = transaction)

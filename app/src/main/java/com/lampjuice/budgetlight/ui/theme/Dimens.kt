@@ -23,4 +23,6 @@ object Dimens {
 
     val SmallProgressBarHeight = 5.dp
     val CategoryIconSize = 44.dp
+
+    val IconSize = 24.dp
 }
