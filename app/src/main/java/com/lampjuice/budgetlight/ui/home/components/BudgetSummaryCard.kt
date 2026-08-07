@@ -49,6 +49,11 @@ fun BudgetSummaryCard(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(Dimens.LargeSpacing),
+                color = if (budget.progress >= 1f) {
+                    MaterialTheme.colorScheme.error
+                } else {
+                    MaterialTheme.colorScheme.primary
+                },
             )
             Column(
                 verticalArrangement = Arrangement.spacedBy(Dimens.ItemSpacing),

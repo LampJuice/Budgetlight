@@ -16,7 +16,6 @@ import jakarta.inject.Inject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
@@ -92,12 +91,19 @@ class HomeViewModel @Inject constructor(
     ): BudgetSummaryUi {
         val remaining = (balance.total - balance.expense)
             .coerceAtLeast(0)
+        val progress =
+            if (balance.total == 0L) {
+                0f
+            } else {
+                (balance.expense.toFloat() / balance.total)
+                    .coerceIn(0f, 1f)
+            }
 
         return BudgetSummaryUi(
             budget = balance.total,
             spent = balance.expense,
             remaining = remaining,
-            progress = 0.32f,
+            progress = progress,
         )
     }
 }

@@ -5,8 +5,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Category
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
@@ -17,7 +15,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.lampjuice.budgetlight.domain.model.CategoryIcon
 import com.lampjuice.budgetlight.ui.home.model.CategoryBudgetUi
+import com.lampjuice.budgetlight.ui.mapper.toImageVector
 import com.lampjuice.budgetlight.ui.theme.BudgetLightTheme
 import com.lampjuice.budgetlight.ui.theme.Dimens
 import com.lampjuice.budgetlight.ui.util.formatMoney
@@ -42,8 +42,8 @@ fun CategoryBudgetItem(
                 horizontalArrangement = Arrangement.spacedBy(Dimens.ItemSpacing),
             ) {
                 Icon(
-                    imageVector = Icons.Default.Category,
-                    contentDescription = "Категория",
+                    imageVector = category.icon.toImageVector(),
+                    contentDescription = category.title,
                 )
                 Text(
                     text = category.title,
@@ -85,7 +85,7 @@ private fun CategoryBudgetItemPreview() {
         CategoryBudgetItem(
             category = CategoryBudgetUi(
                 id = 1,
-                icon = "FOOD",
+                icon = CategoryIcon.FOOD,
                 title = "Еда",
                 spent = 18_400,
                 limit = 25_000,
@@ -101,7 +101,7 @@ private fun CategoryBudgetItemOverBudgetPreview() {
         CategoryBudgetItem(
             category = CategoryBudgetUi(
                 id = 2,
-                icon = "HOME",
+                icon = CategoryIcon.HOME,
                 title = "ЖКХ",
                 spent = 10_500,
                 limit = 8_000,

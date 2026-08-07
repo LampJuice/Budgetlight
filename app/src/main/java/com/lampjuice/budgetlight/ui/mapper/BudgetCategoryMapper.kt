@@ -5,7 +5,7 @@ import com.lampjuice.budgetlight.ui.home.model.CategoryBudgetUi
 
 fun BudgetCategoryInfo.toUi(): CategoryBudgetUi = CategoryBudgetUi(
     id = categoryId,
-    icon = icon.name,
+    icon = icon,
     title = name,
     spent = spentAmount,
     limit = plannedAmount,

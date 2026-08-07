@@ -1,8 +1,10 @@
 package com.lampjuice.budgetlight.ui.home.model
 
+import com.lampjuice.budgetlight.domain.model.CategoryIcon
+
 data class CategoryBudgetUi(
     val id: Long,
-    val icon: String,
+    val icon: CategoryIcon,
     val title: String,
     val spent: Long,
     val limit: Long,

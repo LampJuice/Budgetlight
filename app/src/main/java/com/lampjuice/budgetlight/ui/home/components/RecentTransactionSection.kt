@@ -1,5 +1,6 @@
 package com.lampjuice.budgetlight.ui.home.components
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -34,6 +35,7 @@ fun RecentTransactionSection(
                 modifier = Modifier.weight(1f),
             )
             Text(
+                modifier = Modifier.clickable { },
                 text = "Все",
                 style = MaterialTheme.typography.labelLarge,
                 color = MaterialTheme.colorScheme.primary,
