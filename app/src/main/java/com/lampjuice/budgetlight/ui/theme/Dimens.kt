@@ -9,6 +9,8 @@ object Dimens {
 
     val ItemSpacing = 12.dp
 
+    val ExtraLargeSpacing = 28.dp
+
     val LargeSpacing = 24.dp
 
     val CardCorner = 20.dp

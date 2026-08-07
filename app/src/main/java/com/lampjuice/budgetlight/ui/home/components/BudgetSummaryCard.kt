@@ -30,7 +30,7 @@ fun BudgetSummaryCard(
 
     ) {
         Column(
-            modifier = Modifier.padding(Dimens.LargeSpacing),
+            modifier = Modifier.padding(Dimens.ExtraLargeSpacing),
             verticalArrangement = Arrangement.spacedBy(Dimens.CardCorner),
         ) {
             Text(
