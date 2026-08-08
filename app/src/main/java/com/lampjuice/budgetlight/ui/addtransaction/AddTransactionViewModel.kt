@@ -2,6 +2,7 @@ package com.lampjuice.budgetlight.ui.addtransaction
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.lampjuice.budgetlight.domain.usecase.AddTransactionUseCase
 import com.lampjuice.budgetlight.domain.usecase.InitializeUserUseCase
 import com.lampjuice.budgetlight.domain.usecase.ObserveCategoriesUseCase
 import com.lampjuice.budgetlight.domain.usecase.ObserveCurrentAccountUseCase
@@ -15,6 +16,7 @@ import kotlinx.coroutines.launch
 @HiltViewModel
 class AddTransactionViewModel @Inject constructor(
     private val initializeUserUseCase: InitializeUserUseCase,
+    private val addTransactionUseCase: AddTransactionUseCase,
     private val observeCurrentAccountUseCase: ObserveCurrentAccountUseCase,
     private val observeCategoriesUseCase: ObserveCategoriesUseCase,
 ) : ViewModel() {
