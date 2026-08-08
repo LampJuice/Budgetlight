@@ -51,7 +51,7 @@ fun AddTransactionScreen(
                     TransactionType.entries.forEachIndexed { index, type ->
                         SegmentedButton(
                             selected = state.type == type,
-                            onClick = {},
+                            onClick = { viewModel.onTypeChanged(type) },
                             shape = SegmentedButtonDefaults.itemShape(
                                 index = index,
                                 count = TransactionType.entries.size,
@@ -71,7 +71,7 @@ fun AddTransactionScreen(
             item {
                 OutlinedTextField(
                     value = state.title,
-                    onValueChange = {},
+                    onValueChange = { viewModel.onTitleChanged(it) },
                     modifier = Modifier
                         .fillMaxWidth(),
                     placeholder = {
@@ -87,7 +87,7 @@ fun AddTransactionScreen(
             item {
                 OutlinedTextField(
                     value = state.amount,
-                    onValueChange = {},
+                    onValueChange = { viewModel.onAmountChanged(it) },
                     modifier = Modifier
                         .fillMaxWidth(),
                     placeholder = {
