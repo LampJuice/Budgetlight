@@ -137,7 +137,7 @@ fun AddTransactionScreen(
 
             item {
                 Button(
-                    onClick = {},
+                    onClick = viewModel::onSave,
                     modifier = Modifier
                         .fillMaxWidth(),
                     enabled = !state.isSaving,

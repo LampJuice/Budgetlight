@@ -2,7 +2,9 @@ package com.lampjuice.budgetlight.ui.addtransaction
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.lampjuice.budgetlight.domain.model.Transaction
 import com.lampjuice.budgetlight.domain.model.TransactionType
+import com.lampjuice.budgetlight.domain.usecase.AddTransactionUseCase
 import com.lampjuice.budgetlight.domain.usecase.InitializeUserUseCase
 import com.lampjuice.budgetlight.domain.usecase.ObserveCategoriesUseCase
 import com.lampjuice.budgetlight.domain.usecase.ObserveCurrentAccountUseCase
@@ -17,7 +19,7 @@ import java.time.LocalDate
 @HiltViewModel
 class AddTransactionViewModel @Inject constructor(
     private val initializeUserUseCase: InitializeUserUseCase,
-    // private val addTransactionUseCase: AddTransactionUseCase,
+    private val addTransactionUseCase: AddTransactionUseCase,
     private val observeCurrentAccountUseCase: ObserveCurrentAccountUseCase,
     private val observeCategoriesUseCase: ObserveCategoriesUseCase,
 ) : ViewModel() {
@@ -81,4 +83,61 @@ class AddTransactionViewModel @Inject constructor(
             it.copy(date = date)
         }
     }
+
+    fun onSave() {
+        val transaction = createTransaction(state.value) ?: return
+
+        viewModelScope.launch {
+            _state.update {
+                it.copy(isSaving = true)
+            }
+
+            addTransactionUseCase(transaction)
+            _state.update {
+                it.copy(isSaving = false)
+            }
+        }
+    }
+
+    private fun createTransaction(state: AddTransactionState): Transaction? {
+        val accountId = currentAccountId
+        val categoryId = state.selectedCategoryId
+        val amount = state.amount.toLongOrNull()
+
+        return if (
+            accountId != null &&
+            categoryId != null &&
+            amount != null
+
+        ) {
+            createTransactionOrNull(
+                state = state,
+                accountId = accountId,
+                categoryId = categoryId,
+                amount = amount,
+            )
+        } else {
+            null
+        }
+    }
+}
+
+private fun createTransactionOrNull(
+    state: AddTransactionState,
+    accountId: Long,
+    categoryId: Long,
+    amount: Long,
+): Transaction? {
+    if (state.title.isBlank() || amount <= 0) {
+        return null
+    }
+    return Transaction(
+        id = 0,
+        accountId = accountId,
+        categoryId = categoryId,
+        type = state.type,
+        title = state.title.trim(),
+        amount = amount,
+        date = state.date,
+    )
 }
