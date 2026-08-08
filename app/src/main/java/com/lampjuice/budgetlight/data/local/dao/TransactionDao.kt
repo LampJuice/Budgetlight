@@ -13,7 +13,7 @@ interface TransactionDao {
         """
             SELECT * FROM transactions
             WHERE accountId = :accountId
-            ORDER BY date DESC
+            ORDER BY date DESC, id DESC
         """,
     )
     fun observeTransactions(accountId: Long): Flow<List<TransactionEntity>>
@@ -36,7 +36,7 @@ interface TransactionDao {
             WHERE accountId = :accountId
             AND categoryId = :categoryId
             AND type = 'EXPENSE'
-            ORDER BY date DESC
+            ORDER BY date DESC, id DESC
         """,
     )
     fun observeTransactionByCategory(accountId: Long, categoryId: Long): Flow<List<TransactionEntity>>
@@ -47,7 +47,7 @@ interface TransactionDao {
             FROM transactions
             WHERE accountId = :accountId
             AND type = 'EXPENSE'
-            ORDER BY date DESC
+            ORDER BY date DESC, id DESC
         """,
     )
     fun observeExpenses(accountId: Long): Flow<List<TransactionEntity>>
