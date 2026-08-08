@@ -10,7 +10,9 @@ import com.lampjuice.budgetlight.domain.usecase.ObserveCategoriesUseCase
 import com.lampjuice.budgetlight.domain.usecase.ObserveCurrentAccountUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jakarta.inject.Inject
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -23,6 +25,10 @@ class AddTransactionViewModel @Inject constructor(
     private val observeCurrentAccountUseCase: ObserveCurrentAccountUseCase,
     private val observeCategoriesUseCase: ObserveCategoriesUseCase,
 ) : ViewModel() {
+
+    private val _events = MutableSharedFlow<AddTransactionEvent>()
+    val events = _events.asSharedFlow()
+
     private val _state = MutableStateFlow(AddTransactionState())
     val state = _state.asStateFlow()
 
@@ -96,6 +102,7 @@ class AddTransactionViewModel @Inject constructor(
             _state.update {
                 it.copy(isSaving = false)
             }
+            _events.emit(AddTransactionEvent.TransactionSaved)
         }
     }
 
@@ -140,4 +147,8 @@ private fun createTransactionOrNull(
         amount = amount,
         date = state.date,
     )
+}
+
+sealed interface AddTransactionEvent {
+    data object TransactionSaved : AddTransactionEvent
 }
