@@ -5,29 +5,56 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Button
-import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.SegmentedButton
 import androidx.compose.material3.SegmentedButtonDefaults
 import androidx.compose.material3.SingleChoiceSegmentedButtonRow
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.lampjuice.budgetlight.domain.model.TransactionType
+import com.lampjuice.budgetlight.ui.addtransaction.components.CategoryDropdown
+import com.lampjuice.budgetlight.ui.addtransaction.components.DatePickerField
 import com.lampjuice.budgetlight.ui.components.scaffold.BudgetScaffold
 import com.lampjuice.budgetlight.ui.theme.Dimens
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AddTransactionScreen(
+    onBack: () -> Unit,
     viewModel: AddTransactionViewModel = hiltViewModel(),
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
 
-    BudgetScaffold { paddingValues ->
+    BudgetScaffold(
+        topBar = {
+            TopAppBar(
+                title = {
+                    Text("Добавить операцию")
+                },
+                navigationIcon = {
+                    IconButton(onClick = onBack) {
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                            contentDescription = "Назад",
+                        )
+                    }
+                },
+            )
+        },
+
+    ) { paddingValues ->
+
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
             contentPadding = PaddingValues(
@@ -38,12 +65,6 @@ fun AddTransactionScreen(
             ),
             verticalArrangement = Arrangement.spacedBy(Dimens.ItemSpacing),
         ) {
-            item {
-                Text(
-                    text = "Добавить операцию",
-                    style = MaterialTheme.typography.headlineSmall,
-                )
-            }
             item {
                 SingleChoiceSegmentedButtonRow(
                     modifier = Modifier.fillMaxWidth(),
@@ -97,6 +118,20 @@ fun AddTransactionScreen(
                         Text(text = "Сумма")
                     },
                     singleLine = true,
+                )
+            }
+            item {
+                CategoryDropdown(
+                    categories = state.categories.filter { it.type == state.type },
+                    selectedCategoryId = state.selectedCategoryId,
+                    onCategoryChanged = viewModel::onCategoryChanged,
+                )
+            }
+
+            item {
+                DatePickerField(
+                    date = state.date,
+                    onDateSelected = viewModel::onDateChanged,
                 )
             }
 

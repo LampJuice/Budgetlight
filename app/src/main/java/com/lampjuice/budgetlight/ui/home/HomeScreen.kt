@@ -24,13 +24,14 @@ import com.lampjuice.budgetlight.ui.theme.Dimens
 
 @Composable
 fun HomeScreen(
+    onAddNewTransaction: () -> Unit,
     viewModel: HomeViewModel = hiltViewModel(),
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
     BudgetScaffold(
         floatingActionButton = {
             FloatingActionButton(
-                onClick = { /*TODO*/ },
+                onClick = onAddNewTransaction,
             ) {
                 Icon(
                     imageVector = Icons.Default.Add,

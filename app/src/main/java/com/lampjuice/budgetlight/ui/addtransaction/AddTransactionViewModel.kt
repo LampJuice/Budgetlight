@@ -3,7 +3,6 @@ package com.lampjuice.budgetlight.ui.addtransaction
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lampjuice.budgetlight.domain.model.TransactionType
-import com.lampjuice.budgetlight.domain.usecase.AddTransactionUseCase
 import com.lampjuice.budgetlight.domain.usecase.InitializeUserUseCase
 import com.lampjuice.budgetlight.domain.usecase.ObserveCategoriesUseCase
 import com.lampjuice.budgetlight.domain.usecase.ObserveCurrentAccountUseCase
@@ -18,7 +17,7 @@ import java.time.LocalDate
 @HiltViewModel
 class AddTransactionViewModel @Inject constructor(
     private val initializeUserUseCase: InitializeUserUseCase,
-    private val addTransactionUseCase: AddTransactionUseCase,
+    // private val addTransactionUseCase: AddTransactionUseCase,
     private val observeCurrentAccountUseCase: ObserveCurrentAccountUseCase,
     private val observeCategoriesUseCase: ObserveCategoriesUseCase,
 ) : ViewModel() {
@@ -52,7 +51,10 @@ class AddTransactionViewModel @Inject constructor(
 
     fun onTypeChanged(type: TransactionType) {
         _state.update {
-            it.copy(type = type)
+            it.copy(
+                type = type,
+                selectedCategoryId = null,
+            )
         }
     }
 
