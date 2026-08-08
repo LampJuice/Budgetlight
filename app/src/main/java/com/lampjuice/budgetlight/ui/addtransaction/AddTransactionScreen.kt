@@ -5,12 +5,14 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.SegmentedButton
 import androidx.compose.material3.SegmentedButtonDefaults
@@ -21,6 +23,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.lampjuice.budgetlight.domain.model.TransactionType
@@ -36,6 +39,9 @@ fun AddTransactionScreen(
     viewModel: AddTransactionViewModel = hiltViewModel(),
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
+    val isFormValid = state.title.isNotBlank() &&
+        state.amount.toLongOrNull()?.let { it > 0 } == true &&
+        state.selectedCategoryId != null
 
     LaunchedEffect(Unit) {
         viewModel.events.collect { event ->
@@ -105,7 +111,10 @@ fun AddTransactionScreen(
                     modifier = Modifier
                         .fillMaxWidth(),
                     placeholder = {
-                        Text(text = "Зарплата")
+                        Text(
+                            text = "Зарплата",
+                            color = MaterialTheme.colorScheme.outline,
+                        )
                     },
                     label = {
                         Text(text = "Операция")
@@ -121,11 +130,20 @@ fun AddTransactionScreen(
                     modifier = Modifier
                         .fillMaxWidth(),
                     placeholder = {
-                        Text(text = "10000")
+                        Text(
+                            text = "10 000",
+                            color = MaterialTheme.colorScheme.outline,
+                        )
+                    },
+                    suffix = {
+                        Text("₽")
                     },
                     label = {
                         Text(text = "Сумма")
                     },
+                    keyboardOptions = KeyboardOptions(
+                        keyboardType = KeyboardType.Number,
+                    ),
                     singleLine = true,
                 )
             }
@@ -149,7 +167,7 @@ fun AddTransactionScreen(
                     onClick = viewModel::onSave,
                     modifier = Modifier
                         .fillMaxWidth(),
-                    enabled = !state.isSaving,
+                    enabled = isFormValid && !state.isSaving,
 
                 ) {
                     Text("Добавить")
