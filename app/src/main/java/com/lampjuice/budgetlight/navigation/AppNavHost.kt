@@ -6,6 +6,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.lampjuice.budgetlight.ui.addtransaction.AddTransactionScreen
 import com.lampjuice.budgetlight.ui.home.HomeScreen
+import com.lampjuice.budgetlight.ui.transactions.TransactionsScreen
 
 @Composable
 fun AppNavHost() {
@@ -18,12 +19,22 @@ fun AppNavHost() {
                 onAddNewTransaction = {
                     navController.navigate(AppRoutes.ADD_TRANSACTION)
                 },
+                onShowAllTransactions = {
+                    navController.navigate(AppRoutes.TRANSACTIONS)
+                },
             )
         }
         composable(
             route = AppRoutes.ADD_TRANSACTION,
         ) {
             AddTransactionScreen(
+                onBack = navController::popBackStack,
+            )
+        }
+        composable(
+            route = AppRoutes.TRANSACTIONS,
+        ) {
+            TransactionsScreen(
                 onBack = navController::popBackStack,
             )
         }

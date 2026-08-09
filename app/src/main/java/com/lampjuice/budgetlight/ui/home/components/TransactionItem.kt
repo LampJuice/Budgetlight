@@ -79,6 +79,7 @@ fun TransactionItem(
 @Composable
 private fun TransactionItemPreview(
     transaction: TransactionUi = TransactionUi(
+        id = 0,
         title = "Перевод",
         amount = 75_005,
         date = "Today",
@@ -94,6 +95,7 @@ private fun TransactionItemPreview(
 @Composable
 private fun TransactionItemPreview2(
     transaction: TransactionUi = TransactionUi(
+        id = 2,
         title = "ПРодукты",
         amount = 800,
         date = "Today",

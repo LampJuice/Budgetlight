@@ -25,6 +25,7 @@ import com.lampjuice.budgetlight.ui.theme.Dimens
 @Composable
 fun HomeScreen(
     onAddNewTransaction: () -> Unit,
+    onShowAllTransactions: () -> Unit,
     viewModel: HomeViewModel = hiltViewModel(),
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
@@ -73,6 +74,7 @@ fun HomeScreen(
             item {
                 RecentTransactionSection(
                     transactions = state.recentTransactions,
+                    onShowAllClick = onShowAllTransactions,
                 )
             }
         }

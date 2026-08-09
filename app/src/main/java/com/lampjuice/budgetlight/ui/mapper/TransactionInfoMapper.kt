@@ -4,6 +4,7 @@ import com.lampjuice.budgetlight.domain.model.TransactionInfo
 import com.lampjuice.budgetlight.ui.home.model.TransactionUi
 
 fun TransactionInfo.toUi(): TransactionUi = TransactionUi(
+    id = id,
     title = title,
     amount = amount,
     date = date.toString(),
