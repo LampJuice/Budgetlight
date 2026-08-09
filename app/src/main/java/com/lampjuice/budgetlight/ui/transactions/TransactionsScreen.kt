@@ -10,6 +10,7 @@ import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
@@ -20,6 +21,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.lampjuice.budgetlight.ui.components.scaffold.BudgetScaffold
 import com.lampjuice.budgetlight.ui.home.components.TransactionItem
 import com.lampjuice.budgetlight.ui.theme.Dimens
+import com.lampjuice.budgetlight.ui.util.toTransactionDateString
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -28,6 +30,10 @@ fun TransactionsScreen(
     viewModel: TransactionsViewModel = hiltViewModel(),
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
+
+    val groupedTransactions = state.transactions
+        .sortedByDescending { it.date }
+        .groupBy { it.date }
 
     BudgetScaffold(
         topBar = {
@@ -56,12 +62,21 @@ fun TransactionsScreen(
             ),
             verticalArrangement = Arrangement.spacedBy(Dimens.ItemSpacing),
         ) {
-            items(
-                items = state.transactions,
-                key = { it.id },
+            groupedTransactions.forEach { (date, transactions) ->
+                item(key = "header_$date") {
+                    Text(
+                        text = date.toTransactionDateString(),
+                        style = MaterialTheme.typography.titleMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                }
+                items(
+                    items = transactions,
+                    key = { it.id },
 
-            ) { transaction ->
-                TransactionItem(transaction = transaction)
+                ) { transaction ->
+                    TransactionItem(transaction = transaction)
+                }
             }
         }
     }

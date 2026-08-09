@@ -21,6 +21,8 @@ import com.lampjuice.budgetlight.ui.mapper.toImageVector
 import com.lampjuice.budgetlight.ui.theme.Dimens
 import com.lampjuice.budgetlight.ui.theme.GreenIncome
 import com.lampjuice.budgetlight.ui.theme.RedExpense
+import com.lampjuice.budgetlight.ui.util.toTransactionDateString
+import java.time.LocalDate
 
 @Composable
 fun TransactionItem(
@@ -61,7 +63,7 @@ fun TransactionItem(
             )
 
             Text(
-                text = transaction.date,
+                text = transaction.date.toTransactionDateString(),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
@@ -82,7 +84,7 @@ private fun TransactionItemPreview(
         id = 0,
         title = "Перевод",
         amount = 75_005,
-        date = "Today",
+        date = LocalDate.now(),
         type = TransactionType.INCOME,
         categoryName = "Заплата",
         categoryIcon = CategoryIcon.SALARY,
@@ -98,7 +100,7 @@ private fun TransactionItemPreview2(
         id = 2,
         title = "ПРодукты",
         amount = 800,
-        date = "Today",
+        date = LocalDate.now(),
         type = TransactionType.EXPENSE,
         categoryName = "ЕДа",
         categoryIcon = CategoryIcon.FOOD,
