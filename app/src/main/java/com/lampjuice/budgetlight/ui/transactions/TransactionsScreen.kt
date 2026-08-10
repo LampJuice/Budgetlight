@@ -25,6 +25,7 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.lampjuice.budgetlight.ui.components.scaffold.BudgetScaffold
+import com.lampjuice.budgetlight.ui.components.topbar.BudgetTopAppBar
 import com.lampjuice.budgetlight.ui.home.components.TransactionItem
 import com.lampjuice.budgetlight.ui.theme.Dimens
 import com.lampjuice.budgetlight.ui.util.toTransactionDateString
@@ -44,18 +45,9 @@ fun TransactionsScreen(
 
     BudgetScaffold(
         topBar = {
-            TopAppBar(
-                title = {
-                    Text("Операции")
-                },
-                navigationIcon = {
-                    IconButton(onClick = onBack) {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = "Назад",
-                        )
-                    }
-                },
+            BudgetTopAppBar(
+                title = "Операции",
+                onBack = onBack,
             )
         },
     ) { paddingValues ->

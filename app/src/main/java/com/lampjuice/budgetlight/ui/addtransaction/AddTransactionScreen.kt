@@ -30,6 +30,7 @@ import com.lampjuice.budgetlight.domain.model.TransactionType
 import com.lampjuice.budgetlight.ui.addtransaction.components.CategoryDropdown
 import com.lampjuice.budgetlight.ui.addtransaction.components.DatePickerField
 import com.lampjuice.budgetlight.ui.components.scaffold.BudgetScaffold
+import com.lampjuice.budgetlight.ui.components.topbar.BudgetTopAppBar
 import com.lampjuice.budgetlight.ui.theme.Dimens
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -53,18 +54,9 @@ fun AddTransactionScreen(
 
     BudgetScaffold(
         topBar = {
-            TopAppBar(
-                title = {
-                    Text("Добавить операцию")
-                },
-                navigationIcon = {
-                    IconButton(onClick = onBack) {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = "Назад",
-                        )
-                    }
-                },
+            BudgetTopAppBar(
+                title = "Добавить операцию",
+                onBack = onBack,
             )
         },
 
