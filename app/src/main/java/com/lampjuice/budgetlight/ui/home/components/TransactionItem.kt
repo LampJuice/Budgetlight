@@ -1,5 +1,6 @@
 package com.lampjuice.budgetlight.ui.home.components
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -40,6 +41,7 @@ fun TransactionItem(
     }
     Row(
         modifier = modifier
+            .background(MaterialTheme.colorScheme.background)
             .fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically,
     ) {

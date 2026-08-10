@@ -25,4 +25,6 @@ object Dimens {
     val CategoryIconSize = 44.dp
 
     val IconSize = 24.dp
+
+    val SwipeActionWidth = 72.dp
 }

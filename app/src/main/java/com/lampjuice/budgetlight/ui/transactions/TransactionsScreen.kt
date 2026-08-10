@@ -17,6 +17,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.lampjuice.budgetlight.ui.components.scaffold.BudgetScaffold
 import com.lampjuice.budgetlight.ui.components.segmented.BudgetSegmentedButtons
+import com.lampjuice.budgetlight.ui.components.swipe.SwipeToDeleteItem
 import com.lampjuice.budgetlight.ui.components.topbar.BudgetTopAppBar
 import com.lampjuice.budgetlight.ui.home.components.TransactionItem
 import com.lampjuice.budgetlight.ui.theme.Dimens
@@ -87,7 +88,9 @@ fun TransactionsScreen(
                         key = { it.id },
 
                     ) { transaction ->
-                        TransactionItem(transaction = transaction)
+                        SwipeToDeleteItem(
+                            onDelete = { viewModel.onDeleteTransaction(transaction.id) },
+                        ) { TransactionItem(transaction = transaction) }
                     }
                 }
             }
