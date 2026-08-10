@@ -38,4 +38,6 @@
     <string name="transaction_delete_desc">Удалить операцию?</string>
     <string name="transaction_delete_text">Операция будет удалена без возможности восстановления.</string>
     <string name="transaction_cancel">Отмена</string>
+    <string name="no_transactions">Операций пока нет</string>
+    <string name="add_first_transaction">Добавьте операцию,\nчтобы начать вести учёт финансов</string>
 </resources>

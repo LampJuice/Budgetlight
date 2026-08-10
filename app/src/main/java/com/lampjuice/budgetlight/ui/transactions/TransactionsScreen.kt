@@ -27,6 +27,7 @@ import com.lampjuice.budgetlight.ui.util.toTransactionDateString
 @Composable
 fun TransactionsScreen(
     onBack: () -> Unit,
+    onAddToTransaction: () -> Unit,
     viewModel: TransactionsViewModel = hiltViewModel(),
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
@@ -75,22 +76,28 @@ fun TransactionsScreen(
                 ),
                 verticalArrangement = Arrangement.spacedBy(Dimens.ItemSpacing),
             ) {
-                groupedTransactions.forEach { (date, transactions) ->
-                    item(key = "header_$date") {
-                        Text(
-                            text = date.toTransactionDateString(),
-                            style = MaterialTheme.typography.titleMedium,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        )
+                if (groupedTransactions.isEmpty()) {
+                    item {
+                        EmptyTransactionState(onAddTransaction = onAddToTransaction)
                     }
-                    items(
-                        items = transactions,
-                        key = { it.id },
+                } else {
+                    groupedTransactions.forEach { (date, transactions) ->
+                        item(key = "header_$date") {
+                            Text(
+                                text = date.toTransactionDateString(),
+                                style = MaterialTheme.typography.titleMedium,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            )
+                        }
+                        items(
+                            items = transactions,
+                            key = { it.id },
 
-                    ) { transaction ->
-                        SwipeToDeleteItem(
-                            onDelete = { viewModel.onDeleteTransaction(transaction.id) },
-                        ) { TransactionItem(transaction = transaction) }
+                        ) { transaction ->
+                            SwipeToDeleteItem(
+                                onDelete = { viewModel.onDeleteTransaction(transaction.id) },
+                            ) { TransactionItem(transaction = transaction) }
+                        }
                     }
                 }
             }

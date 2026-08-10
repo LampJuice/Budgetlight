@@ -36,6 +36,9 @@ fun AppNavHost() {
         ) {
             TransactionsScreen(
                 onBack = navController::popBackStack,
+                onAddToTransaction = {
+                    navController.navigate(AppRoutes.ADD_TRANSACTION)
+                },
             )
         }
     }
