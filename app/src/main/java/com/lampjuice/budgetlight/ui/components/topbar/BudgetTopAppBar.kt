@@ -16,7 +16,7 @@ fun BudgetTopAppBar(
     title: String,
     onBack: () -> Unit,
     modifier: Modifier = Modifier,
-    ) {
+) {
     TopAppBar(
         modifier = modifier,
         title = {

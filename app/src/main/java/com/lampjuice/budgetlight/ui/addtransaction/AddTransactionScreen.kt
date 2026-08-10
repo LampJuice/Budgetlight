@@ -6,19 +6,11 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.SegmentedButton
-import androidx.compose.material3.SegmentedButtonDefaults
-import androidx.compose.material3.SingleChoiceSegmentedButtonRow
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -30,6 +22,7 @@ import com.lampjuice.budgetlight.domain.model.TransactionType
 import com.lampjuice.budgetlight.ui.addtransaction.components.CategoryDropdown
 import com.lampjuice.budgetlight.ui.addtransaction.components.DatePickerField
 import com.lampjuice.budgetlight.ui.components.scaffold.BudgetScaffold
+import com.lampjuice.budgetlight.ui.components.segmented.BudgetSegmentedButtons
 import com.lampjuice.budgetlight.ui.components.topbar.BudgetTopAppBar
 import com.lampjuice.budgetlight.ui.theme.Dimens
 
@@ -73,27 +66,18 @@ fun AddTransactionScreen(
             verticalArrangement = Arrangement.spacedBy(Dimens.ItemSpacing),
         ) {
             item {
-                SingleChoiceSegmentedButtonRow(
-                    modifier = Modifier.fillMaxWidth(),
-                ) {
-                    TransactionType.entries.forEachIndexed { index, type ->
-                        SegmentedButton(
-                            selected = state.type == type,
-                            onClick = { viewModel.onTypeChanged(type) },
-                            shape = SegmentedButtonDefaults.itemShape(
-                                index = index,
-                                count = TransactionType.entries.size,
-                            ),
-                        ) {
-                            Text(
-                                text = when (type) {
-                                    TransactionType.EXPENSE -> "Расход"
-                                    TransactionType.INCOME -> "Доход"
-                                },
-                            )
+                BudgetSegmentedButtons(
+                    items = TransactionType.entries.toList(),
+                    selectedItem = state.type,
+                    onItemSelected = viewModel::onTypeChanged,
+                    label = { type ->
+                        when (type) {
+                            TransactionType.EXPENSE -> "Расход"
+                            TransactionType.INCOME -> "Доход"
                         }
-                    }
-                }
+                    },
+
+                )
             }
 
             item {
