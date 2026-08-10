@@ -1,3 +1,37 @@
 <resources>
     <string name="app_name">Budetlight</string>
+
+    <!-- Общие -->
+    <string name="back">Назад</string>
+    <string name="expense">Расход</string>
+    <string name="income">Доход</string>
+    <string name="all">Все</string>
+    <string name="today">Сегодня</string>
+    <string name="yesterday">Вчера</string>
+
+    <!-- Загрузка -->
+    <string name="loading_data">Загружаем данные…</string>
+
+    <!-- Добавление операции -->
+    <string name="add_transaction_title">Добавить операцию</string>
+    <string name="transaction_title_hint">Зарплата</string>
+    <string name="transaction_title_label">Операция</string>
+    <string name="amount_label">Сумма</string>
+    <string name="category_label">Категория</string>
+    <string name="date_label">Дата</string>
+    <string name="select_date_desc">Выбрать дату</string>
+    <string name="add_button">Добавить</string>
+
+    <!-- Главный экран -->
+    <string name="welcome_back">Добро пожаловать 👋</string>
+    <string name="current_balance">Текущий баланс</string>
+    <string name="budget_of_month">Бюджет месяца</string>
+    <string name="spent">Потрачено</string>
+    <string name="remaining">Осталось</string>
+    <string name="categories_title">Категории (%d)</string>
+    <string name="recent_transactions">Последние операции</string>
+    <string name="budget_not_set">Бюджет не задан</string>
+
+    <!-- Операции -->
+    <string name="transactions_title">Операции</string>
 </resources>

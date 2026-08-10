@@ -7,7 +7,9 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import com.lampjuice.budgetlight.R
 import com.lampjuice.budgetlight.ui.components.SectionHeader
 
 @Composable
@@ -20,7 +22,7 @@ fun LoadingScreen() {
     ) {
         CircularProgressIndicator()
         SectionHeader(
-            text = "Загружаем данные...",
+            text = stringResource(R.string.loading_data), // Заменено
         )
     }
 }

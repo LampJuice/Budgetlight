@@ -7,6 +7,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import com.lampjuice.budgetlight.R
 import com.lampjuice.budgetlight.ui.home.model.CategoryBudgetUi
 import com.lampjuice.budgetlight.ui.theme.Dimens
 
@@ -21,7 +23,7 @@ fun CategorySection(
         verticalArrangement = Arrangement.spacedBy(Dimens.ItemSpacing),
     ) {
         Text(
-            text = "Категории (${categories.size})",
+            text = stringResource(R.string.categories_title, categories.size), // Заменено (с аргументом)
             style = MaterialTheme.typography.titleLarge,
         )
         categories.forEach { category ->

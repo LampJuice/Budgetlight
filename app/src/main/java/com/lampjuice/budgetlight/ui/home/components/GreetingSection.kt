@@ -9,7 +9,9 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import com.lampjuice.budgetlight.R
 import com.lampjuice.budgetlight.ui.theme.Dimens
 
 @Composable
@@ -26,7 +28,7 @@ fun GreetingSection(
             ),
     ) {
         Text(
-            text = "Добро пожаловать \uD83D\uDC4B",
+            text = stringResource(R.string.welcome_back),
             style = MaterialTheme.typography.headlineSmall,
         )
         Text(

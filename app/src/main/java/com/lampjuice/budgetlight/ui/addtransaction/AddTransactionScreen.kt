@@ -15,9 +15,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource // Добавлено
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.lampjuice.budgetlight.R // Добавлено
 import com.lampjuice.budgetlight.domain.model.TransactionType
 import com.lampjuice.budgetlight.ui.addtransaction.components.CategoryDropdown
 import com.lampjuice.budgetlight.ui.addtransaction.components.DatePickerField
@@ -48,7 +50,7 @@ fun AddTransactionScreen(
     BudgetScaffold(
         topBar = {
             BudgetTopAppBar(
-                title = "Добавить операцию",
+                title = stringResource(R.string.add_transaction_title), // Заменено
                 onBack = onBack,
             )
         },
@@ -72,8 +74,8 @@ fun AddTransactionScreen(
                     onItemSelected = viewModel::onTypeChanged,
                     label = { type ->
                         when (type) {
-                            TransactionType.EXPENSE -> "Расход"
-                            TransactionType.INCOME -> "Доход"
+                            TransactionType.EXPENSE -> stringResource(R.string.expense) // Заменено
+                            TransactionType.INCOME -> stringResource(R.string.income) // Заменено
                         }
                     },
 
@@ -88,12 +90,12 @@ fun AddTransactionScreen(
                         .fillMaxWidth(),
                     placeholder = {
                         Text(
-                            text = "Зарплата",
+                            text = stringResource(R.string.transaction_title_hint), // Заменено
                             color = MaterialTheme.colorScheme.outline,
                         )
                     },
                     label = {
-                        Text(text = "Операция")
+                        Text(text = stringResource(R.string.transaction_title_label)) // Заменено
                     },
                     singleLine = true,
                 )
@@ -115,7 +117,7 @@ fun AddTransactionScreen(
                         Text("₽")
                     },
                     label = {
-                        Text(text = "Сумма")
+                        Text(text = stringResource(R.string.amount_label)) // Заменено
                     },
                     keyboardOptions = KeyboardOptions(
                         keyboardType = KeyboardType.Number,
@@ -146,7 +148,7 @@ fun AddTransactionScreen(
                     enabled = isFormValid && !state.isSaving,
 
                 ) {
-                    Text("Добавить")
+                    Text(stringResource(R.string.add_button)) // Заменено
                 }
             }
         }
