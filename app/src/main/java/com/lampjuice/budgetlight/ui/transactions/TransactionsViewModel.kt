@@ -31,6 +31,12 @@ class TransactionsViewModel @Inject constructor(
         observeTransactions()
     }
 
+    fun onFilterChanged(filter: TransactionFilter) {
+        _state.update {
+            it.copy(filter = filter)
+        }
+    }
+
     @OptIn(ExperimentalCoroutinesApi::class)
     private fun observeTransactions() {
         viewModelScope.launch {
