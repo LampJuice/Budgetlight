@@ -2,8 +2,8 @@ package com.lampjuice.budgetlight.ui.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.lampjuice.budgetlight.domain.model.Balance
-import com.lampjuice.budgetlight.domain.usecase.CalculateBalanceUseCase
+import com.lampjuice.budgetlight.domain.model.Budget
+import com.lampjuice.budgetlight.domain.model.TransactionType
 import com.lampjuice.budgetlight.domain.usecase.InitializeUserUseCase
 import com.lampjuice.budgetlight.domain.usecase.ObserveBudgetCategoryInfoUseCase
 import com.lampjuice.budgetlight.domain.usecase.ObserveCurrentAccountUseCase
@@ -25,7 +25,6 @@ import kotlinx.coroutines.launch
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val observeTransactionsUseCase: ObserveTransactionsUseCase,
-    private val calculateBalanceUseCase: CalculateBalanceUseCase,
     private val observeCurrentAccountUseCase: ObserveCurrentAccountUseCase,
     private val observeCurrentBudgetUseCase: ObserveCurrentBudgetUseCase,
     private val initializeUserUseCase: InitializeUserUseCase,
@@ -81,15 +80,23 @@ class HomeViewModel @Inject constructor(
                 budgetCategoriesFlow,
 
             ) { budget, transactions, transactionsInfo, categories ->
-                val balance = budget?.let { currentBudget ->
-                    val budgetTransactions = transactions.filter { transaction ->
-                        transaction.date.year == currentBudget.year &&
-                            transaction.date.monthValue == currentBudget.month
-                    }
-                    calculateBalanceUseCase(budgetTransactions)
+                val budgetSummary = budget?.let {
+                    val monthlyExpenses = transactions
+                        .asSequence()
+                        .filter { transaction ->
+                            transaction.date.year == budget.year &&
+                                transaction.date.monthValue == budget.month &&
+                                transaction.type == TransactionType.EXPENSE
+                        }
+                        .sumOf { it.amount }
+                    createBudgetSummary(
+                        budget = budget,
+                        expense = monthlyExpenses,
+
+                    )
                 }
                 HomeState(
-                    budget = balance?.let { createBudgetSummary(it) },
+                    budget = budgetSummary,
                     categories = categories.map { it.toUi() },
                     recentTransactions = transactionsInfo
                         .take(5)
@@ -104,21 +111,22 @@ class HomeViewModel @Inject constructor(
     }
 
     private fun createBudgetSummary(
-        balance: Balance,
+        budget: Budget,
+        expense: Long,
     ): BudgetSummaryUi {
-        val remaining = (balance.total - balance.expense)
+        val remaining = (budget.expenseLimit - expense)
             .coerceAtLeast(0)
         val progress =
-            if (balance.total == 0L) {
+            if (budget.expenseLimit == 0L) {
                 0f
             } else {
-                (balance.expense.toFloat() / balance.total)
+                (expense.toFloat() / budget.expenseLimit)
                     .coerceIn(0f, 1f)
             }
 
         return BudgetSummaryUi(
-            budget = balance.total,
-            spent = balance.expense,
+            budget = budget.expenseLimit,
+            spent = expense,
             remaining = remaining,
             progress = progress,
         )
