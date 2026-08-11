@@ -81,9 +81,15 @@ class HomeViewModel @Inject constructor(
                 budgetCategoriesFlow,
 
             ) { budget, transactions, transactionsInfo, categories ->
-                val balance = calculateBalanceUseCase(transactions)
+                val balance = budget?.let { currentBudget ->
+                    val budgetTransactions = transactions.filter { transaction ->
+                        transaction.date.year == currentBudget.year &&
+                            transaction.date.monthValue == currentBudget.month
+                    }
+                    calculateBalanceUseCase(budgetTransactions)
+                }
                 HomeState(
-                    budget = budget?.let { createBudgetSummary(balance) },
+                    budget = balance?.let { createBudgetSummary(it) },
                     categories = categories.map { it.toUi() },
                     recentTransactions = transactionsInfo
                         .take(5)
