@@ -4,9 +4,13 @@ import com.lampjuice.budgetlight.domain.model.Budget
 import kotlinx.coroutines.flow.Flow
 
 interface BudgetRepository {
-    fun observeCurrentBudget(userId: Long): Flow<Budget?>
 
-    suspend fun insert(budget: Budget): Long
+    suspend fun saveBudget(
+        userId: Long,
+        year: Int,
+        month: Int,
+        expenseLimit: Long,
+    ): Long
 
     fun observeBudget(
         userId: Long,

@@ -27,7 +27,7 @@ import com.lampjuice.budgetlight.data.local.entity.UserEntity
         BudgetEntity::class,
         BudgetCategoryEntity::class,
     ],
-    version = 3,
+    version = 4,
     exportSchema = false,
 )
 @TypeConverters(

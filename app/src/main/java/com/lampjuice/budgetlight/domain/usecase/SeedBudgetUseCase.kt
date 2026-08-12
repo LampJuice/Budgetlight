@@ -31,7 +31,7 @@ class SeedBudgetUseCase @Inject constructor(
         val budget = DefaultBudgetFactory.createBudget(
             userId = userId,
         )
-        val budgetId = budgetRepository.insert(budget)
+        val budgetId = budgetRepository.saveBudget(budget.userId, budget.year, budget.month, budget.expenseLimit)
 
         val categories = categoryRepository
             .observeCategories()

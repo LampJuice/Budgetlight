@@ -1,20 +1,23 @@
 package com.lampjuice.budgetlight.domain.usecase
 
-import com.lampjuice.budgetlight.domain.model.Budget
 import com.lampjuice.budgetlight.domain.repository.BudgetRepository
-import kotlinx.coroutines.flow.Flow
+import jakarta.inject.Inject
 import java.time.LocalDate
-import javax.inject.Inject
 
-class ObserveCurrentBudgetUseCase @Inject constructor(
+class SaveCurrentBudgetUseCase @Inject constructor(
     private val repository: BudgetRepository,
 ) {
-    operator fun invoke(userId: Long): Flow<Budget?> {
+    suspend operator fun invoke(
+        userId: Long,
+        expenseLimit: Long,
+    ) {
         val now = LocalDate.now()
-        return repository.observeBudget(
-            userId,
+
+        repository.saveBudget(
+            userId = userId,
             year = now.year,
             month = now.monthValue,
+            expenseLimit = expenseLimit,
         )
     }
 }

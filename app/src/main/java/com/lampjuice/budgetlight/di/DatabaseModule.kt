@@ -9,6 +9,7 @@ import com.lampjuice.budgetlight.data.local.dao.CategoryDao
 import com.lampjuice.budgetlight.data.local.dao.TransactionDao
 import com.lampjuice.budgetlight.data.local.dao.UserDao
 import com.lampjuice.budgetlight.data.local.database.BudgetDatabase
+import com.lampjuice.budgetlight.data.local.database.MIGRATION_3_4
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -29,7 +30,9 @@ object DatabaseModule {
             BudgetDatabase::class.java,
             "budget_database",
         )
-        .fallbackToDestructiveMigration()
+        .addMigrations(
+            MIGRATION_3_4,
+        )
         .build()
 
     @Provides
