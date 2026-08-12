@@ -12,6 +12,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import com.lampjuice.budgetlight.R
 import com.lampjuice.budgetlight.ui.home.model.BudgetSummaryUi
 import com.lampjuice.budgetlight.ui.theme.Dimens
 import com.lampjuice.budgetlight.ui.theme.GreenIncome
@@ -34,11 +36,11 @@ fun BudgetSummaryCard(
             verticalArrangement = Arrangement.spacedBy(Dimens.CardCorner),
         ) {
             Text(
-                text = "Бюджет месяца",
+                text = stringResource(R.string.budget_of_month),
                 style = MaterialTheme.typography.titleMedium,
             )
             Text(
-                text = budget.budget.formatMoney(),
+                text = budget.expenseLimit.formatMoney(),
                 style = MaterialTheme.typography.headlineLarge,
             )
 
@@ -58,12 +60,12 @@ fun BudgetSummaryCard(
                 verticalArrangement = Arrangement.spacedBy(Dimens.ItemSpacing),
             ) {
                 BudgetValueRow(
-                    title = "Потрачено",
+                    title = stringResource(R.string.spent),
                     value = budget.spent.formatMoney(),
                     color = MaterialTheme.colorScheme.onSurface,
                 )
                 BudgetValueRow(
-                    title = "Осталось",
+                    title = stringResource(R.string.remaining),
                     value = budget.remaining.formatMoney(),
                     color = GreenIncome,
                 )

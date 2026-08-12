@@ -125,7 +125,7 @@ class HomeViewModel @Inject constructor(
             }
 
         return BudgetSummaryUi(
-            budget = budget.expenseLimit,
+            expenseLimit = budget.expenseLimit,
             spent = expense,
             remaining = remaining,
             progress = progress,
