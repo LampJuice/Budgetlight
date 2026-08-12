@@ -10,6 +10,7 @@ import com.lampjuice.budgetlight.domain.usecase.ObserveCurrentAccountUseCase
 import com.lampjuice.budgetlight.domain.usecase.ObserveCurrentBudgetUseCase
 import com.lampjuice.budgetlight.domain.usecase.ObserveTransactionInfoUseCase
 import com.lampjuice.budgetlight.domain.usecase.ObserveTransactionsUseCase
+import com.lampjuice.budgetlight.domain.usecase.SaveCurrentBudgetUseCase
 import com.lampjuice.budgetlight.ui.home.model.BudgetSummaryUi
 import com.lampjuice.budgetlight.ui.mapper.toUi
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -30,6 +31,7 @@ class HomeViewModel @Inject constructor(
     private val initializeUserUseCase: InitializeUserUseCase,
     private val observeBudgetCategoryInfoUseCase: ObserveBudgetCategoryInfoUseCase,
     private val observeTransactionInfoUseCase: ObserveTransactionInfoUseCase,
+    private val saveCurrentBudgetUseCase: SaveCurrentBudgetUseCase,
 ) : ViewModel() {
     private val _state = MutableStateFlow(HomeState())
     val state = _state.asStateFlow()
@@ -130,5 +132,16 @@ class HomeViewModel @Inject constructor(
             remaining = remaining,
             progress = progress,
         )
+    }
+
+    fun saveBudget(expenseLimit: Long) {
+        viewModelScope.launch {
+            val user = initializeUserUseCase()
+
+            saveCurrentBudgetUseCase(
+                userId = user.id,
+                expenseLimit = expenseLimit,
+            )
+        }
     }
 }

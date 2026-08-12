@@ -18,6 +18,7 @@ import androidx.compose.material3.rememberSwipeToDismissBoxState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -27,6 +28,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.res.stringResource
 import com.lampjuice.budgetlight.R
 import com.lampjuice.budgetlight.ui.theme.Dimens
+import kotlinx.coroutines.launch
 
 @Composable
 fun SwipeToDeleteItem(
@@ -39,20 +41,25 @@ fun SwipeToDeleteItem(
     }
 
     val dismissState = rememberSwipeToDismissBoxState(
-        confirmValueChange = { value ->
-            if (value == SwipeToDismissBoxValue.EndToStart) {
-                showDeleteDialog = true
-            }
-            false
-        },
         positionalThreshold = { it * 0.25f },
     )
+
+    val scope = rememberCoroutineScope()
 
     SwipeToDismissBox(
         state = dismissState,
         modifier = modifier,
         enableDismissFromStartToEnd = false,
         enableDismissFromEndToStart = true,
+        onDismiss = { value ->
+            if (value == SwipeToDismissBoxValue.EndToStart) {
+                showDeleteDialog = true
+
+                scope.launch {
+                    dismissState.reset()
+                }
+            }
+        },
         backgroundContent = {
             Box(
                 modifier = Modifier
@@ -75,7 +82,9 @@ fun SwipeToDeleteItem(
                 contentAlignment = Alignment.CenterEnd,
             ) {
                 IconButton(
-                    onClick = onDelete,
+                    onClick = {
+                        showDeleteDialog = true
+                    },
                 ) {
                     Icon(
                         imageVector = Icons.Default.Delete,
@@ -116,7 +125,7 @@ fun SwipeToDeleteItem(
                         showDeleteDialog = false
                     },
                 ) {
-                    Text(stringResource(R.string.transaction_cancel))
+                    Text(stringResource(R.string.cancel_button))
                 }
             },
         )

@@ -8,6 +8,9 @@
     <string name="all">Все</string>
     <string name="today">Сегодня</string>
     <string name="yesterday">Вчера</string>
+    <string name="currency_rub">₽</string>
+    <string name="cancel_button">Отмена</string>
+
 
     <!-- Загрузка -->
     <string name="loading_data">Загружаем данные…</string>
@@ -31,13 +34,15 @@
     <string name="categories_title">Категории (%d)</string>
     <string name="recent_transactions">Последние операции</string>
     <string name="budget_not_set">Бюджет не задан</string>
+    <string name="edit_budget">Изменить</string>
+    <string name="limit_for_month">Лимит расходов</string>
+    <string name="save">Сохранить</string>
 
     <!-- Операции -->
     <string name="transactions_title">Операции</string>
     <string name="transaction_delete">Удалить</string>
     <string name="transaction_delete_desc">Удалить операцию?</string>
     <string name="transaction_delete_text">Операция будет удалена без возможности восстановления.</string>
-    <string name="transaction_cancel">Отмена</string>
     <string name="no_transactions">Операций пока нет</string>
     <string name="add_first_transaction">Добавьте операцию,\nчтобы начать вести учёт финансов</string>
 </resources>
