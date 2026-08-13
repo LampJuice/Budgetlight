@@ -1,6 +1,7 @@
 package com.lampjuice.budgetlight.ui.home.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -32,11 +33,13 @@ import com.lampjuice.budgetlight.ui.util.formatMoney
 @Composable
 fun CategoryBudgetItem(
     category: CategoryBudgetUi,
+    onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Card(
         modifier = modifier
-            .fillMaxWidth(),
+            .fillMaxWidth()
+            .clickable(onClick = onClick),
         elevation = CardDefaults.cardElevation(Dimens.CardElevation),
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.background),
     ) {
@@ -114,6 +117,7 @@ private fun CategoryBudgetItemPreview() {
                 spent = 18_400,
                 limit = 25_000,
             ),
+            onClick = {  },
         )
     }
 }
@@ -130,6 +134,7 @@ private fun CategoryBudgetItemOverBudgetPreview() {
                 spent = 10_500,
                 limit = 8_000,
             ),
+            onClick = {}
         )
     }
 }

@@ -24,6 +24,8 @@ import com.lampjuice.budgetlight.ui.home.components.CategorySection
 import com.lampjuice.budgetlight.ui.home.components.GreetingSection
 import com.lampjuice.budgetlight.ui.home.components.RecentTransactionSection
 import com.lampjuice.budgetlight.ui.home.components.budgetcard.BudgetEditDialog
+import com.lampjuice.budgetlight.ui.home.components.categorysection.BudgetCategoryEditDialog
+import com.lampjuice.budgetlight.ui.home.model.CategoryBudgetUi
 import com.lampjuice.budgetlight.ui.theme.Dimens
 
 @Composable
@@ -36,6 +38,9 @@ fun HomeScreen(
 
     var showBudgetDialog by rememberSaveable {
         mutableStateOf(false)
+    }
+    var selectedCategory by rememberSaveable {
+        mutableStateOf<CategoryBudgetUi?>(null)
     }
 
     BudgetScaffold(
@@ -81,6 +86,9 @@ fun HomeScreen(
             item {
                 CategorySection(
                     categories = state.categories,
+                    onCategoryClick = { category ->
+                        selectedCategory = category
+                    },
 
                 )
             }
@@ -101,6 +109,20 @@ fun HomeScreen(
                 viewModel.saveBudget(limit)
                 showBudgetDialog = false
             },
+
+        )
+    }
+
+    selectedCategory?.let { category ->
+        BudgetCategoryEditDialog(
+            category = category,
+            onDismiss = {
+                selectedCategory = null
+            },
+            onSave = { limit ->
+                viewModel.updateCategoryLimit(category.id, limit)
+                selectedCategory = null
+            }
 
         )
     }

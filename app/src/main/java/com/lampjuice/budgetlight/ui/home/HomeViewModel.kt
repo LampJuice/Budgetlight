@@ -11,6 +11,7 @@ import com.lampjuice.budgetlight.domain.usecase.ObserveCurrentBudgetUseCase
 import com.lampjuice.budgetlight.domain.usecase.ObserveTransactionInfoUseCase
 import com.lampjuice.budgetlight.domain.usecase.ObserveTransactionsUseCase
 import com.lampjuice.budgetlight.domain.usecase.SaveCurrentBudgetUseCase
+import com.lampjuice.budgetlight.domain.usecase.UpdateBudgetCategoryLimitUseCase
 import com.lampjuice.budgetlight.ui.home.model.BudgetSummaryUi
 import com.lampjuice.budgetlight.ui.mapper.toUi
 import com.lampjuice.budgetlight.ui.util.toMonthYearString
@@ -34,9 +35,12 @@ class HomeViewModel @Inject constructor(
     private val observeBudgetCategoryInfoUseCase: ObserveBudgetCategoryInfoUseCase,
     private val observeTransactionInfoUseCase: ObserveTransactionInfoUseCase,
     private val saveCurrentBudgetUseCase: SaveCurrentBudgetUseCase,
+    private val updateBudgetCategoryLimitUseCase: UpdateBudgetCategoryLimitUseCase,
 ) : ViewModel() {
     private val _state = MutableStateFlow(HomeState())
     val state = _state.asStateFlow()
+
+    private var currentBudgetId: Long? = null
 
     init {
         observeHomeData()
@@ -83,21 +87,22 @@ class HomeViewModel @Inject constructor(
                 transactionsInfoFlow,
                 budgetCategoriesFlow,
 
-            ) { budget, transactions, transactionsInfo, categories ->
+                ) { budget, transactions, transactionsInfo, categories ->
+                currentBudgetId = budget?.id
                 val budgetSummary = budget?.let {
                     val monthlyExpenses = transactions
                         .asSequence()
                         .filter { transaction ->
                             transaction.date.year == budget.year &&
-                                transaction.date.monthValue == budget.month &&
-                                transaction.type == TransactionType.EXPENSE
+                                    transaction.date.monthValue == budget.month &&
+                                    transaction.type == TransactionType.EXPENSE
                         }
                         .sumOf { it.amount }
                     createBudgetSummary(
                         budget = budget,
                         expense = monthlyExpenses,
 
-                    )
+                        )
                 }
                 HomeState(
                     month = budget?.let {
@@ -147,6 +152,17 @@ class HomeViewModel @Inject constructor(
             saveCurrentBudgetUseCase(
                 userId = user.id,
                 expenseLimit = expenseLimit,
+            )
+        }
+    }
+
+    fun updateCategoryLimit(categoryId: Long, limit: Long) {
+        val budgetId = currentBudgetId ?: return
+        viewModelScope.launch {
+            updateBudgetCategoryLimitUseCase(
+                budgetId = budgetId,
+                categoryId = categoryId,
+                plannedAmount = limit,
             )
         }
     }

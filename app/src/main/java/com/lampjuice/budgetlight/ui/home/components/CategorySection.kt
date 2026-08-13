@@ -15,6 +15,7 @@ import com.lampjuice.budgetlight.ui.theme.Dimens
 @Composable
 fun CategorySection(
     categories: List<CategoryBudgetUi>,
+    onCategoryClick: (CategoryBudgetUi) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -27,7 +28,10 @@ fun CategorySection(
             style = MaterialTheme.typography.titleLarge,
         )
         categories.forEach { category ->
-            CategoryBudgetItem(category = category)
+            CategoryBudgetItem(
+                category = category,
+                onClick = {onCategoryClick(category)},
+                )
         }
     }
 }
