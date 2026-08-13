@@ -30,8 +30,8 @@ fun CategorySection(
         categories.forEach { category ->
             CategoryBudgetItem(
                 category = category,
-                onClick = {onCategoryClick(category)},
-                )
+                onClick = { onCategoryClick(category) },
+            )
         }
     }
 }

@@ -122,7 +122,7 @@ fun HomeScreen(
             onSave = { limit ->
                 viewModel.updateCategoryLimit(category.id, limit)
                 selectedCategory = null
-            }
+            },
 
         )
     }

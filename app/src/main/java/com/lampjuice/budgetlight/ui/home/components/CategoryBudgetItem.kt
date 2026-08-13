@@ -117,7 +117,7 @@ private fun CategoryBudgetItemPreview() {
                 spent = 18_400,
                 limit = 25_000,
             ),
-            onClick = {  },
+            onClick = { },
         )
     }
 }
@@ -134,7 +134,7 @@ private fun CategoryBudgetItemOverBudgetPreview() {
                 spent = 10_500,
                 limit = 8_000,
             ),
-            onClick = {}
+            onClick = {},
         )
     }
 }

@@ -87,22 +87,22 @@ class HomeViewModel @Inject constructor(
                 transactionsInfoFlow,
                 budgetCategoriesFlow,
 
-                ) { budget, transactions, transactionsInfo, categories ->
+            ) { budget, transactions, transactionsInfo, categories ->
                 currentBudgetId = budget?.id
                 val budgetSummary = budget?.let {
                     val monthlyExpenses = transactions
                         .asSequence()
                         .filter { transaction ->
                             transaction.date.year == budget.year &&
-                                    transaction.date.monthValue == budget.month &&
-                                    transaction.type == TransactionType.EXPENSE
+                                transaction.date.monthValue == budget.month &&
+                                transaction.type == TransactionType.EXPENSE
                         }
                         .sumOf { it.amount }
                     createBudgetSummary(
                         budget = budget,
                         expense = monthlyExpenses,
 
-                        )
+                    )
                 }
                 HomeState(
                     month = budget?.let {
