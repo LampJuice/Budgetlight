@@ -37,4 +37,18 @@ interface BudgetCategoryDao {
     fun observeBudgetCategoriesWithCategory(
         budgetId: Long,
     ): Flow<List<BudgetCategoryWithCategoryEntity>>
+
+    @Query(
+        """
+            UPDATE budget_categories
+            SET plannedAmount = :plannedAmount
+            WHERE budgetId = :budgetId
+            AND categoryId = :categoryId
+        """,
+    )
+    suspend fun updatePlannedAmount(
+        budgetId: Long,
+        categoryId: Long,
+        plannedAmount: Long,
+    ): Int
 }

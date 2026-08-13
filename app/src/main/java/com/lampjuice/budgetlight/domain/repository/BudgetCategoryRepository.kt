@@ -9,4 +9,10 @@ interface BudgetCategoryRepository {
     suspend fun insert(budgetCategory: BudgetCategory): Long
 
     suspend fun insertAll(budgetCategories: List<BudgetCategory>)
+
+    suspend fun updatePlannedAmount(
+        budgetId: Long,
+        categoryId: Long,
+        plannedAmount: Long,
+    )
 }
