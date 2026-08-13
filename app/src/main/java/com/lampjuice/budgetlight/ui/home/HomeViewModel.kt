@@ -13,6 +13,7 @@ import com.lampjuice.budgetlight.domain.usecase.ObserveTransactionsUseCase
 import com.lampjuice.budgetlight.domain.usecase.SaveCurrentBudgetUseCase
 import com.lampjuice.budgetlight.ui.home.model.BudgetSummaryUi
 import com.lampjuice.budgetlight.ui.mapper.toUi
+import com.lampjuice.budgetlight.ui.util.toMonthYearString
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jakarta.inject.Inject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -22,6 +23,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.launch
+import java.time.LocalDate
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
@@ -98,6 +100,10 @@ class HomeViewModel @Inject constructor(
                     )
                 }
                 HomeState(
+                    month = budget?.let {
+                        LocalDate.of(it.year, it.month, 1)
+                            .toMonthYearString()
+                    } ?: "",
                     budget = budgetSummary,
                     categories = categories.map { it.toUi() },
                     recentTransactions = transactionsInfo

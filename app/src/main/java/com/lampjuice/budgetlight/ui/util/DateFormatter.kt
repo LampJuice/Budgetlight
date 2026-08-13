@@ -24,3 +24,11 @@ fun LocalDate.toTransactionDateString(
     year == today.year -> format(dateFormatter)
     else -> format(dateFormatterWithYear)
 }
+
+private val monthFormatter =
+    DateTimeFormatter.ofPattern(
+        "LLLL yyyy",
+        Locale.forLanguageTag("ru-RU"),
+    )
+
+fun LocalDate.toMonthYearString(): String = format(monthFormatter).replaceFirstChar { it.uppercase() }

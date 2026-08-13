@@ -17,7 +17,7 @@ import com.lampjuice.budgetlight.ui.theme.Dimens
 @Composable
 fun GreetingSection(
     userName: String = "",
-    month: String = "Июль 2026",
+    month: String = "",
 ) {
     Column(
         modifier = Modifier
@@ -28,12 +28,11 @@ fun GreetingSection(
             ),
     ) {
         Text(
-            text = stringResource(R.string.welcome_back),
+            text = stringResource(
+                R.string.welcome_back,
+                userName,
+            ),
             style = MaterialTheme.typography.headlineSmall,
-        )
-        Text(
-            text = userName,
-            style = MaterialTheme.typography.headlineMedium,
             fontWeight = FontWeight.Bold,
         )
 

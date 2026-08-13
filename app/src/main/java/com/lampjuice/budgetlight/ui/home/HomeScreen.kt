@@ -64,6 +64,7 @@ fun HomeScreen(
             item {
                 GreetingSection(
                     userName = state.userName,
+                    month = state.month,
                 )
             }
             item {
