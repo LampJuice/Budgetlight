@@ -28,14 +28,16 @@ class HomeViewModel @Inject constructor(
 ) : ViewModel() {
     private val _state = MutableStateFlow(HomeState())
     val state = _state.asStateFlow()
+    private var userId: Long? = null
 
     init {
-        observeHomeData()
+        initialize()
     }
 
-    private fun observeHomeData() {
+    private fun initialize() {
         viewModelScope.launch {
             val user = initializeUserUseCase()
+            userId = user.id
 
             observeHomeDataUseCase(user.id).collect { homeData ->
                 _state.value = homeData.toUi(user.name)
@@ -45,10 +47,10 @@ class HomeViewModel @Inject constructor(
 
     fun saveBudget(expenseLimit: Long) {
         viewModelScope.launch {
-            val user = initializeUserUseCase()
+            val currentUserId = userId ?: return@launch
 
             saveCurrentBudgetUseCase(
-                userId = user.id,
+                userId = currentUserId,
                 expenseLimit = expenseLimit,
             )
         }
@@ -65,10 +67,10 @@ class HomeViewModel @Inject constructor(
         }
     }
     fun addCategory(name: String, icon: CategoryIcon, type: TransactionType) {
+        val currentUserId = userId ?: return
         viewModelScope.launch {
-            val user = initializeUserUseCase()
             addCategoryUseCase(
-                userId = user.id,
+                userId = currentUserId,
                 name = name,
                 icon = icon,
                 type = type,
