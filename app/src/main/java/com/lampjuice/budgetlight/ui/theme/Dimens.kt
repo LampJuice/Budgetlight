@@ -11,13 +11,13 @@ object Dimens {
 
     val ExtraLargeSpacing = 28.dp
 
+    val Spacing = 16.dp
+
     val LargeSpacing = 24.dp
 
     val CardCorner = 20.dp
 
     val CardElevation = 4.dp
-
-    val IconPadding = 10.dp
 
     val FabBottomPadding = 80.dp
 
@@ -26,5 +26,4 @@ object Dimens {
 
     val IconSize = 24.dp
 
-    val SwipeActionWidth = 72.dp
 }

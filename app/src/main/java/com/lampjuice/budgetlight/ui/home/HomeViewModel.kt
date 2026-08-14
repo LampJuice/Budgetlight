@@ -2,6 +2,9 @@ package com.lampjuice.budgetlight.ui.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.lampjuice.budgetlight.domain.model.CategoryIcon
+import com.lampjuice.budgetlight.domain.model.TransactionType
+import com.lampjuice.budgetlight.domain.usecase.AddCategoryUseCase
 import com.lampjuice.budgetlight.domain.usecase.InitializeUserUseCase
 import com.lampjuice.budgetlight.domain.usecase.ObserveHomeDataUseCase
 import com.lampjuice.budgetlight.domain.usecase.SaveCurrentBudgetUseCase
@@ -18,6 +21,7 @@ class HomeViewModel @Inject constructor(
     private val observeHomeDataUseCase: ObserveHomeDataUseCase,
     private val initializeUserUseCase: InitializeUserUseCase,
     private val saveCurrentBudgetUseCase: SaveCurrentBudgetUseCase,
+    private val addCategoryUseCase: AddCategoryUseCase,
     private val updateBudgetCategoryLimitUseCase: UpdateBudgetCategoryLimitUseCase,
 ) : ViewModel() {
     private val _state = MutableStateFlow(HomeState())
@@ -55,6 +59,17 @@ class HomeViewModel @Inject constructor(
                 budgetId = budgetId,
                 categoryId = categoryId,
                 plannedAmount = limit,
+            )
+        }
+    }
+    fun addCategory(name: String, icon: CategoryIcon, type: TransactionType) {
+        viewModelScope.launch {
+            val user = initializeUserUseCase()
+            addCategoryUseCase(
+                userId = user.id,
+                name = name,
+                icon = icon,
+                type = type,
             )
         }
     }

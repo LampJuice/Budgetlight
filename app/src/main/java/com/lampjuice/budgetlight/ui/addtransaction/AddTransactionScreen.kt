@@ -74,8 +74,8 @@ fun AddTransactionScreen(
                     onItemSelected = viewModel::onTypeChanged,
                     label = { type ->
                         when (type) {
-                            TransactionType.EXPENSE -> stringResource(R.string.expense) // Заменено
-                            TransactionType.INCOME -> stringResource(R.string.income) // Заменено
+                            TransactionType.EXPENSE -> stringResource(R.string.expense)
+                            TransactionType.INCOME -> stringResource(R.string.income)
                         }
                     },
 

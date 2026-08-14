@@ -38,6 +38,11 @@
     <string name="limit_for_month">Лимит расходов</string>
     <string name="save">Сохранить</string>
 
+
+    <!-- Категории -->
+    <string name="category_add">Добавить категорию</string>
+    <string name="category_name">Название категории</string>
+
     <!-- Операции -->
     <string name="transactions_title">Операции</string>
     <string name="transaction_delete">Удалить</string>

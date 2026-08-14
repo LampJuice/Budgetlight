@@ -24,6 +24,7 @@ import com.lampjuice.budgetlight.ui.home.components.CategorySection
 import com.lampjuice.budgetlight.ui.home.components.GreetingSection
 import com.lampjuice.budgetlight.ui.home.components.RecentTransactionSection
 import com.lampjuice.budgetlight.ui.home.components.budgetcard.BudgetEditDialog
+import com.lampjuice.budgetlight.ui.home.components.categorysection.AddCategoryDialog
 import com.lampjuice.budgetlight.ui.home.components.categorysection.BudgetCategoryEditDialog
 import com.lampjuice.budgetlight.ui.home.model.CategoryBudgetUi
 import com.lampjuice.budgetlight.ui.theme.Dimens
@@ -41,6 +42,10 @@ fun HomeScreen(
     }
     var selectedCategory by rememberSaveable {
         mutableStateOf<CategoryBudgetUi?>(null)
+    }
+
+    var showAddCategoryDialog by rememberSaveable {
+        mutableStateOf(false)
     }
 
     BudgetScaffold(
@@ -86,6 +91,9 @@ fun HomeScreen(
             item {
                 CategorySection(
                     categories = state.categories,
+                    onAddCategoryClick = {
+                        showAddCategoryDialog = true
+                    },
                     onCategoryClick = { category ->
                         selectedCategory = category
                     },
@@ -110,6 +118,16 @@ fun HomeScreen(
                 showBudgetDialog = false
             },
 
+        )
+    }
+
+    if (showAddCategoryDialog) {
+        AddCategoryDialog(
+            onDismiss = { showAddCategoryDialog = false },
+            onSave = { name, icon, type ->
+                viewModel.addCategory(name, icon, type)
+                showAddCategoryDialog = false
+            },
         )
     }
 
