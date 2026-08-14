@@ -8,7 +8,7 @@ import com.lampjuice.budgetlight.ui.mapper.toUi
 import com.lampjuice.budgetlight.ui.util.toMonthYearString
 import java.time.LocalDate
 
-fun HomeData.toUi(): HomeState {
+fun HomeData.toUi(userName: String): HomeState {
     val budgetSummary = budget?.let {
         val monthlyExpenses = transactions
             .asSequence()
@@ -34,6 +34,7 @@ fun HomeData.toUi(): HomeState {
         )
     }
     return HomeState(
+        userName = userName,
         month = budget?.let {
             LocalDate.of(it.year, it.month, 1)
                 .toMonthYearString()

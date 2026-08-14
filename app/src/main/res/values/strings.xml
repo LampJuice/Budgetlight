@@ -26,7 +26,7 @@
     <string name="add_button">Добавить</string>
 
     <!-- Главный экран -->
-    <string name="welcome_back">Добро пожаловать,%1$s 👋</string>
+    <string name="welcome_back">Добро пожаловать, %1$s 👋</string>
     <string name="current_balance">Текущий баланс</string>
     <string name="budget_of_month">Бюджет месяца</string>
     <string name="spent">Потрачено</string>

@@ -38,7 +38,7 @@ class HomeViewModel @Inject constructor(
             val user = initializeUserUseCase()
 
             observeHomeDataUseCase(user.id).collect { homeData ->
-                _state.value = homeData.toUi()
+                _state.value = homeData.toUi(user.name)
             }
         }
     }
