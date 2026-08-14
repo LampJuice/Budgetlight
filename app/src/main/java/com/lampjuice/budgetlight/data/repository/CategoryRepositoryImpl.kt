@@ -13,18 +13,27 @@ class CategoryRepositoryImpl @Inject constructor(
     private val categoryDao: CategoryDao,
 ) : CategoryRepository {
     override fun observeCategories(): Flow<List<Category>> {
-        val categories = categoryDao.observeCategories()
+        val categories = categoryDao.observeActiveCategories()
         return categories.map { list ->
             list.map { it.toDomain() }
         }
     }
 
-    override suspend fun insert(category: Category) {
-        categoryDao.insert(category.toEntity())
+    override fun observeAllCategories(): Flow<List<Category>> {
+        val categories = categoryDao.observeAllCategories()
+        return categories.map { list ->
+            list.map { it.toDomain() }
+        }
     }
+
+    override suspend fun insert(category: Category): Long = categoryDao.insert(category.toEntity())
 
     override suspend fun insertAll(categories: List<Category>) {
         categoryDao.insertAll(categories.map { it.toEntity() })
+    }
+
+    override suspend fun archive(categoryId: Long) {
+        categoryDao.setArchived(categoryId, true)
     }
 
     override suspend fun getCount(): Int = categoryDao.getCount()

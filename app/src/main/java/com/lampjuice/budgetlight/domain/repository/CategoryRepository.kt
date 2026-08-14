@@ -7,9 +7,13 @@ interface CategoryRepository {
 
     fun observeCategories(): Flow<List<Category>>
 
-    suspend fun insert(category: Category)
+    fun observeAllCategories(): Flow<List<Category>>
+
+    suspend fun insert(category: Category): Long
 
     suspend fun insertAll(categories: List<Category>)
+
+    suspend fun archive(categoryId: Long)
 
     suspend fun getCount(): Int
 }

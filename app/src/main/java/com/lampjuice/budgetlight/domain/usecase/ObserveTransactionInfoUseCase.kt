@@ -14,7 +14,7 @@ class ObserveTransactionInfoUseCase @Inject constructor(
 ) {
     operator fun invoke(accountId: Long): Flow<List<TransactionInfo>> = combine(
         transactionRepository.observeTransactions(accountId = accountId),
-        categoryRepository.observeCategories(),
+        categoryRepository.observeAllCategories(),
     ) { transactions, categories ->
         transactions.map { transaction ->
             val category = categories.find { it.id == transaction.categoryId }
