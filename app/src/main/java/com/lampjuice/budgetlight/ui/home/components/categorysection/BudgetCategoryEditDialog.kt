@@ -1,6 +1,9 @@
 package com.lampjuice.budgetlight.ui.home.components.categorysection
 
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -12,13 +15,19 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.res.stringResource
 import com.lampjuice.budgetlight.R
 import com.lampjuice.budgetlight.ui.home.model.CategoryBudgetUi
+import com.lampjuice.budgetlight.ui.theme.Dimens
 
 @Composable
 fun BudgetCategoryEditDialog(
     category: CategoryBudgetUi,
     onDismiss: () -> Unit,
     onSave: (Long) -> Unit,
+    onArchive: () -> Unit,
 ) {
+    var showArchiveConfirmation by rememberSaveable {
+        mutableStateOf(false)
+    }
+
     var value by rememberSaveable {
         mutableStateOf(
             if (category.limit == 0L) {
@@ -35,25 +44,39 @@ fun BudgetCategoryEditDialog(
             Text(category.title)
         },
         text = {
-            OutlinedTextField(
-                value = value,
-                onValueChange = { newValue ->
-                    if (newValue.all { it.isDigit() }) {
-                        value = newValue
-                    }
-                },
-                label = {
+            Column(
+                verticalArrangement = Arrangement.spacedBy(Dimens.ItemSpacing),
+            ) {
+                OutlinedTextField(
+                    value = value,
+                    onValueChange = { newValue ->
+                        if (newValue.all { it.isDigit() }) {
+                            value = newValue
+                        }
+                    },
+                    label = {
+                        Text(
+                            stringResource(R.string.limit_for_month),
+                        )
+                    },
+                    singleLine = true,
+                    suffix = {
+                        Text(
+                            stringResource(R.string.currency_rub),
+                        )
+                    },
+                )
+                TextButton(
+                    onClick = {
+                        showArchiveConfirmation = true
+                    },
+                ) {
                     Text(
-                        stringResource(R.string.limit_for_month),
+                        text = stringResource(R.string.category_archive),
+                        color = MaterialTheme.colorScheme.error,
                     )
-                },
-                singleLine = true,
-                suffix = {
-                    Text(
-                        stringResource(R.string.currency_rub),
-                    )
-                },
-            )
+                }
+            }
         },
         confirmButton = {
             TextButton(
@@ -79,5 +102,51 @@ fun BudgetCategoryEditDialog(
                 )
             }
         },
+
     )
+
+    if (showArchiveConfirmation) {
+        AlertDialog(
+            onDismissRequest = {
+                showArchiveConfirmation = false
+            },
+            title = {
+                Text(
+                    text = stringResource(R.string.category_archive),
+                )
+            },
+            text = {
+                Text(
+                    text = stringResource(
+                        R.string.category_archive_confirmation,
+                        category.title,
+                    ),
+                )
+            },
+            confirmButton = {
+                TextButton(
+                    onClick = {
+                        showArchiveConfirmation = false
+                        onArchive()
+                    },
+                ) {
+                    Text(
+                        text = stringResource(R.string.category_archive),
+                        color = MaterialTheme.colorScheme.error,
+                    )
+                }
+            },
+            dismissButton = {
+                TextButton(
+                    onClick = {
+                        showArchiveConfirmation = false
+                    },
+                ) {
+                    Text(
+                        text = stringResource(R.string.cancel_button),
+                    )
+                }
+            },
+        )
+    }
 }

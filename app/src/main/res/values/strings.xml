@@ -42,6 +42,8 @@
     <!-- Категории -->
     <string name="category_add">Добавить категорию</string>
     <string name="category_name">Название категории</string>
+    <string name="category_archive">Архивировать категорию</string>
+    <string name="category_archive_confirmation">Архивировать категорию %1$s ?</string>
 
     <!-- Операции -->
     <string name="transactions_title">Операции</string>

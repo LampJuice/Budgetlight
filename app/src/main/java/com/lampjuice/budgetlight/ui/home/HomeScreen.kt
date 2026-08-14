@@ -81,7 +81,7 @@ fun HomeScreen(
                 state.budget?.let { budget ->
                     BudgetSummaryCard(
                         budget = budget,
-                        onEditCLick = {
+                        onEditClick = {
                             showBudgetDialog = true
                         },
                     )
@@ -139,6 +139,10 @@ fun HomeScreen(
             },
             onSave = { limit ->
                 viewModel.updateCategoryLimit(category.id, limit)
+                selectedCategory = null
+            },
+            onArchive = {
+                viewModel.archiveCategory(category.id)
                 selectedCategory = null
             },
 

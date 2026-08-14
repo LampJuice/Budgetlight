@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.lampjuice.budgetlight.domain.model.CategoryIcon
 import com.lampjuice.budgetlight.domain.model.TransactionType
 import com.lampjuice.budgetlight.domain.usecase.AddCategoryUseCase
+import com.lampjuice.budgetlight.domain.usecase.ArchiveCategoryUseCase
 import com.lampjuice.budgetlight.domain.usecase.InitializeUserUseCase
 import com.lampjuice.budgetlight.domain.usecase.ObserveHomeDataUseCase
 import com.lampjuice.budgetlight.domain.usecase.SaveCurrentBudgetUseCase
@@ -22,6 +23,7 @@ class HomeViewModel @Inject constructor(
     private val initializeUserUseCase: InitializeUserUseCase,
     private val saveCurrentBudgetUseCase: SaveCurrentBudgetUseCase,
     private val addCategoryUseCase: AddCategoryUseCase,
+    private val archiveCategoryUseCase: ArchiveCategoryUseCase,
     private val updateBudgetCategoryLimitUseCase: UpdateBudgetCategoryLimitUseCase,
 ) : ViewModel() {
     private val _state = MutableStateFlow(HomeState())
@@ -70,6 +72,14 @@ class HomeViewModel @Inject constructor(
                 name = name,
                 icon = icon,
                 type = type,
+            )
+        }
+    }
+
+    fun archiveCategory(categoryId: Long) {
+        viewModelScope.launch {
+            archiveCategoryUseCase(
+                categoryId = categoryId,
             )
         }
     }

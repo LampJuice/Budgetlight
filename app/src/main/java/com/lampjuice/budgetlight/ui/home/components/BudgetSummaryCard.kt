@@ -29,7 +29,7 @@ import com.lampjuice.budgetlight.ui.util.formatMoney
 @Composable
 fun BudgetSummaryCard(
     budget: BudgetSummaryUi,
-    onEditCLick: () -> Unit,
+    onEditClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Card(
@@ -54,7 +54,7 @@ fun BudgetSummaryCard(
                 )
 
                 IconButton(
-                    onClick = onEditCLick,
+                    onClick = onEditClick,
                 ) {
                     Icon(
                         imageVector = Icons.Default.Edit,
