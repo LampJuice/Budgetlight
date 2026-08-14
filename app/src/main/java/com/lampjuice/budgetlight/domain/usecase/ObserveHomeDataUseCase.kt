@@ -44,7 +44,7 @@ class ObserveHomeDataUseCase @Inject constructor(
             if (budget == null || account == null) {
                 flowOf(emptyList())
             } else {
-                observeBudgetCategoryInfoUseCase(budget.id, account.id)
+                observeBudgetCategoryInfoUseCase(budget, account.id)
             }
         }
 

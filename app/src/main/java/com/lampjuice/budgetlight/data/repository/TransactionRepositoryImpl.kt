@@ -8,6 +8,7 @@ import com.lampjuice.budgetlight.domain.repository.TransactionRepository
 import jakarta.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import java.time.LocalDate
 
 class TransactionRepositoryImpl
 @Inject
@@ -28,7 +29,10 @@ constructor(
         dao.deleteTransaction(id)
     }
 
-    override fun observeTransactionByCategory(accountId: Long, categoryId: Long): Flow<List<Transaction>> = dao
+    override fun observeTransactionByCategory(
+        accountId: Long,
+        categoryId: Long,
+    ): Flow<List<Transaction>> = dao
         .observeTransactionByCategory(accountId, categoryId)
         .map { list ->
             list.map { it.toDomain() }
@@ -36,6 +40,20 @@ constructor(
 
     override fun observeExpenses(accountId: Long): Flow<List<Transaction>> = dao
         .observeExpenses(accountId)
+        .map { list ->
+            list.map { it.toDomain() }
+        }
+
+    override fun observeExpensesForPeriod(
+        accountId: Long,
+        startDate: LocalDate,
+        endDate: LocalDate,
+    ): Flow<List<Transaction>> = dao
+        .observeExpensesForPeriod(
+            accountId,
+            startDate,
+            endDate,
+        )
         .map { list ->
             list.map { it.toDomain() }
         }

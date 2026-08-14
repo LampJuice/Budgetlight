@@ -6,6 +6,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.lampjuice.budgetlight.data.local.entity.TransactionEntity
 import kotlinx.coroutines.flow.Flow
+import java.time.LocalDate
 
 @Dao
 interface TransactionDao {
@@ -51,4 +52,21 @@ interface TransactionDao {
         """,
     )
     fun observeExpenses(accountId: Long): Flow<List<TransactionEntity>>
+
+    @Query(
+        """
+            SELECT *
+            FROM transactions
+            WHERE accountId = :accountId
+            AND type = 'EXPENSE'
+            AND date >= :startDate
+            AND date < :endDate
+            ORDER BY date DESC, id DESC
+        """,
+    )
+    fun observeExpensesForPeriod(
+        accountId: Long,
+        startDate: LocalDate,
+        endDate: LocalDate,
+    ): Flow<List<TransactionEntity>>
 }
