@@ -9,35 +9,35 @@ import com.lampjuice.budgetlight.ui.home.HomeScreen
 import com.lampjuice.budgetlight.ui.transactions.TransactionsScreen
 
 @Composable
-fun AppNavHost() {
+fun BudgetLightNavHost() {
     val navController = rememberNavController()
-    NavHost(navController = navController, startDestination = Screen.Home.route) {
+    NavHost(navController = navController, startDestination = BudgetLightRoutes.HOME) {
         composable(
-            route = AppRoutes.HOME,
+            route = BudgetLightRoutes.HOME,
         ) {
             HomeScreen(
                 onAddNewTransaction = {
-                    navController.navigate(AppRoutes.ADD_TRANSACTION)
+                    navController.navigate(BudgetLightRoutes.ADD_TRANSACTION)
                 },
                 onShowAllTransactions = {
-                    navController.navigate(AppRoutes.TRANSACTIONS)
+                    navController.navigate(BudgetLightRoutes.TRANSACTIONS)
                 },
             )
         }
         composable(
-            route = AppRoutes.ADD_TRANSACTION,
+            route = BudgetLightRoutes.ADD_TRANSACTION,
         ) {
             AddTransactionScreen(
                 onBack = navController::popBackStack,
             )
         }
         composable(
-            route = AppRoutes.TRANSACTIONS,
+            route = BudgetLightRoutes.TRANSACTIONS,
         ) {
             TransactionsScreen(
                 onBack = navController::popBackStack,
                 onAddToTransaction = {
-                    navController.navigate(AppRoutes.ADD_TRANSACTION)
+                    navController.navigate(BudgetLightRoutes.ADD_TRANSACTION)
                 },
             )
         }
