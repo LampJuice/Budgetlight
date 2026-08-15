@@ -1,14 +1,18 @@
 package com.lampjuice.budgetlight.app
 
 import androidx.compose.runtime.Composable
-import com.lampjuice.budgetlight.feature.launcher.ui.LauncherScreen
+import com.lampjuice.budgetlight.feature.auth.ui.AuthScreen
 
 @Composable
 fun ApplicationFlow() {
-    LauncherScreen(
-        onBudgetPlannerClick = {
-        },
-        onShoppingListClick = {
+    AuthScreen(
+        onAuthSuccess = {
         },
     )
+//    LauncherScreen(
+//        onBudgetPlannerClick = {
+//        },
+//        onShoppingListClick = {
+//        },
+//    )
 }

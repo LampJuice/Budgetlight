@@ -11,6 +11,16 @@
     <string name="sign_in">Войти или зарегистрироваться</string>
 
 
+    <!-- Авторизация -->
+    <string name="login_label">Логин</string>
+    <string name="password_label">Пароль</string>
+    <string name="forgot_password">Забыли пароль?</string>
+    <string name="login_button">Войти</string>
+    <string name="register_button">Регистрация</string>
+    <string name="welcome">Добро пожаловать</string>
+    <string name="sign_in_your_account">Войдите в свой аккаунт</string>
+
+
 
     <!-- Общие -->
     <string name="back">Назад</string>
