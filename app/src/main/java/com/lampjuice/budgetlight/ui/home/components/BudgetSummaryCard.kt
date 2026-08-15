@@ -93,6 +93,13 @@ fun BudgetSummaryCard(
                     value = budget.remaining.formatMoney(),
                     color = GreenIncome,
                 )
+                if (budget.income > 0L) {
+                    BudgetValueRow(
+                        title = stringResource(R.string.income),
+                        value = budget.income.formatMoney(),
+                        color = GreenIncome,
+                    )
+                }
             }
         }
     }

@@ -6,4 +6,5 @@ data class BudgetSummaryUi(
     val spent: Long,
     val remaining: Long,
     val progress: Float,
+    val income: Long,
 )
