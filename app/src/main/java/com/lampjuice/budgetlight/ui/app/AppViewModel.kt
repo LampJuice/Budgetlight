@@ -2,8 +2,8 @@ package com.lampjuice.budgetlight.ui.app
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.lampjuice.budgetlight.domain.usecase.InitializeUserUseCase
-import com.lampjuice.budgetlight.domain.usecase.SeedApplicationDataUseCase
+import com.lampjuice.budgetlight.feature.auth.domain.usecase.InitializeUserUseCase
+import com.lampjuice.budgetlight.feature.budget.domain.usecase.SeedApplicationDataUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jakarta.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow

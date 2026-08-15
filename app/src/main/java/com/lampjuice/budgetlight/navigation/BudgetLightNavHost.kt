@@ -4,9 +4,9 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.lampjuice.budgetlight.ui.addtransaction.AddTransactionScreen
-import com.lampjuice.budgetlight.ui.home.HomeScreen
-import com.lampjuice.budgetlight.ui.transactions.TransactionsScreen
+import com.lampjuice.budgetlight.feature.budget.ui.addtransaction.AddTransactionScreen
+import com.lampjuice.budgetlight.feature.budget.ui.home.HomeScreen
+import com.lampjuice.budgetlight.feature.budget.ui.transactions.TransactionsScreen
 
 @Composable
 fun BudgetLightNavHost() {
