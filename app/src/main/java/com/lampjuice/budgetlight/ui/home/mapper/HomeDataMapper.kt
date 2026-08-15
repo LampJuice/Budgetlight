@@ -38,6 +38,5 @@ fun HomeData.toUi(userName: String): HomeState {
         recentTransactions = transactionsInfo
             .take(5)
             .map { it.toUi() },
-        isLoading = false,
     )
 }

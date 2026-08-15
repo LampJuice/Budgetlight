@@ -10,5 +10,4 @@ data class HomeState(
     val budget: BudgetSummaryUi? = null,
     val categories: List<CategoryBudgetUi> = emptyList(),
     val recentTransactions: List<TransactionUi> = emptyList(),
-    val isLoading: Boolean = true,
 )
