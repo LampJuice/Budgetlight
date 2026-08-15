@@ -1,4 +1,4 @@
-package com.lampjuice.budgetlight.feature.budget.data.local.entity
+package com.lampjuice.budgetlight.feature.auth.data.local.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

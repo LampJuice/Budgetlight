@@ -1,7 +1,7 @@
-package com.lampjuice.budgetlight.feature.budget.data.mapper
+package com.lampjuice.budgetlight.feature.auth.data.mapper
 
+import com.lampjuice.budgetlight.feature.auth.data.local.entity.UserEntity
 import com.lampjuice.budgetlight.feature.auth.domain.model.User
-import com.lampjuice.budgetlight.feature.budget.data.local.entity.UserEntity
 
 fun UserEntity.toDomain(): User = User(
     id = id,

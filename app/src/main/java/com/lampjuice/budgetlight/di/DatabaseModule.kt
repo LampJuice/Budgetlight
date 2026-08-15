@@ -4,12 +4,12 @@ import android.content.Context
 import androidx.room.Room
 import com.lampjuice.budgetlight.database.BudgetDatabase
 import com.lampjuice.budgetlight.database.MIGRATION_3_4
+import com.lampjuice.budgetlight.feature.auth.data.local.dao.UserDao
 import com.lampjuice.budgetlight.feature.budget.data.local.dao.AccountDao
 import com.lampjuice.budgetlight.feature.budget.data.local.dao.BudgetCategoryDao
 import com.lampjuice.budgetlight.feature.budget.data.local.dao.BudgetDao
 import com.lampjuice.budgetlight.feature.budget.data.local.dao.CategoryDao
 import com.lampjuice.budgetlight.feature.budget.data.local.dao.TransactionDao
-import com.lampjuice.budgetlight.feature.budget.data.local.dao.UserDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

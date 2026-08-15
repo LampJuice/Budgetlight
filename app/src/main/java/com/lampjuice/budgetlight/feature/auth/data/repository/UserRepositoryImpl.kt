@@ -1,10 +1,10 @@
-package com.lampjuice.budgetlight.feature.budget.data.repository
+package com.lampjuice.budgetlight.feature.auth.data.repository
 
+import com.lampjuice.budgetlight.feature.auth.data.local.dao.UserDao
+import com.lampjuice.budgetlight.feature.auth.data.local.entity.UserEntity
+import com.lampjuice.budgetlight.feature.auth.data.mapper.toDomain
 import com.lampjuice.budgetlight.feature.auth.domain.model.User
 import com.lampjuice.budgetlight.feature.auth.domain.repository.UserRepository
-import com.lampjuice.budgetlight.feature.budget.data.local.dao.UserDao
-import com.lampjuice.budgetlight.feature.budget.data.local.entity.UserEntity
-import com.lampjuice.budgetlight.feature.budget.data.mapper.toDomain
 import jakarta.inject.Inject
 import kotlinx.coroutines.flow.first
 

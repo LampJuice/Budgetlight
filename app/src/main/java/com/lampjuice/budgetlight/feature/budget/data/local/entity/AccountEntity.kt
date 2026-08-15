@@ -4,6 +4,7 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.Index
 import androidx.room.PrimaryKey
+import com.lampjuice.budgetlight.feature.auth.data.local.entity.UserEntity
 
 @Entity(
     tableName = "accounts",

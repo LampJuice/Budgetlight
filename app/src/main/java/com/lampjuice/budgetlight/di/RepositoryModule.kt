@@ -1,12 +1,12 @@
 package com.lampjuice.budgetlight.di
 
+import com.lampjuice.budgetlight.feature.auth.data.repository.UserRepositoryImpl
 import com.lampjuice.budgetlight.feature.auth.domain.repository.UserRepository
 import com.lampjuice.budgetlight.feature.budget.data.repository.AccountRepositoryImpl
 import com.lampjuice.budgetlight.feature.budget.data.repository.BudgetCategoryRepositoryImpl
 import com.lampjuice.budgetlight.feature.budget.data.repository.BudgetRepositoryImpl
 import com.lampjuice.budgetlight.feature.budget.data.repository.CategoryRepositoryImpl
 import com.lampjuice.budgetlight.feature.budget.data.repository.TransactionRepositoryImpl
-import com.lampjuice.budgetlight.feature.budget.data.repository.UserRepositoryImpl
 import com.lampjuice.budgetlight.feature.budget.domain.repository.AccountRepository
 import com.lampjuice.budgetlight.feature.budget.domain.repository.BudgetCategoryRepository
 import com.lampjuice.budgetlight.feature.budget.domain.repository.BudgetRepository
