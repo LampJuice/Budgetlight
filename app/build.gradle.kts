@@ -43,6 +43,8 @@ android {
 }
 
 dependencies {
+    implementation(libs.password4j)
+    implementation(libs.androidx.datastore.preferences)
     implementation(libs.androidx.navigation.compose)
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.compose.material.icons.extended)

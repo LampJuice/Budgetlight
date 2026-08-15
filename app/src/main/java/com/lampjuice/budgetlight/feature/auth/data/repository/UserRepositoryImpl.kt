@@ -6,30 +6,35 @@ import com.lampjuice.budgetlight.feature.auth.data.mapper.toDomain
 import com.lampjuice.budgetlight.feature.auth.domain.model.User
 import com.lampjuice.budgetlight.feature.auth.domain.repository.UserRepository
 import jakarta.inject.Inject
-import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.firstOrNull
 
 class UserRepositoryImpl
 @Inject
 constructor(
     private val userDao: UserDao,
 ) : UserRepository {
-    override suspend fun getOrCreateUser(): User {
-        val existingUser =
-            userDao
-                .observeUser()
-                .first()
+    override suspend fun getUserByLogin(login: String): User? = userDao
+        .getUserByLogin(login)
+        ?.toDomain()
 
-        if (existingUser != null) {
-            return existingUser.toDomain()
-        }
-        val newUser =
-            UserEntity(
-                name = "User",
-            )
-        val id = userDao.insertUser(newUser)
-
-        return newUser
+    override suspend fun createUser(
+        login: String,
+        name: String,
+        passwordHash: String,
+    ): User {
+        val entity = UserEntity(
+            login = login,
+            name = name,
+            passwordHash = passwordHash,
+        )
+        val id = userDao.insertUser(entity)
+        return entity
             .copy(id = id)
             .toDomain()
     }
+
+    override suspend fun getCurrentUser(): User? = userDao
+        .observeUser()
+        .firstOrNull()
+        ?.toDomain()
 }

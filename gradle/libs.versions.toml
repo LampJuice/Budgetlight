@@ -14,8 +14,13 @@ ksp = "2.2.10-2.0.2"
 hilt = "2.60.1"
 detekt = "1.23.8"
 spotless = "7.0.2"
+datastore = "1.1.7"
+password4j = "1.8.4"
+
 
 [libraries]
+password4j = { group = "com.password4j", name = "password4j", version.ref = "password4j" }
+androidx-datastore-preferences = { group = "androidx.datastore", name = "datastore-preferences", version.ref = "datastore" }
 detekt-formatting = { group = "io.gitlab.arturbosch.detekt", name = "detekt-formatting", version.ref = "detekt" }
 hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
 hilt-compiler = { group = "com.google.dagger", name = "hilt-compiler", version.ref = "hilt" }

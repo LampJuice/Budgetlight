@@ -1,7 +1,9 @@
 package com.lampjuice.budgetlight.di
 
 import com.lampjuice.budgetlight.feature.auth.data.repository.UserRepositoryImpl
+import com.lampjuice.budgetlight.feature.auth.data.session.LocalAuthSession
 import com.lampjuice.budgetlight.feature.auth.domain.repository.UserRepository
+import com.lampjuice.budgetlight.feature.auth.domain.session.AuthSession
 import com.lampjuice.budgetlight.feature.budget.data.repository.AccountRepositoryImpl
 import com.lampjuice.budgetlight.feature.budget.data.repository.BudgetCategoryRepositoryImpl
 import com.lampjuice.budgetlight.feature.budget.data.repository.BudgetRepositoryImpl
@@ -44,4 +46,8 @@ abstract class RepositoryModule {
     @Binds
     @Singleton
     abstract fun bindBudgetCategoryRepository(impl: BudgetCategoryRepositoryImpl): BudgetCategoryRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindAuthSession(impl: LocalAuthSession): AuthSession
 }
