@@ -1,7 +1,6 @@
 package com.lampjuice.budgetlight.ui.home.mapper
 
 import com.lampjuice.budgetlight.domain.model.HomeData
-import com.lampjuice.budgetlight.domain.model.TransactionType
 import com.lampjuice.budgetlight.ui.home.HomeState
 import com.lampjuice.budgetlight.ui.home.model.BudgetSummaryUi
 import com.lampjuice.budgetlight.ui.mapper.toUi
@@ -10,14 +9,9 @@ import java.time.LocalDate
 
 fun HomeData.toUi(userName: String): HomeState {
     val budgetSummary = budget?.let {
-        val monthlyExpenses = transactions
-            .asSequence()
-            .filter { transaction ->
-                transaction.date.year == it.year &&
-                    transaction.date.monthValue == it.month &&
-                    transaction.type == TransactionType.EXPENSE
-            }
-            .sumOf { transaction -> transaction.amount }
+        val monthlyExpenses = budgetCategories.sumOf { category ->
+            category.spentAmount
+        }
 
         BudgetSummaryUi(
             id = budget.id,

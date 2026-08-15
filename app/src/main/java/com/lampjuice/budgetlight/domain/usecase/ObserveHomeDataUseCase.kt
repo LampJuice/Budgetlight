@@ -10,7 +10,6 @@ import kotlinx.coroutines.flow.flowOf
 
 class ObserveHomeDataUseCase @Inject constructor(
     private val observeTransactionInfoUseCase: ObserveTransactionInfoUseCase,
-    private val observeTransactionsUseCase: ObserveTransactionsUseCase,
     private val observeCurrentAccountUseCase: ObserveCurrentAccountUseCase,
     private val observeCurrentBudgetUseCase: ObserveCurrentBudgetUseCase,
     private val observeBudgetCategoryInfoUseCase: ObserveBudgetCategoryInfoUseCase,
@@ -19,14 +18,6 @@ class ObserveHomeDataUseCase @Inject constructor(
     operator fun invoke(userId: Long): Flow<HomeData> {
         val accountFlow = observeCurrentAccountUseCase(userId)
         val budgetFlow = observeCurrentBudgetUseCase(userId)
-        val transactionsFlow = accountFlow
-            .flatMapLatest { account ->
-                if (account == null) {
-                    flowOf(emptyList())
-                } else {
-                    observeTransactionsUseCase(account.id)
-                }
-            }
         val transactionsInfoFlow = accountFlow
             .flatMapLatest { account ->
                 if (account == null) {
@@ -35,6 +26,7 @@ class ObserveHomeDataUseCase @Inject constructor(
                     observeTransactionInfoUseCase(account.id)
                 }
             }
+
         val budgetCategoriesFlow = combine(
             budgetFlow,
             accountFlow,
@@ -50,13 +42,11 @@ class ObserveHomeDataUseCase @Inject constructor(
 
         return combine(
             budgetFlow,
-            transactionsFlow,
             transactionsInfoFlow,
             budgetCategoriesFlow,
-        ) { budget, transactions, transactionsInfo, categories ->
+        ) { budget, transactionsInfo, categories ->
             HomeData(
                 budget = budget,
-                transactions = transactions,
                 transactionsInfo = transactionsInfo,
                 budgetCategories = categories,
             )
