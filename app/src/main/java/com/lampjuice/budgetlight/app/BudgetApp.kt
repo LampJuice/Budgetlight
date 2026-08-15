@@ -8,7 +8,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.lampjuice.budgetlight.navigation.BudgetLightNavHost
 import com.lampjuice.budgetlight.ui.app.AppState
 import com.lampjuice.budgetlight.ui.app.AppViewModel
 import com.lampjuice.budgetlight.ui.loadingscreen.LoadingScreen
@@ -26,7 +25,7 @@ fun BudgetApp(
 
         when (state) {
             AppState.Loading -> LoadingScreen()
-            AppState.Ready -> BudgetLightNavHost()
+            AppState.Ready -> ApplicationFlow()
         }
     }
 }
