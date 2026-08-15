@@ -1,183 +1,74 @@
 # BudgetLight
 
-BudgetLight — Android-приложение для планирования личного бюджета, контроля расходов и управления финансами.
+BudgetLight — современное Android-приложение для планирования личного бюджета, контроля расходов и управления финансами.
 
-Приложение позволяет планировать месячный бюджет, устанавливать лимиты по категориям и отслеживать фактические расходы.
-
-Проект разрабатывается на Kotlin с использованием Jetpack Compose и Clean Architecture.
+Приложение построено на принципах реактивного программирования: любые изменения в базе данных мгновенно отображаются в интерфейсе.
 
 ## Архитектура
 
-Проект построен по принципам Clean Architecture с разделением на три основных слоя:
+Проект строго следует принципам **Clean Architecture**:
 
-```text
-ui
- ↓
-domain
- ↓
-data
-```
+ui (Compose + ViewModel + Mappers)
+↓
+domain (Models + UseCases + Repository Interfaces)
+↓
+data (Room + DAOs + Repository Implementations + Mappers)
 
-### UI
+### Навигация
+В приложении реализована типичная для Compose навигация через `AppNavHost`:
+*   **Home**: Главный дашборд с обзором финансов.
+*   **Transactions**: Полный список операций с фильтрацией и возможностью удаления (Swipe-to-Delete).
+*   **Add Transaction**: Экран создания новых доходов и расходов.
 
-UI реализован на Jetpack Compose. Состояние экранов управляется через ViewModel и StateFlow.
+## Основной функционал
 
-Основной экран Home Dashboard включает:
+### 1. Планирование бюджета
+*   **Месячные циклы**: Бюджет привязан к конкретному месяцу и году. При переходе на новый месяц приложение автоматически подготавливает структуру бюджета.
+*   **Лимиты по категориям**: Возможность устанавливать индивидуальные лимиты для каждой расходной категории.
+*   **Архивация**: Поддержка архивации категорий, которые больше не используются, с сохранением исторической точности в прошлых периодах.
 
-```text
-HomeScreen
-├── GreetingSection
-├── BudgetSummaryCard
-├── CategorySection
-│   └── CategoryBudgetItem
-└── RecentTransactionSection
-    └── TransactionItem
-```
+### 2. Учет операций
+*   **Типы транзакций**: Поддержка Доходов и Расходов.
+*   **Детализация**: Каждая операция имеет название, сумму, дату и категорию.
+*   **Гибкий ввод**: Удобный выбор даты через календарь и выбор категории из выпадающего списка.
 
-Также используется переиспользуемый `BudgetScaffold` и Floating Action Button для добавления операций.
+### 3. Аналитика (Home Dashboard)
+*   Визуальный индикатор прогресса (Spent vs Limit).
+*   Автоматический расчет остатка средств.
+*   Секция последних операций для быстрого контроля.
 
-### Domain
+## Технический стек
 
-Domain-слой содержит бизнес-модели, Repository-контракты и UseCase.
+*   **UI**: Jetpack Compose, Material 3 (Material You).
+*   **DI**: Hilt (Dagger).
+*   **Database**: Room (с поддержкой Flow, Foreign Keys и индексов).
+*   **Architecture Components**: ViewModel, Navigation Compose, Lifecycle KTX.
+*   **Date & Time**: Java Time API (LocalDate) с TypeConverters для Room.
+*   **Code Quality**: Detekt, Spotless, ktlint, Android Lint.
 
-Основные сущности:
+## Структура Domain-слоя
 
-* User
-* Account
-* Transaction
-* Category
-* Budget
-* BudgetCategory
+Основные UseCase-ы, реализующие бизнес-логику:
 
-Основные UseCase:
-
-* InitializeUserUseCase
-* CalculateBalanceUseCase
-* ObserveTransactionsUseCase
-* ObserveTransactionInfoUseCase
-* ObserveCurrentAccountUseCase
-* ObserveCurrentBudgetUseCase
-* ObserveBudgetCategoryInfoUseCase
-* AddAccountUseCase
-* AddTransactionUseCase
-
-### Data
-
-Для локального хранения используется Room.
-
-Реализованы:
-
-* Entity;
-* DAO;
-* Repository implementations;
-* Entity ↔ Domain mapper'ы;
-* ForeignKey связи;
-* индексы;
-* TypeConverter для `LocalDate`.
-
-Текущая структура данных:
-
-```text
-User
- └── Account
-      └── Transaction
-
-Budget
- └── BudgetCategory
-      └── Category
-```
-
-На текущем этапе пользователь работает с одним основным счётом. Архитектура `Account` при этом уже подготовлена для дальнейшей поддержки нескольких счетов.
-
-## Инициализация приложения
-
-При запуске приложение проходит базовую инициализацию:
-
-```text
-Application start
-       ↓
-AppViewModel
-       ↓
-InitializeUserUseCase
-       ↓
-SeedApplicationDataUseCase
-       ↓
-AppState.Ready
-       ↓
-Navigation
-```
-
-Для отображения состояния загрузки используется отдельный `LoadingScreen`.
-
-## Home Dashboard
-
-Главный экран отображает:
-
-* приветствие пользователя;
-* текущий бюджет;
-* сумму расходов;
-* остаток бюджета;
-* прогресс выполнения бюджета;
-* лимиты по категориям;
-* фактические расходы по категориям;
-* последние операции.
-
-Категории используют собственные Material Icons, а операции отображают иконку соответствующей категории.
-
-Данные HomeScreen поступают из Room через `Flow` и преобразуются в UI-модели перед отображением.
-
-## Технологии
-
-* Kotlin
-* Jetpack Compose
-* Material 3
-* Room
-* Hilt
-* Coroutines
-* Flow
-* StateFlow
-* KSP
-* Navigation Compose
-* Detekt
-* Spotless
-* ktlint
-* Android Lint
-* Gradle Version Catalog
+*   **Управление данными**: `InitializeUserUseCase`, `SeedApplicationDataUseCase`, `SeedDatabaseUseCase`.
+*   **Наблюдение (Flow)**: `ObserveHomeDataUseCase`, `ObserveTransactionsUseCase`, `ObserveCurrentBudgetUseCase`, `ObserveBudgetCategoryInfoUseCase`.
+*   **Действия**: `AddTransactionUseCase`, `DeleteTransactionUseCase`, `SaveCurrentBudgetUseCase`, `AddCategoryUseCase`, `ArchiveCategoryUseCase`, `UpdateBudgetCategoryLimitUseCase`.
 
 ## Качество кода
 
-Для контроля качества используются Detekt, Spotless + ktlint и Android Lint.
+Проект поддерживает высокие стандарты оформления кода. Перед внесением изменений рекомендуется выполнять проверку:
 
-Перед коммитом:
-
-```bash
-./gradlew format
-./gradlew verify
-```
-
-`verify` выполняет проверки форматирования, статический анализ, Android Lint и сборку проекта.
+./gradlew format  # Автоматическое форматирование (Spotless + ktlint)
+./gradlew verify  # Полная проверка (Lint + Detekt + Тесты)
 
 ## Текущее состояние
 
-На данный момент реализованы:
-
-* Clean Architecture;
-* Room Database;
-* Hilt DI;
-* Repository и UseCase слои;
-* пользователь инициализируется автоматически;
-* один основной счёт;
-* категории и категории бюджета;
-* месячный бюджет;
-* расчёт баланса;
-* Home Dashboard;
-* отображение бюджета и категорий;
-* отображение последних операций;
-* иконки категорий;
-* LoadingScreen;
-* AppViewModel;
-* HomeViewModel;
-* Floating Action Button;
-* инструменты проверки и форматирования кода.
-
-Следующий этап разработки — реализация полноценного сценария добавления операции через кнопку `+`.
+✅ **Реализовано:**
+*   Полная структура Clean Architecture и DI (Hilt).
+*   Реактивная база данных (Room + Flow).
+*   Главный экран (Home Dashboard) с расчетом прогресса.
+*   Экран всех транзакций с группировкой по датам.
+*   Экран добавления операций с валидацией форм.
+*   Диалоги редактирования лимитов и добавления категорий.
+*   Механика архивации категорий.
+*   Локализация через ресурсы (strings.xml).
