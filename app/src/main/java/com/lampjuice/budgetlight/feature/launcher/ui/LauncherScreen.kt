@@ -2,23 +2,21 @@ package com.lampjuice.budgetlight.feature.launcher.ui
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountBalanceWallet
-import androidx.compose.material.icons.filled.Receipt
+import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -53,60 +51,52 @@ fun LauncherScreen(
             title = stringResource(R.string.shopping_list_title),
             description = stringResource(R.string.shopping_list_desc),
             enabled = false,
-            icon = Icons.Default.Receipt,
+            icon = Icons.Default.ShoppingCart,
             onClick = onShoppingListClick,
         ),
     )
 
-    LazyColumn(
-        modifier = Modifier.fillMaxSize(),
-        contentPadding = PaddingValues(
-            horizontal = Dimens.LargeSpacing,
-            vertical = Dimens.XXLSpacing,
-        ),
-        verticalArrangement = Arrangement.spacedBy(Dimens.LargeSpacing),
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(horizontal = Dimens.LargeSpacing),
         horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center,
     ) {
-        item {
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
+            Text(
+                text = stringResource(R.string.app_name),
+                style = MaterialTheme.typography.headlineLarge,
+
+            )
+
+            Spacer(modifier = Modifier.size(Dimens.SmallSpacing))
+
+            Text(
+                text = stringResource(R.string.app_choice),
+                style = MaterialTheme.typography.bodyLarge,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+
+            )
+
+            Spacer(modifier = Modifier.size(Dimens.ExtraLargeSpacing))
+
+            LauncherFeatureCard(features[0])
+            Spacer(modifier = Modifier.size(Dimens.Spacing))
+            LauncherFeatureCard(features[1])
+
+            Spacer(modifier = Modifier.size(Dimens.LargeSpacing))
+            TextButton(
+                onClick = {
+                    // выход на экран авторизации
+                },
+                modifier = Modifier.fillMaxWidth(),
+
             ) {
                 Text(
-                    text = stringResource(R.string.app_name),
-                    style = MaterialTheme.typography.headlineLarge,
-
-                )
-
-                Spacer(modifier = Modifier.size(Dimens.SmallSpacing))
-
-                Text(
-                    text = stringResource(R.string.app_choice),
-                    style = MaterialTheme.typography.bodyLarge,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-
-                )
-            }
-        }
-        items(features) { feature ->
-            LauncherFeatureCard(feature = feature)
-        }
-        item {
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = Dimens.ItemSpacing),
-                horizontalAlignment = Alignment.CenterHorizontally,
-            ) {
-                Text(
-                    text = stringResource(R.string.have_an_account),
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                )
-
-                Spacer(modifier = Modifier.size(Dimens.ExtraSmallSpacing))
-
-                Text(
-                    text = stringResource(R.string.sign_in),
+                    text = stringResource(R.string.change_user),
                     style = MaterialTheme.typography.labelLarge,
                     color = MaterialTheme.colorScheme.primary,
                 )
@@ -123,7 +113,7 @@ private fun LauncherFeatureCard(
         onClick = feature.onClick,
         enabled = feature.enabled,
         modifier = Modifier
-            .fillMaxSize()
+            .fillMaxWidth()
             .alpha(if (feature.enabled) 1f else 0.5f),
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surface,

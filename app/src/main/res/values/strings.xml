@@ -1,12 +1,12 @@
 <resources>
-    <string name="app_name">Budetlight</string>
+    <string name="app_name">BudgetLight</string>
 
     <!-- Лаунчер -->
     <string name="budget_planner_title">Планирование бюджета</string>
     <string name="shopping_list_title">Список покупок</string>
     <string name="budget_planner_desc">Контролируйте доходы, расходы и бюджет</string>
     <string name="shopping_list_desc">Удобный список покупок - скоро</string>
-    <string name="app_choice">Выберите приложение</string>
+    <string name="app_choice">Что будем использовать?</string>
     <string name="have_an_account">Уже есть аккаунт?</string>
     <string name="sign_in">Войти или зарегистрироваться</string>
 
@@ -19,6 +19,7 @@
     <string name="register_button">Регистрация</string>
     <string name="welcome">Добро пожаловать</string>
     <string name="create_account">Создайте аккаунт</string>
+    <string name="change_user">Сменить пользователя</string>
     <string name="create_account_subtitle">Зарегистрируйтесь, чтобы начать вести учёт финансов</string>
     <string name="sign_in_your_account">Войдите в свой аккаунт</string>
     <string name="empty_login_or_password">Введите логин и пароль</string>
