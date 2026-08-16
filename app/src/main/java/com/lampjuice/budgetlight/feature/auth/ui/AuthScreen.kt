@@ -44,20 +44,49 @@ fun AuthScreen(
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Text(
-            text = stringResource(R.string.welcome),
+            text = stringResource(
+                if (state.isRegisterMode) {
+                    R.string.create_account
+                } else {
+                    R.string.welcome
+                },
+            ),
+            style = MaterialTheme.typography.headlineMedium,
         )
         Spacer(modifier = Modifier.size(Dimens.SmallSpacing))
 
         Text(
-            text = stringResource(R.string.sign_in_your_account),
+            text = stringResource(
+                if (state.isRegisterMode) {
+                    R.string.create_account_subtitle
+                } else {
+                    R.string.sign_in_your_account
+                },
+            ),
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
 
         Spacer(modifier = Modifier.size(Dimens.ExtraLargeSpacing))
+
+        if (state.isRegisterMode) {
+            OutlinedTextField(
+                value = state.name,
+                onValueChange = viewModel::onNameChange,
+                modifier = Modifier.fillMaxWidth(),
+                singleLine = true,
+                label = {
+                    Text(text = stringResource(R.string.name_label))
+                },
+            )
+            Spacer(modifier = Modifier.size(Dimens.ItemSpacing))
+        }
 
         OutlinedTextField(
             value = state.login,
             onValueChange = viewModel::onLoginChange,
             modifier = Modifier.fillMaxWidth(),
+            singleLine = true,
             label = {
                 Text(text = stringResource(R.string.login_label))
             },
@@ -90,6 +119,27 @@ fun AuthScreen(
                 }
             },
         )
+
+        if (state.isRegisterMode) {
+            Spacer(modifier = Modifier.size(Dimens.ItemSpacing))
+
+            OutlinedTextField(
+                value = state.confirmPassword,
+                onValueChange = viewModel::onConfirmPasswordChange,
+                modifier = Modifier.fillMaxWidth(),
+                singleLine = true,
+                label = {
+                    Text(text = stringResource(R.string.confirm_password_label))
+                },
+                visualTransformation = if (state.isPasswordVisible) {
+                    VisualTransformation.None
+                } else {
+                    PasswordVisualTransformation()
+                },
+
+            )
+        }
+
         state.errorMessageResId?.let { errorResId ->
             Spacer(modifier = Modifier.size(Dimens.SmallSpacing))
             Text(
@@ -103,31 +153,61 @@ fun AuthScreen(
 
         Button(
             onClick = {
-                viewModel.login(
-                    onSuccess = onAuthSuccess,
-                )
+                if (state.isRegisterMode) {
+                    viewModel.register(
+                        onSuccess = onAuthSuccess,
+                    )
+                } else {
+                    viewModel.login(
+                        onSuccess = onAuthSuccess,
+                    )
+                }
             },
             modifier = Modifier.fillMaxWidth(),
             enabled = !state.isLoading,
 
         ) {
-            Text(text = stringResource(R.string.login_button))
+            Text(
+                text = stringResource(
+                    if (state.isRegisterMode) {
+                        R.string.register_button
+                    } else {
+                        R.string.login_button
+                    },
+                ),
+            )
         }
+
         TextButton(
             onClick = {
-                viewModel.register()
+                if (!state.isRegisterMode) {
+                    viewModel.showRegistration()
+                } else {
+                    viewModel.showLogin()
+                }
             },
             modifier = Modifier.fillMaxWidth(),
+            enabled = !state.isLoading,
         ) {
-            Text(text = stringResource(R.string.register_button))
+            Text(
+                text = stringResource(
+                    if (state.isRegisterMode) {
+                        R.string.already_have_account
+                    } else {
+                        R.string.no_account
+                    },
+                ),
+            )
         }
-        TextButton(
-            onClick = {
-                viewModel.forgotPassword()
-            },
-            modifier = Modifier.fillMaxWidth(),
-        ) {
-            Text(text = stringResource(R.string.forgot_password))
+        if (!state.isRegisterMode) {
+            TextButton(
+                onClick = {
+                    viewModel.forgotPassword()
+                },
+                modifier = Modifier.fillMaxWidth(),
+            ) {
+                Text(text = stringResource(R.string.forgot_password))
+            }
         }
     }
 }

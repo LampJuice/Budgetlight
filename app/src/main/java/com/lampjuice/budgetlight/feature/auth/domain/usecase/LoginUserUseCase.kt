@@ -1,5 +1,7 @@
 package com.lampjuice.budgetlight.feature.auth.domain.usecase
 
+import com.lampjuice.budgetlight.feature.auth.domain.error.AuthError
+import com.lampjuice.budgetlight.feature.auth.domain.error.AuthException
 import com.lampjuice.budgetlight.feature.auth.domain.model.User
 import com.lampjuice.budgetlight.feature.auth.domain.repository.UserRepository
 import com.lampjuice.budgetlight.feature.auth.domain.security.PasswordHasher
@@ -23,19 +25,19 @@ class LoginUserUseCase @Inject constructor(
         val result = when {
             user == null -> {
                 Result.failure(
-                    IllegalArgumentException("Пользователь с логином $login не найден"),
+                    AuthException(AuthError.UserNotFound),
                 )
             }
 
             passwordHash == null -> {
                 Result.failure(
-                    IllegalArgumentException("Пароль пользователя не найден"),
+                    AuthException(AuthError.PasswordNotFound),
                 )
             }
 
             !passwordHasher.verify(password, passwordHash) -> {
                 Result.failure(
-                    IllegalArgumentException("Неверный пароль"),
+                    AuthException(AuthError.InvalidCredentials),
                 )
             }
 

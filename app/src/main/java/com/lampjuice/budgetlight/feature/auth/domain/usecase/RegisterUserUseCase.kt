@@ -1,5 +1,7 @@
 package com.lampjuice.budgetlight.feature.auth.domain.usecase
 
+import com.lampjuice.budgetlight.feature.auth.domain.error.AuthError
+import com.lampjuice.budgetlight.feature.auth.domain.error.AuthException
 import com.lampjuice.budgetlight.feature.auth.domain.model.User
 import com.lampjuice.budgetlight.feature.auth.domain.repository.UserRepository
 import com.lampjuice.budgetlight.feature.auth.domain.security.PasswordHasher
@@ -19,7 +21,7 @@ class RegisterUserUseCase @Inject constructor(
     ): Result<User> {
         if (userRepository.getUserByLogin(login) != null) {
             return Result.failure(
-                IllegalArgumentException("User with login $login already exists"),
+                AuthException(AuthError.UserAlreadyExists),
             )
         }
 
