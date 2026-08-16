@@ -46,14 +46,14 @@ fun LauncherScreen(
             title = stringResource(R.string.budget_planner_title),
             description = stringResource(R.string.budget_planner_desc),
             enabled = true,
-            icon = Icons.Default.Receipt,
+            icon = Icons.Default.AccountBalanceWallet,
             onClick = onBudgetPlannerClick,
         ),
         LauncherFeature(
             title = stringResource(R.string.shopping_list_title),
             description = stringResource(R.string.shopping_list_desc),
-            enabled = true,
-            icon = Icons.Default.AccountBalanceWallet,
+            enabled = false,
+            icon = Icons.Default.Receipt,
             onClick = onShoppingListClick,
         ),
     )
