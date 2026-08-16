@@ -13,6 +13,7 @@ import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -89,14 +90,26 @@ fun AuthScreen(
                 }
             },
         )
+        state.errorMessageResId?.let { errorResId ->
+            Spacer(modifier = Modifier.size(Dimens.SmallSpacing))
+            Text(
+                text = stringResource(errorResId),
+                color = MaterialTheme.colorScheme.error,
+                style = MaterialTheme.typography.bodySmall,
+            )
+        }
 
         Spacer(modifier = Modifier.size(Dimens.CardCorner))
 
         Button(
             onClick = {
-                viewModel.login()
+                viewModel.login(
+                    onSuccess = onAuthSuccess,
+                )
             },
             modifier = Modifier.fillMaxWidth(),
+            enabled = !state.isLoading,
+
         ) {
             Text(text = stringResource(R.string.login_button))
         }

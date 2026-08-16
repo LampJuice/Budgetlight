@@ -1,0 +1,38 @@
+package com.lampjuice.budgetlight.feature.auth.domain.usecase
+
+import com.lampjuice.budgetlight.feature.auth.domain.model.User
+import com.lampjuice.budgetlight.feature.auth.domain.repository.UserRepository
+import com.lampjuice.budgetlight.feature.auth.domain.security.PasswordHasher
+import com.lampjuice.budgetlight.feature.auth.domain.session.AuthSession
+import jakarta.inject.Inject
+
+class RegisterUserUseCase @Inject constructor(
+    private val userRepository: UserRepository,
+    private val authSession: AuthSession,
+    private val passwordHasher: PasswordHasher,
+) {
+
+    suspend operator fun invoke(
+        login: String,
+        name: String,
+        password: String,
+    ): Result<User> {
+        if (userRepository.getUserByLogin(login) != null) {
+            return Result.failure(
+                IllegalArgumentException("User with login $login already exists"),
+            )
+        }
+
+        val passwordHash = passwordHasher.hash(password)
+
+        val user = userRepository.createUser(
+            login = login,
+            name = name,
+            passwordHash = passwordHash,
+        )
+
+        authSession.setUserId(user.id)
+
+        return Result.success(user)
+    }
+}

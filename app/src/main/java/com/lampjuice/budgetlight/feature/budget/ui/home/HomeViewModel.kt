@@ -2,7 +2,7 @@ package com.lampjuice.budgetlight.feature.budget.ui.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.lampjuice.budgetlight.feature.auth.domain.usecase.InitializeUserUseCase
+import com.lampjuice.budgetlight.feature.auth.domain.usecase.ObserveCurrentUserUseCase
 import com.lampjuice.budgetlight.feature.budget.domain.model.CategoryIcon
 import com.lampjuice.budgetlight.feature.budget.domain.model.TransactionType
 import com.lampjuice.budgetlight.feature.budget.domain.usecase.AddCategoryUseCase
@@ -13,14 +13,18 @@ import com.lampjuice.budgetlight.feature.budget.domain.usecase.UpdateBudgetCateg
 import com.lampjuice.budgetlight.feature.budget.ui.home.mapper.toUi
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jakarta.inject.Inject
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val observeHomeDataUseCase: ObserveHomeDataUseCase,
-    private val initializeUserUseCase: InitializeUserUseCase,
+    private val observeCurrentUserUseCase: ObserveCurrentUserUseCase,
     private val saveCurrentBudgetUseCase: SaveCurrentBudgetUseCase,
     private val addCategoryUseCase: AddCategoryUseCase,
     private val archiveCategoryUseCase: ArchiveCategoryUseCase,
@@ -34,14 +38,22 @@ class HomeViewModel @Inject constructor(
         initialize()
     }
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     private fun initialize() {
         viewModelScope.launch {
-            val user = initializeUserUseCase()
-            userId = user.id
+            observeCurrentUserUseCase()
+                .filterNotNull()
+                .flatMapLatest { user ->
+                    userId = user.id
 
-            observeHomeDataUseCase(user.id).collect { homeData ->
-                _state.value = homeData.toUi(user.name)
-            }
+                    observeHomeDataUseCase(user.id)
+                        .map { homeData ->
+                            user to homeData
+                        }
+                }
+                .collect { (user, homeData) ->
+                    _state.value = homeData.toUi(user.name)
+                }
         }
     }
 

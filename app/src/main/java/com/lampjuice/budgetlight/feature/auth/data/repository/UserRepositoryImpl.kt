@@ -6,7 +6,9 @@ import com.lampjuice.budgetlight.feature.auth.data.mapper.toDomain
 import com.lampjuice.budgetlight.feature.auth.domain.model.User
 import com.lampjuice.budgetlight.feature.auth.domain.repository.UserRepository
 import jakarta.inject.Inject
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.map
 
 class UserRepositoryImpl
 @Inject
@@ -16,6 +18,10 @@ constructor(
     override suspend fun getUserByLogin(login: String): User? = userDao
         .getUserByLogin(login)
         ?.toDomain()
+
+    override suspend fun getPassHashByLogin(login: String): String? = userDao
+        .getUserByLogin(login)
+        ?.passwordHash
 
     override suspend fun createUser(
         login: String,
@@ -37,4 +43,7 @@ constructor(
         .observeUser()
         .firstOrNull()
         ?.toDomain()
+
+    override fun observeUserById(userId: Long): Flow<User?> = userDao.observeUserById(userId)
+        .map { it?.toDomain() }
 }

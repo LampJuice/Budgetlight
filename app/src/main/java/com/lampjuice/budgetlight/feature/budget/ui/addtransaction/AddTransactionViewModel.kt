@@ -2,7 +2,7 @@ package com.lampjuice.budgetlight.feature.budget.ui.addtransaction
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.lampjuice.budgetlight.feature.auth.domain.usecase.InitializeUserUseCase
+import com.lampjuice.budgetlight.feature.auth.domain.usecase.ObserveCurrentUserUseCase
 import com.lampjuice.budgetlight.feature.budget.domain.model.Transaction
 import com.lampjuice.budgetlight.feature.budget.domain.model.TransactionType
 import com.lampjuice.budgetlight.feature.budget.domain.usecase.AddTransactionUseCase
@@ -10,17 +10,20 @@ import com.lampjuice.budgetlight.feature.budget.domain.usecase.ObserveCategories
 import com.lampjuice.budgetlight.feature.budget.domain.usecase.ObserveCurrentAccountUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jakarta.inject.Inject
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 
 @HiltViewModel
 class AddTransactionViewModel @Inject constructor(
-    private val initializeUserUseCase: InitializeUserUseCase,
+    private val observeCurrentUserUseCase: ObserveCurrentUserUseCase,
     private val addTransactionUseCase: AddTransactionUseCase,
     private val observeCurrentAccountUseCase: ObserveCurrentAccountUseCase,
     private val observeCategoriesUseCase: ObserveCategoriesUseCase,
@@ -36,20 +39,22 @@ class AddTransactionViewModel @Inject constructor(
         observeData()
     }
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     private fun observeData() {
         viewModelScope.launch {
-            val user = initializeUserUseCase()
-
-            launch {
-                observeCurrentAccountUseCase(user.id).collect { account ->
+            observeCurrentUserUseCase()
+                .filterNotNull()
+                .flatMapLatest { user ->
+                    observeCurrentAccountUseCase(user.id)
+                }
+                .collect { account ->
                     currentAccountId = account?.id
                 }
-            }
-            launch {
-                observeCategoriesUseCase().collect { categories ->
-                    _state.update {
-                        it.copy(categories = categories)
-                    }
+        }
+        viewModelScope.launch {
+            observeCategoriesUseCase().collect { categories ->
+                _state.update {
+                    it.copy(categories = categories)
                 }
             }
         }

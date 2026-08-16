@@ -2,7 +2,7 @@ package com.lampjuice.budgetlight.feature.budget.ui.transactions
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.lampjuice.budgetlight.feature.auth.domain.usecase.InitializeUserUseCase
+import com.lampjuice.budgetlight.feature.auth.domain.usecase.ObserveCurrentUserUseCase
 import com.lampjuice.budgetlight.feature.budget.domain.usecase.DeleteTransactionUseCase
 import com.lampjuice.budgetlight.feature.budget.domain.usecase.ObserveCurrentAccountUseCase
 import com.lampjuice.budgetlight.feature.budget.domain.usecase.ObserveTransactionInfoUseCase
@@ -11,6 +11,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.update
@@ -21,7 +22,7 @@ import javax.inject.Inject
 class TransactionsViewModel @Inject constructor(
     private val observeTransactionInfoUseCase: ObserveTransactionInfoUseCase,
     private val observeCurrentAccountUseCase: ObserveCurrentAccountUseCase,
-    private val initializeUserUseCase: InitializeUserUseCase,
+    private val observeCurrentUserUseCase: ObserveCurrentUserUseCase,
     private val deleteTransactionUseCase: DeleteTransactionUseCase,
 ) : ViewModel() {
 
@@ -47,9 +48,11 @@ class TransactionsViewModel @Inject constructor(
     @OptIn(ExperimentalCoroutinesApi::class)
     private fun observeTransactions() {
         viewModelScope.launch {
-            val user = initializeUserUseCase()
-
-            observeCurrentAccountUseCase(user.id)
+            observeCurrentUserUseCase()
+                .filterNotNull()
+                .flatMapLatest { user ->
+                    observeCurrentAccountUseCase(user.id)
+                }
                 .flatMapLatest { account ->
                     if (account == null) {
                         flowOf(emptyList())

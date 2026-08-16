@@ -17,7 +17,7 @@ interface UserDao {
         LIMIT 1
         """,
     )
-    fun getUserByLogin(login: String): UserEntity?
+    suspend fun getUserByLogin(login: String): UserEntity?
 
     @Query(
         """
@@ -30,4 +30,14 @@ interface UserDao {
 
     @Insert(onConflict = OnConflictStrategy.ABORT)
     suspend fun insertUser(user: UserEntity): Long
+
+    @Query(
+        """
+            SELECT *
+            FROM users
+            WHERE id = :userId
+            LIMIT 1
+        """,
+    )
+    fun observeUserById(userId: Long): Flow<UserEntity?>
 }

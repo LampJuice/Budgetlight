@@ -19,7 +19,10 @@
     <string name="register_button">Регистрация</string>
     <string name="welcome">Добро пожаловать</string>
     <string name="sign_in_your_account">Войдите в свой аккаунт</string>
-
+    <string name="empty_login_or_password">Введите логин и пароль</string>
+    <string name="invalid_login_or_password">Неверный логин или пароль</string>
+    <string name="registration_not_available">Регистрация не доступна</string>"
+    <string name="password_reset_not_available">Восстановление пароля не доступно</string>
 
 
     <!-- Общие -->
