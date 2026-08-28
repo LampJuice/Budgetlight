@@ -22,7 +22,7 @@ fun BudgetLightNavHost(
 
     BackHandler(
         enabled = currentRoute == BudgetLightRoutes.HOME,
-        onBack = onBackToLauncher
+        onBack = onBackToLauncher,
     )
 
     NavHost(navController = navController, startDestination = BudgetLightRoutes.HOME) {
