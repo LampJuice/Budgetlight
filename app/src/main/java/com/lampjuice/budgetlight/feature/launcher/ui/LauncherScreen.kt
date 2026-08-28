@@ -38,6 +38,7 @@ private data class LauncherFeature(
 fun LauncherScreen(
     onBudgetPlannerClick: () -> Unit,
     onShoppingListClick: () -> Unit,
+    onChangeUserClick: () -> Unit,
 ) {
     val features = listOf(
         LauncherFeature(
@@ -89,9 +90,7 @@ fun LauncherScreen(
 
             Spacer(modifier = Modifier.size(Dimens.LargeSpacing))
             TextButton(
-                onClick = {
-                    // выход на экран авторизации
-                },
+                onClick = onChangeUserClick,
                 modifier = Modifier.fillMaxWidth(),
 
             ) {

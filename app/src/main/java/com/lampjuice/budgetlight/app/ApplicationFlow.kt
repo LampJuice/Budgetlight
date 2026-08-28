@@ -27,6 +27,7 @@ fun ApplicationFlow(
                 onShoppingListClick = {
                     // Пока feature недоступна
                 },
+                onChangeUserClick = viewModel::logout,
             )
         }
 

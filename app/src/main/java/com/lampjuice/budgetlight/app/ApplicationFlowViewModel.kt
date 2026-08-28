@@ -2,6 +2,7 @@ package com.lampjuice.budgetlight.app
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.lampjuice.budgetlight.feature.auth.domain.session.AuthSession
 import com.lampjuice.budgetlight.feature.auth.domain.usecase.ObserveCurrentUserUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jakarta.inject.Inject
@@ -12,6 +13,7 @@ import kotlinx.coroutines.launch
 @HiltViewModel
 class ApplicationFlowViewModel @Inject constructor(
     observeCurrentUserUseCase: ObserveCurrentUserUseCase,
+    private val authSession: AuthSession,
 ) : ViewModel() {
 
     private val _state = MutableStateFlow<ApplicationFlowState>(
@@ -33,5 +35,11 @@ class ApplicationFlowViewModel @Inject constructor(
 
     fun openBudget() {
         _state.value = ApplicationFlowState.Budget
+    }
+
+    fun logout() {
+        viewModelScope.launch {
+            authSession.clear()
+        }
     }
 }
