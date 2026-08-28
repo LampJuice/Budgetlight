@@ -1,6 +1,6 @@
 package com.lampjuice.budgetlight.domain.defaultdata
 
-import com.lampjuice.budgetlight.domain.model.CategoryIcon
+import com.lampjuice.budgetlight.feature.budget.domain.model.CategoryIcon
 
 object DefaultBudgetCategories {
 

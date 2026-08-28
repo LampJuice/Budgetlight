@@ -1,5 +1,47 @@
 <resources>
-    <string name="app_name">Budetlight</string>
+    <string name="app_name">BudgetLight</string>
+
+    <!-- Лаунчер -->
+    <string name="budget_planner_title">Планирование бюджета</string>
+    <string name="shopping_list_title">Список покупок</string>
+    <string name="budget_planner_desc">Контролируйте доходы, расходы и бюджет</string>
+    <string name="shopping_list_desc">Удобный список покупок - скоро</string>
+    <string name="app_choice">Что будем использовать?</string>
+    <string name="have_an_account">Уже есть аккаунт?</string>
+    <string name="sign_in">Войти или зарегистрироваться</string>
+
+
+    <!-- Авторизация -->
+    <string name="login_label">Логин</string>
+    <string name="password_label">Пароль</string>
+    <string name="forgot_password">Забыли пароль?</string>
+    <string name="login_button">Войти</string>
+    <string name="register_button">Регистрация</string>
+    <string name="welcome">Добро пожаловать</string>
+    <string name="create_account">Создайте аккаунт</string>
+    <string name="change_user">Сменить пользователя</string>
+    <string name="create_account_subtitle">Зарегистрируйтесь, чтобы начать вести учёт финансов</string>
+    <string name="sign_in_your_account">Войдите в свой аккаунт</string>
+    <string name="empty_login_or_password">Введите логин и пароль</string>
+    <string name="invalid_login_or_password">Неверный логин или пароль</string>
+    <string name="registration_not_available">Регистрация не доступна</string>"
+    <string name="password_reset_not_available">Восстановление пароля не доступно</string>
+    <string name="empty_name">Введите имя</string>
+    <string name="fill_all_fields">Заполните все поля</string>
+    <string name="empty_login">Введите логин</string>
+    <string name="empty_password">Введите пароль</string>
+    <string name="passwords_do_not_match">Пароли не совпадают</string>
+    <string name="user_already_exists">Пользователь с таким логином уже существует</string>
+    <string name="invalid_credentials">Неверный логин или пароль</string>
+    <string name="auth_unknown_error">Не удалось выполнить операцию. Попробуйте ещё раз.</string>
+    <string name="password_recovery_unavailable">Восстановление пароля пока недоступно</string>
+
+    <string name="name_label">Имя</string>
+    <string name="confirm_password_label">Повторите пароль</string>
+    <string name="create_account_button">Создать аккаунт</string>
+    <string name="already_have_account">Уже есть аккаунт? Войти</string>
+    <string name="no_account">Нет аккаунта? Зарегистрироваться</string>
+
 
     <!-- Общие -->
     <string name="back">Назад</string>

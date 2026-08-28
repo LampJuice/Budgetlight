@@ -1,7 +1,7 @@
 package com.lampjuice.budgetlight.ui.mapper
 
-import com.lampjuice.budgetlight.domain.model.BudgetCategoryInfo
-import com.lampjuice.budgetlight.ui.home.model.CategoryBudgetUi
+import com.lampjuice.budgetlight.feature.budget.domain.model.BudgetCategoryInfo
+import com.lampjuice.budgetlight.feature.budget.ui.home.model.CategoryBudgetUi
 
 fun BudgetCategoryInfo.toUi(): CategoryBudgetUi = CategoryBudgetUi(
     id = categoryId,

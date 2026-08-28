@@ -1,9 +1,9 @@
 package com.lampjuice.budgetlight.domain.defaultdata
 
-import com.lampjuice.budgetlight.domain.model.Budget
-import com.lampjuice.budgetlight.domain.model.BudgetCategory
-import com.lampjuice.budgetlight.domain.model.Category
-import com.lampjuice.budgetlight.domain.model.TransactionType
+import com.lampjuice.budgetlight.feature.budget.domain.model.Budget
+import com.lampjuice.budgetlight.feature.budget.domain.model.BudgetCategory
+import com.lampjuice.budgetlight.feature.budget.domain.model.Category
+import com.lampjuice.budgetlight.feature.budget.domain.model.TransactionType
 import java.time.LocalDate
 
 object DefaultBudgetFactory {

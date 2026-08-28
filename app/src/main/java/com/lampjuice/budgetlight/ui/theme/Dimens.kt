@@ -11,6 +11,10 @@ object Dimens {
 
     val ExtraLargeSpacing = 28.dp
 
+    val SmallSpacing = 8.dp
+
+    val ExtraSmallSpacing = 4.dp
+
     val Spacing = 16.dp
 
     val LargeSpacing = 24.dp
@@ -23,6 +27,8 @@ object Dimens {
 
     val SmallProgressBarHeight = 5.dp
     val CategoryIconSize = 44.dp
+
+    val XXLSpacing = 48.dp
 
     val IconSize = 24.dp
 }

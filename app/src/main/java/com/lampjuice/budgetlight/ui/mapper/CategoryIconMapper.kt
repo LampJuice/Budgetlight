@@ -12,7 +12,7 @@ import androidx.compose.material.icons.filled.Movie
 import androidx.compose.material.icons.filled.Restaurant
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.ui.graphics.vector.ImageVector
-import com.lampjuice.budgetlight.domain.model.CategoryIcon
+import com.lampjuice.budgetlight.feature.budget.domain.model.CategoryIcon
 
 fun CategoryIcon.toImageVector(): ImageVector = when (this) {
     CategoryIcon.FOOD -> Icons.Default.Restaurant
