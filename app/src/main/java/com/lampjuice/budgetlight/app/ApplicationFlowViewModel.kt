@@ -37,6 +37,10 @@ class ApplicationFlowViewModel @Inject constructor(
         _state.value = ApplicationFlowState.Budget
     }
 
+    fun openLauncher() {
+        _state.value = ApplicationFlowState.Launcher
+    }
+
     fun logout() {
         viewModelScope.launch {
             authSession.clear()

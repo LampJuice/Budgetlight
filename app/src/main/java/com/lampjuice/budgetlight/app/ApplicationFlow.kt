@@ -32,7 +32,9 @@ fun ApplicationFlow(
         }
 
         ApplicationFlowState.Budget -> {
-            BudgetLightNavHost()
+            BudgetLightNavHost(
+                onBackToLauncher = viewModel::openLauncher,
+            )
         }
     }
 }
