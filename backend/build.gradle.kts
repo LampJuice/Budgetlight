@@ -16,6 +16,10 @@ kotlin {
     jvmToolchain(21)
 }
 dependencies {
+    implementation(libs.postgresql)
+    implementation(libs.hikari)
+    implementation(exposedLibs.core)
+    implementation(exposedLibs.jdbc)
     implementation(ktorLibs.serialization.kotlinx.json)
     implementation(ktorLibs.server.config.yaml)
     implementation(ktorLibs.server.contentNegotiation)

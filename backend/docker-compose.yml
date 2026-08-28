@@ -1,0 +1,16 @@
+services:
+  postgres:
+    image: postgres:18
+    container_name: budgetlight-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: budgetlight
+      POSTGRES_USER: budgetlight
+      POSTGRES_PASSWORD: budgetlight_dev
+    ports:
+      - "5432:5432"
+    volumes:
+      - budgetlight_postgres_data:/var/lib/postgresql
+
+volumes:
+  budgetlight_postgres_data:

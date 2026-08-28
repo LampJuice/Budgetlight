@@ -5,3 +5,8 @@ ktor:
     modules:
       - com.lampjuice.SerializationKt.configureSerialization
       - com.lampjuice.RoutingKt.configureRouting
+      - com.lampjuice.DatabaseKt.configureDatabase
+database:
+  url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/budgetlight}
+  username: ${DATABASE_USERNAME:budgetlight}
+  password: ${DATABASE_PASSWORD:budgetlight_dev}
