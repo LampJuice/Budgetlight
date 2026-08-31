@@ -5,6 +5,7 @@ import com.lampjuice.feature.auth.data.security.PasswordHasherImpl
 import com.lampjuice.feature.auth.domain.repository.UserRepository
 import com.lampjuice.feature.auth.domain.security.PasswordHasher
 import com.lampjuice.feature.auth.domain.usecase.RegisterUserUseCase
+import com.lampjuice.feature.auth.presentation.service.AuthService
 import org.koin.dsl.module
 
 val appModule = module {
@@ -18,5 +19,9 @@ val appModule = module {
         )
     }
 
+    single {
+        AuthService(
+            registerUserUseCase = get()
+        )
+    }
 }
-
