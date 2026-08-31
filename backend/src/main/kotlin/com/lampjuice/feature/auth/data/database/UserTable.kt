@@ -1,4 +1,4 @@
-package com.lampjuice.com.lampjuice.feature.auth.data.database
+package com.lampjuice.feature.auth.data.database
 
 import org.jetbrains.exposed.v1.core.dao.id.LongIdTable
 
@@ -8,3 +8,4 @@ object UserTable : LongIdTable("users")  {
     val createdAt = long("created_at")
 
 }
+

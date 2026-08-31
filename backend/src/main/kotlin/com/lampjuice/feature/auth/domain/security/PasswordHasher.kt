@@ -1,4 +1,4 @@
-package com.lampjuice.com.lampjuice.feature.auth.domain.security
+package com.lampjuice.feature.auth.domain.security
 
 interface PasswordHasher {
 
@@ -7,3 +7,4 @@ interface PasswordHasher {
     fun verify(password: String, hash: String): Boolean
 
 }
+

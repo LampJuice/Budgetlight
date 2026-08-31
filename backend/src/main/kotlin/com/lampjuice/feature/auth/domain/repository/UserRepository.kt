@@ -1,6 +1,6 @@
-package com.lampjuice.com.lampjuice.feature.auth.domain.repository
+package com.lampjuice.feature.auth.domain.repository
 
-import com.lampjuice.com.lampjuice.feature.auth.domain.model.User
+import com.lampjuice.feature.auth.domain.model.User
 
 interface UserRepository {
 
@@ -13,3 +13,4 @@ interface UserRepository {
     suspend fun getUserByEmail(email: String): User?
 
 }
+

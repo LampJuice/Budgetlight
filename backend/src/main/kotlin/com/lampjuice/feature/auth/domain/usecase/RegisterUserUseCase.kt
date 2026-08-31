@@ -1,8 +1,8 @@
-package com.lampjuice.com.lampjuice.feature.auth.domain.usecase
+package com.lampjuice.feature.auth.domain.usecase
 
-import com.lampjuice.com.lampjuice.feature.auth.domain.model.RegisterResult
-import com.lampjuice.com.lampjuice.feature.auth.domain.repository.UserRepository
-import com.lampjuice.com.lampjuice.feature.auth.domain.security.PasswordHasher
+import com.lampjuice.feature.auth.domain.model.RegisterResult
+import com.lampjuice.feature.auth.domain.repository.UserRepository
+import com.lampjuice.feature.auth.domain.security.PasswordHasher
 
 class RegisterUserUseCase(
     private val userRepository: UserRepository,
@@ -28,3 +28,4 @@ class RegisterUserUseCase(
         return RegisterResult.Success(createdUser)
     }
 }
+

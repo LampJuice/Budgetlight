@@ -1,4 +1,4 @@
-package com.lampjuice.com.lampjuice.feature.auth.data.security
+package com.lampjuice.feature.auth.data.security
 
 import kotlin.test.Test
 import kotlin.test.assertFalse
@@ -36,3 +36,4 @@ class PasswordHasherTest {
         assertFalse(result)
     }
 }
+

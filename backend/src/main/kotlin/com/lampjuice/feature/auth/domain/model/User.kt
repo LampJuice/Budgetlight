@@ -1,4 +1,4 @@
-package com.lampjuice.com.lampjuice.feature.auth.domain.model
+package com.lampjuice.feature.auth.domain.model
 
 data class User(
     val id: Long,
@@ -6,3 +6,4 @@ data class User(
     val passwordHash: String,
     val createdAt: Long
 )
+

@@ -1,9 +1,7 @@
-package com.lampjuice.com.lampjuice.feature.auth.data.repositrory
+package com.lampjuice.feature.auth.data.repository
 
-import com.lampjuice.com.lampjuice.database.DatabaseTestHelper
-import com.lampjuice.com.lampjuice.feature.auth.data.database.UserTable
-import com.lampjuice.com.lampjuice.feature.auth.data.repository.UserRepositoryImpl
-import kotlinx.coroutines.runBlocking
+import com.lampjuice.database.DatabaseTestHelper
+import com.lampjuice.feature.auth.data.database.UserTable
 import kotlinx.coroutines.test.runTest
 import org.jetbrains.exposed.v1.exceptions.ExposedSQLException
 import org.jetbrains.exposed.v1.jdbc.deleteAll
@@ -74,3 +72,4 @@ class UserRepositoryTest {
         }
     }
 }
+

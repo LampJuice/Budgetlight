@@ -1,9 +1,9 @@
-package com.lampjuice.com.lampjuice.feature.auth.data.repository
+package com.lampjuice.feature.auth.data.repository
 
-import com.lampjuice.com.lampjuice.feature.auth.data.database.UserTable
-import com.lampjuice.com.lampjuice.feature.auth.data.database.UserTable.createdAt
-import com.lampjuice.com.lampjuice.feature.auth.domain.model.User
-import com.lampjuice.com.lampjuice.feature.auth.domain.repository.UserRepository
+import com.lampjuice.feature.auth.data.database.UserTable
+import com.lampjuice.feature.auth.data.database.UserTable.createdAt
+import com.lampjuice.feature.auth.domain.model.User
+import com.lampjuice.feature.auth.domain.repository.UserRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.jetbrains.exposed.v1.core.eq
@@ -51,3 +51,4 @@ class UserRepositoryImpl : UserRepository {
             }
         }
 }
+

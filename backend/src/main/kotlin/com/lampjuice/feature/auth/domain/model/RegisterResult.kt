@@ -1,4 +1,4 @@
-package com.lampjuice.com.lampjuice.feature.auth.domain.model
+package com.lampjuice.feature.auth.domain.model
 
 sealed interface RegisterResult {
     data class Success(
@@ -7,3 +7,4 @@ sealed interface RegisterResult {
 
     data object EmailAlreadyExists : RegisterResult
 }
+

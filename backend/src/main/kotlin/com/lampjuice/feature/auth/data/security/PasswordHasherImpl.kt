@@ -1,6 +1,6 @@
-package com.lampjuice.com.lampjuice.feature.auth.data.security
+package com.lampjuice.feature.auth.data.security
 
-import com.lampjuice.com.lampjuice.feature.auth.domain.security.PasswordHasher
+import com.lampjuice.feature.auth.domain.security.PasswordHasher
 import com.password4j.Argon2Function
 import com.password4j.types.Argon2
 
@@ -33,3 +33,4 @@ class PasswordHasherImpl : PasswordHasher {
     ): Boolean =
         argon2.check(password, hash)
 }
+

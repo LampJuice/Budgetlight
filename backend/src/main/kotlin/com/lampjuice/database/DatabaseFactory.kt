@@ -1,6 +1,6 @@
 package com.lampjuice.database
 
-import com.lampjuice.com.lampjuice.feature.auth.data.database.UserTable
+import com.lampjuice.feature.auth.data.database.UserTable
 import com.zaxxer.hikari.HikariDataSource
 import io.ktor.server.config.ApplicationConfig
 import org.jetbrains.exposed.v1.jdbc.Database
@@ -41,3 +41,4 @@ object DatabaseFactory {
     }
 
 }
+
