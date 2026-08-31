@@ -16,6 +16,7 @@ kotlin {
     jvmToolchain(21)
 }
 dependencies {
+    implementation(libs.password4j)
     implementation(libs.postgresql)
     implementation(libs.hikari)
     implementation(exposedLibs.core)
