@@ -23,6 +23,7 @@ class RegisterUserUseCaseTest {
 
         val result = useCase(
             email = "test@example.com",
+            name = "test",
             password = "SuperSecretPass123!"
         )
 
@@ -51,6 +52,7 @@ class RegisterUserUseCaseTest {
             existingUser = User(
                 id = 1,
                 email = "test@example.com",
+                name = "test",
                 passwordHash = "hashed-password",
                 createdAt = 123L
 
@@ -64,6 +66,7 @@ class RegisterUserUseCaseTest {
 
         val result = useCase(
             email = "test@example.com",
+            name = "test",
             password = "SuperSecretPass123!"
         )
 
@@ -90,6 +93,7 @@ class RegisterUserUseCaseTest {
 
         override suspend fun createUser(
             email: String,
+            name: String,
             passwordHash: String,
             createdAt: Long
         ): User {
@@ -98,6 +102,7 @@ class RegisterUserUseCaseTest {
             return User(
                 id = 1,
                 email = email,
+                name = name,
                 passwordHash = passwordHash,
                 createdAt = createdAt
 

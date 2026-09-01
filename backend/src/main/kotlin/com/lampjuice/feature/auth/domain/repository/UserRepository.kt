@@ -6,6 +6,7 @@ interface UserRepository {
 
     suspend fun createUser(
         email: String,
+        name: String,
         passwordHash: String,
         createdAt: Long
     ): User

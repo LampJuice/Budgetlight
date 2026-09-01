@@ -14,6 +14,7 @@ class LoginUserUseCaseTest {
     private val user = User(
         id = 1L,
         email = "test@example.com",
+        name = "test",
         passwordHash = "hashed-correct-password",
         createdAt = 123456789L,
     )
@@ -22,6 +23,7 @@ class LoginUserUseCaseTest {
 
         override suspend fun createUser(
             email: String,
+            name: String,
             passwordHash: String,
             createdAt: Long,
         ): User = user

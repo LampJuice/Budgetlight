@@ -18,6 +18,7 @@ class AuthService(
     suspend fun register(request: RegisterRequest): RegisterResult {
         return registerUserUseCase(
             email = request.email,
+            name = request.name,
             password = request.password
         )
     }

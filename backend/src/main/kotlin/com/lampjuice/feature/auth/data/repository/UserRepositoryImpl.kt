@@ -14,12 +14,14 @@ import org.jetbrains.exposed.v1.jdbc.transactions.transaction
 class UserRepositoryImpl : UserRepository {
     override suspend fun createUser(
         email: String,
+        name: String,
         passwordHash: String,
         createdAt: Long
     ): User = withContext(Dispatchers.IO) {
         transaction {
             val id = UserTable.insert {
                 it[UserTable.email] = email
+                it[UserTable.name] = name
                 it[UserTable.passwordHash] = passwordHash
                 it[UserTable.createdAt] = createdAt
             } get UserTable.id
@@ -27,6 +29,7 @@ class UserRepositoryImpl : UserRepository {
             User(
                 id = id.value,
                 email = email,
+                name = name,
                 passwordHash = passwordHash,
                 createdAt = createdAt
             )
@@ -44,6 +47,7 @@ class UserRepositoryImpl : UserRepository {
                         User(
                             id = it[UserTable.id].value,
                             email = it[UserTable.email],
+                            name = it[UserTable.name],
                             passwordHash = it[UserTable.passwordHash],
                             createdAt = it[createdAt]
                         )

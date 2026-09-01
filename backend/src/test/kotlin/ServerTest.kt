@@ -67,6 +67,7 @@ class ServerTest {
                 """
                     {
                 	    "email": "integration@example.com",
+                        "name": "integration",
                 	    "password": "SuperSecretPassword"
                     }
                 """.trimIndent()
@@ -86,6 +87,7 @@ class ServerTest {
         val request = """
             {
                 "email": "duplicate-integration@example.com",
+                "name": "integration",
                 "password": "SuperSecretPassword"
             }
         """.trimIndent()
@@ -110,6 +112,7 @@ class ServerTest {
         configure()
 
         val email = "password-hash-integration@example.com"
+
         val password = "SuperSecretPassword"
 
         val response = client.post("/auth/register") {
@@ -118,6 +121,7 @@ class ServerTest {
                 """
                     {
                 	    "email": "$email",
+                        "name": "integration",
                 	    "password": "$password"
                     }
                 """.trimIndent()
@@ -152,23 +156,32 @@ class ServerTest {
             }
         }
 
-        val request = """
+        val registerRequest = """
+            {
+                "email": "login@example.com",
+                "name": "integration",
+                "password": "SuperSecretPassword"
+            }
+        """.trimIndent()
+
+        val loginRequest = """
             {
                 "email": "login@example.com",
                 "password": "SuperSecretPassword"
             }
         """.trimIndent()
 
+
         val registerResponse = client.post("/auth/register") {
             contentType(ContentType.Application.Json)
-            setBody(request)
+            setBody(registerRequest)
         }
 
         assertEquals(HttpStatusCode.Created, registerResponse.status)
 
         val loginResponse = client.post("/auth/login") {
             contentType(ContentType.Application.Json)
-            setBody(request)
+            setBody(loginRequest)
         }
 
         assertEquals(HttpStatusCode.OK, loginResponse.status)
@@ -184,6 +197,7 @@ class ServerTest {
         val registerRequest = """
             {
                 "email": "wrong-password-integration@example.com",
+                "name": "integration",
                 "password": "SuperSecretPassword"
             }
         """.trimIndent()
@@ -259,23 +273,32 @@ class ServerTest {
             }
         }
 
-        val request = """
+        val registerRequest = """
         {
             "email": "login@example.com",
+            "name": "integration",
             "password": "SuperSecretPassword"
         }
     """.trimIndent()
 
+        val loginRequest = """
+            {
+                "email": "login@example.com",
+                "password": "SuperSecretPassword"
+            }
+        """.trimIndent()
+
+
         val registerResponse = client.post("/auth/register") {
             contentType(ContentType.Application.Json)
-            setBody(request)
+            setBody(registerRequest)
         }
 
         assertEquals(HttpStatusCode.Created, registerResponse.status)
 
         val loginResponse = client.post("/auth/login") {
             contentType(ContentType.Application.Json)
-            setBody(request)
+            setBody(loginRequest)
         }
 
         assertEquals(HttpStatusCode.OK, loginResponse.status)

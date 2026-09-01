@@ -34,6 +34,7 @@ class UserRepositoryTest {
     fun `create and find user`() = runTest {
         val created = userRepository.createUser(
             email = "test@example.com",
+            name = "test",
             passwordHash = "test-hash",
             createdAt = 123456789L,
         )
@@ -59,6 +60,7 @@ class UserRepositoryTest {
     fun `create fails when email already exists`() = runTest {
         userRepository.createUser(
             email = "duplicate@example.com",
+            name = "test",
             passwordHash = "hash-1",
             createdAt = 123456789L,
         )
@@ -66,6 +68,7 @@ class UserRepositoryTest {
         assertFailsWith<ExposedSQLException> {
             userRepository.createUser(
                 email = "duplicate@example.com",
+                name = "test",
                 passwordHash = "hash-2",
                 createdAt = 987654321L,
             )

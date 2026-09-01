@@ -11,6 +11,7 @@ class RegisterUserUseCase(
 
     suspend operator fun invoke(
         email: String,
+        name: String,
         password: String
     ): RegisterResult {
         if (userRepository.getUserByEmail(email) != null) {
@@ -21,6 +22,7 @@ class RegisterUserUseCase(
 
         val createdUser = userRepository.createUser(
             email = email,
+            name = name,
             passwordHash = passwordHash,
             createdAt = System.currentTimeMillis()
         )
