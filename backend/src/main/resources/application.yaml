@@ -1,0 +1,21 @@
+ktor:
+  deployment:
+    port: 8080
+  application:
+    modules:
+      - com.lampjuice.SerializationKt.configureSerialization
+      - com.lampjuice.DatabaseKt.configureDatabase
+      - com.lampjuice.di.DependencyInjectionKt.configureDependencyInjection
+      - com.lampjuice.feature.auth.presentation.authentication.AuthenticationKt.configureAuthentication
+      - com.lampjuice.RoutingKt.configureRouting
+database:
+  url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/budgetlight}
+  username: ${DATABASE_USERNAME:budgetlight}
+  password: ${DATABASE_PASSWORD:budgetlight_dev}
+
+jwt:
+  secret: ${JWT_SECRET:dev-secret-change-me}
+  issuer: budgetlight
+  audience: budgetlight-client
+  realm: budgetlight
+  expiration-ms: 3600000
