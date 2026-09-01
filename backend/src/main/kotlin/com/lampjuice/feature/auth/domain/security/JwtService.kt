@@ -1,0 +1,8 @@
+package com.lampjuice.com.lampjuice.feature.auth.domain.security
+
+interface JwtService {
+    fun generateToken(
+        userId: Long,
+        email: String,
+    ): String
+}

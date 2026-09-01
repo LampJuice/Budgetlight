@@ -16,6 +16,8 @@ kotlin {
     jvmToolchain(21)
 }
 dependencies {
+    implementation(ktorLibs.server.auth)
+    implementation(ktorLibs.server.auth.jwt)
     implementation(libs.koin.ktor)
     implementation(libs.password4j)
     implementation(libs.postgresql)
