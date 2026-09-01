@@ -1,6 +1,9 @@
 package com.lampjuice.feature.auth.presentation.routing
 
+import com.lampjuice.feature.auth.domain.model.LoginResult
 import com.lampjuice.feature.auth.domain.model.RegisterResult
+import com.lampjuice.feature.auth.presentation.dto.LoginRequest
+import com.lampjuice.feature.auth.presentation.dto.LoginResponse
 import com.lampjuice.feature.auth.presentation.dto.RegisterRequest
 import com.lampjuice.feature.auth.presentation.dto.RegisterResponse
 import com.lampjuice.feature.auth.presentation.service.AuthService
@@ -29,6 +32,26 @@ fun Route.authRouting(
 
             RegisterResult.EmailAlreadyExists -> {
                 call.respond(HttpStatusCode.Conflict)
+            }
+        }
+    }
+
+    post("/login") {
+        val request = call.receive<LoginRequest>()
+
+        when (val result = authService.login(request)) {
+            is LoginResult.Success -> {
+                call.respond(
+                    HttpStatusCode.OK,
+                    LoginResponse(
+                        id = result.user.id,
+                        email = result.user.email
+                    )
+                )
+            }
+
+            LoginResult.InvalidCredentials -> {
+                call.respond(HttpStatusCode.Unauthorized)
             }
         }
     }

@@ -29,7 +29,8 @@ val appModule = module {
 
     single {
         AuthService(
-            registerUserUseCase = get()
+            registerUserUseCase = get(),
+            loginUserUseCase = get()
         )
     }
 }
