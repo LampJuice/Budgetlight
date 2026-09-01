@@ -1,11 +1,10 @@
 package com.lampjuice.feature.auth.presentation.routing
 
-import com.lampjuice.feature.auth.domain.model.LoginResult
 import com.lampjuice.feature.auth.domain.model.RegisterResult
 import com.lampjuice.feature.auth.presentation.dto.LoginRequest
-import com.lampjuice.feature.auth.presentation.dto.LoginResponse
 import com.lampjuice.feature.auth.presentation.dto.RegisterRequest
 import com.lampjuice.feature.auth.presentation.dto.RegisterResponse
+import com.lampjuice.feature.auth.presentation.model.LoginServiceResult
 import com.lampjuice.feature.auth.presentation.service.AuthService
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.request.receive
@@ -40,17 +39,14 @@ fun Route.authRouting(
         val request = call.receive<LoginRequest>()
 
         when (val result = authService.login(request)) {
-            is LoginResult.Success -> {
+            is LoginServiceResult.Success -> {
                 call.respond(
                     HttpStatusCode.OK,
-                    LoginResponse(
-                        id = result.user.id,
-                        email = result.user.email
-                    )
+                    result.response
                 )
             }
 
-            LoginResult.InvalidCredentials -> {
+            LoginServiceResult.InvalidCredentials -> {
                 call.respond(HttpStatusCode.Unauthorized)
             }
         }

@@ -6,6 +6,7 @@ ktor:
       - com.lampjuice.SerializationKt.configureSerialization
       - com.lampjuice.DatabaseKt.configureDatabase
       - com.lampjuice.di.DependencyInjectionKt.configureDependencyInjection
+      - com.lampjuice.feature.auth.presentation.authentication.AuthenticationKt.configureAuthentication
       - com.lampjuice.RoutingKt.configureRouting
 database:
   url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/budgetlight}

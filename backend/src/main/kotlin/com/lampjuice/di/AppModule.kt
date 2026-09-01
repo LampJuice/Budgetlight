@@ -35,7 +35,8 @@ fun appModule(
     single {
         AuthService(
             registerUserUseCase = get(),
-            loginUserUseCase = get()
+            loginUserUseCase = get(),
+            jwtService = get()
         )
     }
     single {
