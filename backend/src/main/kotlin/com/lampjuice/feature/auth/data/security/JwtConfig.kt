@@ -1,4 +1,4 @@
-package com.lampjuice.com.lampjuice.feature.auth.data.security
+package com.lampjuice.feature.auth.data.security
 
 data class JwtConfig(
     val secret: String,

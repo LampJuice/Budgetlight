@@ -1,4 +1,4 @@
-package com.lampjuice.com.lampjuice.feature.auth.domain.security
+package com.lampjuice.feature.auth.domain.security
 
 interface JwtService {
     fun generateToken(
