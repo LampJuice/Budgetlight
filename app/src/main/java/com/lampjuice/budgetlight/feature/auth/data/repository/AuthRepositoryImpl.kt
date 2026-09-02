@@ -3,8 +3,12 @@ package com.lampjuice.budgetlight.feature.auth.data.repository
 import com.lampjuice.budgetlight.feature.auth.data.remote.AuthApi
 import com.lampjuice.budgetlight.feature.auth.data.remote.LoginRequestDto
 import com.lampjuice.budgetlight.feature.auth.data.remote.RegisterRequestDto
+import com.lampjuice.budgetlight.feature.auth.domain.error.AuthError
+import com.lampjuice.budgetlight.feature.auth.domain.error.AuthException
 import com.lampjuice.budgetlight.feature.auth.domain.model.User
 import com.lampjuice.budgetlight.feature.auth.domain.repository.AuthRepository
+import io.ktor.client.plugins.ClientRequestException
+import io.ktor.http.HttpStatusCode
 import jakarta.inject.Inject
 
 class AuthRepositoryImpl @Inject constructor(
@@ -31,6 +35,14 @@ class AuthRepositoryImpl @Inject constructor(
                 ),
                 token = response.token
             )
+        }.recoverCatching { error ->
+            if (
+                error is ClientRequestException &&
+                error.response.status == HttpStatusCode.Conflict
+            ) {
+                throw AuthException(AuthError.UserAlreadyExists)
+            }
+            throw error
         }
 
     override suspend fun login(
@@ -54,5 +66,13 @@ class AuthRepositoryImpl @Inject constructor(
                 token = response.token
             )
 
+        }.recoverCatching { error ->
+            if (
+                error is ClientRequestException &&
+                error.response.status == HttpStatusCode.Unauthorized
+            ) {
+                throw AuthException(AuthError.InvalidCredentials)
+            }
+            throw error
         }
 }

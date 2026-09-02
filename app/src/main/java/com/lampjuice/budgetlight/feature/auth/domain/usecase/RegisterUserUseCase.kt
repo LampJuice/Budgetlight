@@ -1,7 +1,5 @@
 package com.lampjuice.budgetlight.feature.auth.domain.usecase
 
-import com.lampjuice.budgetlight.feature.auth.domain.error.AuthError
-import com.lampjuice.budgetlight.feature.auth.domain.error.AuthException
 import com.lampjuice.budgetlight.feature.auth.domain.model.User
 import com.lampjuice.budgetlight.feature.auth.domain.repository.AuthRepository
 import com.lampjuice.budgetlight.feature.auth.domain.repository.UserRepository
@@ -20,15 +18,8 @@ class RegisterUserUseCase @Inject constructor(
         login: String,
         name: String,
         password: String,
-    ): Result<User> {
-        val existingUser = userRepository.getUserByLogin(login)
-        if (existingUser != null) {
-            return Result.failure(
-                AuthException(AuthError.UserAlreadyExists),
-            )
-        }
-
-        return authRepository
+    ): Result<User> =
+        authRepository
             .register(
                 login = login,
                 name = name,
@@ -48,6 +39,4 @@ class RegisterUserUseCase @Inject constructor(
 
                 localUser
             }
-
-    }
 }
