@@ -1,14 +1,14 @@
 # BudgetLight 💎
 
-**BudgetLight** — приложение для управления личными финансами: планирование бюджета, контроль расходов и доходов, категории, лимиты и аналитика.
+**BudgetLight** — Android-приложение для управления личными финансами: планирование бюджета, контроль расходов и доходов, категории, лимиты и аналитика.
 
-Проект развивается как клиент-серверная система и состоит из Android-приложения и собственного backend API.
+Проект развивается как клиент-серверная система и состоит из Android-приложения и собственного backend API на Kotlin/Ktor.
 
 ---
 
 ## Архитектура
 
-Проект построен на **Feature-based Clean Architecture** с разделением ответственности между слоями.
+Проект построен на **Feature-based Clean Architecture + MVVM**.
 
 ```text
 BudgetLight
@@ -29,7 +29,7 @@ BudgetLight
 
 ### Android
 
-Каждая feature разделена на:
+Каждая feature разделена на слои:
 
 ```text
 UI
@@ -57,8 +57,10 @@ Data
 * Room
 * DAO
 * Repository implementations
+* Remote API / DTO
 * Data mappers
 * DataStore
+* Ktor Client
 
 Dependency Injection выполняется с помощью **Hilt**.
 
@@ -84,7 +86,7 @@ PostgreSQL
 
 ## Authentication
 
-Авторизация вынесена в отдельную `auth` feature и уже реализована на backend.
+Авторизация вынесена в отдельную `auth` feature и работает через backend.
 
 ### Регистрация
 
@@ -108,9 +110,18 @@ UserRepository
 PostgreSQL
 ```
 
-Пароль передаётся backend через защищённое HTTPS-соединение и **хешируется Argon2id на сервере**.
+Android передаёт backend логин, имя и пароль. Пароль хешируется **на сервере** с использованием Argon2id. В PostgreSQL хранится только hash пароля.
 
-В PostgreSQL хранится только password hash.
+После успешной регистрации backend возвращает:
+
+```json
+{
+  "id": 1,
+  "email": "user@example.com",
+  "name": "User",
+  "token": "<JWT>"
+}
+```
 
 ### Логин
 
@@ -118,6 +129,9 @@ PostgreSQL
 Android
    │
    │ POST /auth/login
+   ▼
+Ktor
+   │
    ▼
 LoginUserUseCase
    │
@@ -134,7 +148,16 @@ JWT
 Android
 ```
 
-После успешной аутентификации backend возвращает JWT.
+После успешной аутентификации backend возвращает пользователя и JWT.
+
+Android сохраняет локальную сессию в **DataStore**:
+
+```text
+userId
+accessToken
+```
+
+Локальный `User` хранится в Room и используется приложением для связи с локальными финансовыми данными.
 
 Для защищённых запросов используется:
 
@@ -150,10 +173,11 @@ Backend использует Ktor Authentication и проверяет:
 * issuer;
 * audience;
 * expiration;
-* наличие `userId`;
-* наличие `email`.
+* `userId`;
+* `email`;
+* `name`.
 
-Тестовый защищённый endpoint:
+Защищённый endpoint:
 
 ```http
 GET /auth/me
@@ -165,12 +189,74 @@ GET /auth/me
 
 На текущем этапе реализованы:
 
-| Method | Endpoint         | Description                              |
-| ------ | ---------------- | ---------------------------------------- |
-| GET    | `/health`        | Проверка доступности backend             |
-| POST   | `/auth/register` | Регистрация пользователя                 |
-| POST   | `/auth/login`    | Аутентификация и выдача JWT              |
-| GET    | `/auth/me`       | Проверка JWT и получение данных из token |
+| Method | Endpoint         | Description                                           |
+| ------ | ---------------- | ----------------------------------------------------- |
+| GET    | `/health`        | Проверка доступности backend                          |
+| POST   | `/auth/register` | Регистрация и выдача JWT                              |
+| POST   | `/auth/login`    | Аутентификация и выдача JWT                           |
+| GET    | `/auth/me`       | Проверка JWT и получение данных текущего пользователя |
+
+### Register
+
+```http
+POST /auth/register
+Content-Type: application/json
+```
+
+```json
+{
+  "email": "user@example.com",
+  "name": "User",
+  "password": "secret"
+}
+```
+
+Успешный ответ: `201 Created`.
+
+### Login
+
+```http
+POST /auth/login
+Content-Type: application/json
+```
+
+```json
+{
+  "email": "user@example.com",
+  "password": "secret"
+}
+```
+
+Успешный ответ: `200 OK` и JWT.
+
+---
+
+## Локальное хранение и backend
+
+На текущем этапе authentication уже работает через backend, но **финансовые данные приложения пока хранятся локально в Room**.
+
+Поэтому пользователь может войти с другого устройства, однако транзакции, бюджеты, категории и другие локальные данные ещё не синхронизируются автоматически между устройствами.
+
+Планируемая схема:
+
+
+```text
+                PostgreSQL
+                    │
+                Ktor API
+                    │
+              REST + JWT
+                    │
+          ┌─────────┴─────────┐
+          │                   │
+      Device A             Device B
+          │                   │
+        Room                Room
+          │                   │
+          └────── sync ──────┘
+```
+
+В дальнейшем backend станет источником истины для финансовых данных, а Room — локальным кешем/offline storage.
 
 ---
 
@@ -186,31 +272,35 @@ GET /auth/me
 * Room
 * DataStore
 * Navigation Compose
+* Ktor Client
+* Kotlinx Serialization
 * Detekt
+* Spotless / ktlint
 
 ### Backend
 
 * Kotlin 2.4.0
 * Ktor 3.5.2
-* PostgreSQL
+* PostgreSQL 18
 * Exposed
 * HikariCP
 * Koin 4.1.1
 * Password4j 1.8.4
 * Argon2id
-* JWT / Auth0 Java JWT
+* Auth0 Java JWT
 * Kotlinx Serialization
 
 ### Infrastructure
 
 * Docker
+* Docker Compose
 * PostgreSQL
 
 ---
 
 ## Тестирование
 
-Проект покрывается несколькими уровнями тестов.
+Backend покрыт unit- и integration-тестами.
 
 ### Unit tests
 
@@ -223,7 +313,7 @@ GET /auth/me
 
 ### Repository integration tests
 
-Проверяется реальная работа с PostgreSQL:
+Проверяется работа с реальным PostgreSQL:
 
 * создание пользователя;
 * поиск по email;
@@ -233,7 +323,7 @@ GET /auth/me
 
 ### HTTP integration tests
 
-Через `testApplication` проверяются:
+Через Ktor `testApplication` проверяются:
 
 * `/health`;
 * регистрация;
@@ -249,18 +339,27 @@ GET /auth/me
 * invalid audience;
 * expired JWT.
 
-Тесты используют реальный PostgreSQL, а тестовые данные очищаются после выполнения.
+Backend tests используют реальный PostgreSQL в Docker и очищают тестовые данные после выполнения.
 
-Запуск:
+Текущий backend checkpoint: **29 тестов проходят успешно**.
+
+Запуск тестов:
 
 ```bash
 ./gradlew test
 ```
 
-Сборка:
+Сборка backend:
 
 ```bash
 ./gradlew build
+```
+
+Android-проверки:
+
+```bash
+./gradlew format
+./gradlew verify
 ```
 
 ---
@@ -277,19 +376,45 @@ GET /auth/me
 Argon2id
 ```
 
-с параметрами, настроенными в backend.
+Пароль хешируется только на backend.
 
 ### JWT
 
-JWT используется только после успешной аутентификации пользователя.
+JWT создаётся backend после успешной аутентификации и используется для защищённых API-запросов.
 
-Секрет JWT не должен храниться в исходном коде production-окружения. Он передаётся через environment variable:
+Секрет JWT не должен храниться в исходном коде production-окружения. Для production он передаётся через environment variable:
 
 ```text
 JWT_SECRET
 ```
 
 Для локальной разработки используется dev secret из `application.yaml`.
+
+### HTTPS
+
+В локальной разработке Android Emulator обращается к backend по HTTP через `10.0.2.2:8080`.
+
+В production планируется использовать HTTPS.
+
+---
+
+## Room migrations
+
+Локальная база Android развивается через явные Room migrations.
+
+Текущая версия `BudgetDatabase` — **5**.
+
+Основные изменения:
+
+```text
+3 → 4
+    уникальный индекс budgets(userId, year, month)
+
+4 → 5
+    удаление passwordHash из локальной users таблицы
+```
+
+После переноса authentication на backend Android больше не хранит пароль или его hash в Room.
 
 ---
 
@@ -301,9 +426,21 @@ BudgetLight
 ├── app / Android
 │   ├── feature
 │   │   ├── auth
+│   │   │   ├── data
+│   │   │   │   ├── local
+│   │   │   │   ├── remote
+│   │   │   │   └── repository
+│   │   │   ├── domain
+│   │   │   │   ├── model
+│   │   │   │   ├── repository
+│   │   │   │   ├── session
+│   │   │   │   └── usecase
+│   │   │   └── ui
 │   │   ├── launcher
 │   │   └── budget
-│   └── ...
+│   ├── database
+│   ├── di
+│   └── navigation
 │
 └── backend
     └── src
@@ -320,7 +457,6 @@ BudgetLight
         │
         └── test
             └── kotlin
-                └── com.lampjuice
 ```
 
 ---
@@ -335,41 +471,57 @@ BudgetLight
 * ✅ Jetpack Compose
 * ✅ Hilt
 * ✅ Room
+* ✅ Room migrations
 * ✅ Coroutines / Flow
-* 🚧 Интеграция с backend authentication
+* ✅ DataStore session
+* ✅ Ktor Client
+* ✅ Kotlinx Serialization
+* ✅ Backend registration
+* ✅ Backend login
+* ✅ JWT session storage
+* ✅ Logout
+* ✅ Session restoration after app restart
+* ✅ `format` / `verify` проходят успешно
 
 ### Backend
 
 * ✅ Ktor application
-* ✅ PostgreSQL
+* ✅ PostgreSQL 18
+* ✅ Docker Compose
 * ✅ Exposed
 * ✅ HikariCP
 * ✅ Koin
 * ✅ User repository
 * ✅ Registration
 * ✅ Login
+* ✅ User name
 * ✅ Argon2id password hashing
 * ✅ JWT generation
 * ✅ JWT validation
 * ✅ Protected `/auth/me`
 * ✅ Unit tests
-* ✅ Integration tests
+* ✅ Repository integration tests
+* ✅ HTTP integration tests
+* ✅ 29 tests green
 
 ### Следующий этап
 
+Главная следующая задача — сделать финансовые данные серверными и синхронизируемыми между устройствами:
+
 ```text
-Android Auth
-    ↓
-HTTP client
-    ↓
-POST /auth/register
-POST /auth/login
-    ↓
-JWT storage
-    ↓
-Authorization header
-    ↓
-Protected API
+Account
+Category
+Budget
+BudgetCategory
+Transaction
+        ↓
+Ktor API
+        ↓
+PostgreSQL
+        ↓
+Android sync
+        ↓
+Room
 ```
 
-После интеграции authentication следующим этапом будет подключение финансовой части BudgetLight к backend API.
+После этого можно будет реализовать полноценную multi-device синхронизацию и offline-first поведение.
