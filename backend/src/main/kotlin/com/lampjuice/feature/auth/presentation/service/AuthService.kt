@@ -1,6 +1,6 @@
 package com.lampjuice.feature.auth.presentation.service
 
-import com.lampjuice.com.lampjuice.feature.auth.presentation.model.RegisterServiceResult
+import com.lampjuice.feature.auth.presentation.model.RegisterServiceResult
 import com.lampjuice.feature.auth.domain.model.LoginResult
 import com.lampjuice.feature.auth.domain.model.RegisterResult
 import com.lampjuice.feature.auth.domain.security.JwtService

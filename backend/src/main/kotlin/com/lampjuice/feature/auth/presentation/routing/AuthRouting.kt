@@ -1,9 +1,10 @@
 package com.lampjuice.feature.auth.presentation.routing
 
-import com.lampjuice.com.lampjuice.feature.auth.presentation.model.RegisterServiceResult
+import com.lampjuice.feature.auth.presentation.model.RegisterServiceResult
 import com.lampjuice.feature.auth.presentation.dto.LoginRequest
 import com.lampjuice.feature.auth.presentation.dto.RegisterRequest
 import com.lampjuice.feature.auth.presentation.model.LoginServiceResult
+import com.lampjuice.feature.auth.presentation.service.AuthService
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.request.receive
 import io.ktor.server.response.respond

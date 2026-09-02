@@ -1,6 +1,6 @@
 package com.lampjuice.database
 
-import com.lampjuice.com.lampjuice.database.UserTableMigration
+import com.lampjuice.database.UserTableMigration
 import com.lampjuice.feature.auth.data.database.UserTable
 import com.zaxxer.hikari.HikariDataSource
 import io.ktor.server.config.ApplicationConfig

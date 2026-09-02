@@ -1,4 +1,4 @@
-package com.lampjuice.com.lampjuice.feature.auth.presentation.model
+package com.lampjuice.feature.auth.presentation.model
 
 import com.lampjuice.feature.auth.presentation.dto.RegisterResponse
 

@@ -1,6 +1,5 @@
 package com.lampjuice.database
 
-import com.lampjuice.com.lampjuice.database.UserTableMigration
 import com.lampjuice.feature.auth.data.database.UserTable
 import org.jetbrains.exposed.v1.jdbc.Database
 import org.jetbrains.exposed.v1.jdbc.SchemaUtils

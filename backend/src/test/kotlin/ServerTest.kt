@@ -364,6 +364,7 @@ class ServerTest {
         val token = jwtService.generateToken(
             userId = 42L,
             email = "auth-me@example.com",
+            name = "test"
         )
 
         val response = client.get("/auth/me") {
@@ -392,6 +393,7 @@ class ServerTest {
         val token = jwtService.generateToken(
             userId = 42L,
             email = "auth-me@example.com",
+            name = "test"
         )
 
         val response = client.get("/auth/me") {

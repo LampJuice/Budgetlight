@@ -1,4 +1,4 @@
-package com.lampjuice.com.lampjuice.database
+package com.lampjuice.database
 
 import org.jetbrains.exposed.v1.jdbc.transactions.transaction
 

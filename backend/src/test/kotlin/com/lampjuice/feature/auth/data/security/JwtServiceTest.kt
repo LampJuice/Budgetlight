@@ -24,6 +24,7 @@ class JwtServiceTest {
         val token = jwtService.generateToken(
             userId = 42L,
             email = "test@example.com",
+            name = "test"
         )
 
         assertTrue(token.isNotBlank())
@@ -48,6 +49,7 @@ class JwtServiceTest {
         val token = jwtService.generateToken(
             userId = 42L,
             email = "test@example.com",
+            name = "test"
         )
 
         val decoded = JWT.decode(token)
@@ -61,6 +63,8 @@ class JwtServiceTest {
         val token = jwtService.generateToken(
             userId = 42L,
             email = "test@example.com",
+            name = "test"
+
         )
 
         val verifier = JWT.require(
@@ -84,6 +88,7 @@ class JwtServiceTest {
         val token = jwtService.generateToken(
             userId = 42L,
             email = "test@example.com",
+            name = "test"
         )
 
         val verifier = JWT.require(
