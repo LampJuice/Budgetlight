@@ -6,4 +6,6 @@ import kotlinx.serialization.Serializable
 data class RegisterResponse(
     val id: Long,
     val email: String,
+    val name: String,
+    val token: String,
 )

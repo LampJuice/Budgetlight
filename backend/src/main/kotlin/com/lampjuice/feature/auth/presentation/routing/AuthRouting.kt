@@ -1,9 +1,8 @@
 package com.lampjuice.feature.auth.presentation.routing
 
-import com.lampjuice.feature.auth.domain.model.RegisterResult
+import com.lampjuice.com.lampjuice.feature.auth.presentation.model.RegisterServiceResult
 import com.lampjuice.feature.auth.presentation.dto.LoginRequest
 import com.lampjuice.feature.auth.presentation.dto.RegisterRequest
-import com.lampjuice.feature.auth.presentation.dto.RegisterResponse
 import com.lampjuice.feature.auth.presentation.model.LoginServiceResult
 import com.lampjuice.feature.auth.presentation.service.AuthService
 import io.ktor.http.HttpStatusCode
@@ -19,17 +18,14 @@ fun Route.authRouting(
         val request = call.receive<RegisterRequest>()
 
         when (val result = authService.register(request)) {
-            is RegisterResult.Success -> {
+            is RegisterServiceResult.Success -> {
                 call.respond(
                     HttpStatusCode.Created,
-                    RegisterResponse(
-                        id = result.user.id,
-                        email = result.user.email
-                    ),
+                    result.response
                 )
             }
 
-            RegisterResult.EmailAlreadyExists -> {
+            RegisterServiceResult.EmailAlreadyExists -> {
                 call.respond(HttpStatusCode.Conflict)
             }
         }
