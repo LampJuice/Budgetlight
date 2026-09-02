@@ -4,5 +4,6 @@ interface JwtService {
     fun generateToken(
         userId: Long,
         email: String,
+        name: String
     ): String
 }

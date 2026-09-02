@@ -61,7 +61,7 @@ class AuthRepositoryImpl @Inject constructor(
                 user = User(
                     id = response.id,
                     login = response.email,
-                    name = ""
+                    name = response.name
                 ),
                 token = response.token
             )

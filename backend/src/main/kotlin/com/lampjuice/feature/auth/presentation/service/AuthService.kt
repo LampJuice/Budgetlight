@@ -28,7 +28,9 @@ class AuthService(
             is RegisterResult.Success -> {
                 val token = jwtService.generateToken(
                     userId = result.user.id,
-                    email = result.user.email
+                    email = result.user.email,
+                    name = result.user.name
+
                 )
 
                 RegisterServiceResult.Success(
@@ -57,12 +59,14 @@ class AuthService(
             is LoginResult.Success -> {
                 val token = jwtService.generateToken(
                     userId = result.user.id,
-                    email = result.user.email
+                    email = result.user.email,
+                    name = result.user.name
                 )
                 LoginServiceResult.Success(
                     LoginResponse(
                         id = result.user.id,
                         email = result.user.email,
+                        name = result.user.name,
                         token = token
                     )
                 )

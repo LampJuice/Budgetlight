@@ -2,6 +2,7 @@ package com.lampjuice.feature.auth.data.security
 
 import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.Algorithm
+import com.lampjuice.feature.auth.data.database.UserTable.name
 import com.lampjuice.feature.auth.domain.security.JwtService
 import java.util.Date
 
@@ -23,6 +24,7 @@ class JwtServiceImpl(
             .withAudience(config.audience)
             .withClaim("userId", userId)
             .withClaim("email", email)
+            .withClaim("name", name)
             .withExpiresAt(expiresAt)
             .sign(algorithm)
     }

@@ -42,12 +42,19 @@ fun Application.configureRouting() {
                         ?.getClaim("email")
                         ?.asString()
 
+                    val name = principal
+                        ?.payload
+                        ?.getClaim("name")
+                        ?.asString()
+
                     call.respond(
                         AuthMeResponse(
                             userId = userId
                                 ?: error("User ID is missing in JWT"),
                             email = email
                                 ?: error("Email is missing in JWT"),
+                            name = name
+                                ?: error("Name is missing in JWT")
                         )
                     )
                 }
