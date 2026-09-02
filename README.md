@@ -1,3 +1,20 @@
+### Android
+
+[![Kotlin](https://img.shields.io/badge/Kotlin-2.2.10-7F52FF?logo=kotlin\&logoColor=white)](https://kotlinlang.org/) [![Jetpack Compose](https://img.shields.io/badge/Jetpack%20Compose-2026.03.01-4285F4?logo=jetpackcompose\&logoColor=white)](https://developer.android.com/compose) [![Hilt](https://img.shields.io/badge/Hilt-DI-34A853?logo=android\&logoColor=white)](https://dagger.dev/hilt/) [![Room](https://img.shields.io/badge/Room-Database-3DDC84?logo=android\&logoColor=white)](https://developer.android.com/training/data-storage/room) [![Coroutines](https://img.shields.io/badge/Coroutines%20%2F%20Flow-7F52FF?logo=kotlin\&logoColor=white)](https://kotlinlang.org/docs/coroutines-overview.html) [![Ktor](https://img.shields.io/badge/Ktor%20Client-087CFA)](https://ktor.io/) [![DataStore](https://img.shields.io/badge/DataStore-3DDC84?logo=android\&logoColor=white)](https://developer.android.com/topic/libraries/architecture/datastore) [![Detekt](https://img.shields.io/badge/Detekt-00A98F)](https://detekt.dev/)
+
+**Architecture:** Clean Architecture · MVVM · Feature-based
+
+### Backend
+
+[![Kotlin](https://img.shields.io/badge/Kotlin-2.4.0-7F52FF?logo=kotlin\&logoColor=white)](https://kotlinlang.org/) [![Ktor](https://img.shields.io/badge/Ktor-3.5.2-087CFA)](https://ktor.io/) [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-18-4169E1?logo=postgresql\&logoColor=white)](https://www.postgresql.org/) [![Koin](https://img.shields.io/badge/Koin-4.1.1-F8C52C)](https://insert-koin.io/) [![Exposed](https://img.shields.io/badge/Exposed-ORM-087CFA)](https://www.jetbrains.com/help/exposed/) [![Docker](https://img.shields.io/badge/Docker%20Compose-2496ED?logo=docker\&logoColor=white)](https://www.docker.com/)
+
+**Security:** JWT · Argon2id
+
+### Tooling
+
+[![Gradle](https://img.shields.io/badge/Gradle-9.x-02303A?logo=gradle\&logoColor=white)](https://gradle.org/) [![Android Studio](https://img.shields.io/badge/Android%20Studio-Latest-34A853?logo=androidstudio\&logoColor=white)](https://developer.android.com/studio) [![Git](https://img.shields.io/badge/Git-F05032?logo=git\&logoColor=white)](https://git-scm.com/)
+
+
 # BudgetLight 💎
 
 **BudgetLight** — Android-приложение для управления личными финансами: планирование бюджета, контроль расходов и доходов, категории, лимиты и аналитика.
