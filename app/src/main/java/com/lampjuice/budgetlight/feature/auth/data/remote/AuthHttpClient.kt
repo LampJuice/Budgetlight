@@ -6,15 +6,14 @@ import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
 
-fun createAuthHttpClient(): HttpClient =
-    HttpClient(Android) {
-        install(ContentNegotiation) {
-            json(
-                Json {
-                    ignoreUnknownKeys = true
-                    isLenient = true
-                }
+fun createAuthHttpClient(): HttpClient = HttpClient(Android) {
+    install(ContentNegotiation) {
+        json(
+            Json {
+                ignoreUnknownKeys = true
+                isLenient = true
+            },
 
-            )
-        }
+        )
     }
+}

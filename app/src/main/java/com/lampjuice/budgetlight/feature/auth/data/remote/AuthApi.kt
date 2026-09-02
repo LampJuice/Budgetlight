@@ -9,25 +9,23 @@ import io.ktor.http.contentType
 
 class AuthApi(
     private val client: HttpClient,
-    private val baseUrl: String
+    private val baseUrl: String,
 ) {
     suspend fun register(
-        request: RegisterRequestDto
-    ): RegisterResponseDto =
-        client
-            .post("${baseUrl}auth/register") {
-                contentType(ContentType.Application.Json)
-                setBody(request)
-            }
-            .body()
+        request: RegisterRequestDto,
+    ): RegisterResponseDto = client
+        .post("${baseUrl}auth/register") {
+            contentType(ContentType.Application.Json)
+            setBody(request)
+        }
+        .body()
 
     suspend fun login(
-        request: LoginRequestDto
-    ): LoginResponseDto =
-        client
-            .post("${baseUrl}auth/login") {
-                contentType(ContentType.Application.Json)
-                setBody(request)
-            }
-            .body()
+        request: LoginRequestDto,
+    ): LoginResponseDto = client
+        .post("${baseUrl}auth/login") {
+            contentType(ContentType.Application.Json)
+            setBody(request)
+        }
+        .body()
 }

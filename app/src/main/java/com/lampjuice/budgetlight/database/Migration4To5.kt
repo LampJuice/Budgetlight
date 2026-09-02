@@ -10,9 +10,9 @@ val MIGRATION_4_5 = object : Migration(4, 5) {
                 CREATE TABLE users_new (
                     id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
                     login TEXT NOT NULL,
-                    name TEXT NOT NULL,
+                    name TEXT NOT NULL
                 )
-            """.trimIndent()
+            """.trimIndent(),
         )
         db.execSQL(
             """
@@ -26,27 +26,26 @@ val MIGRATION_4_5 = object : Migration(4, 5) {
                     login,
                     name
                 FROM users
-            """.trimIndent()
+            """.trimIndent(),
         )
 
         db.execSQL(
             """
                 DROP TABLE users
-            """.trimIndent()
+            """.trimIndent(),
         )
 
         db.execSQL(
             """
                 ALTER TABLE users_new RENAME TO users
-            """.trimIndent()
+            """.trimIndent(),
         )
 
         db.execSQL(
             """
                 CREATE UNIQUE INDEX index_users_login
                 ON users (login)
-            """.trimIndent()
+            """.trimIndent(),
         )
-
     }
 }

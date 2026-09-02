@@ -128,6 +128,10 @@ class AuthViewModel @Inject constructor(
         }
     }
 
+    fun reset() {
+        _state.value = AuthState()
+    }
+
     fun register(onSuccess: () -> Unit) {
         val currentState = state.value
 

@@ -17,16 +17,14 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideHttpClient(): HttpClient =
-        createAuthHttpClient()
+    fun provideHttpClient(): HttpClient = createAuthHttpClient()
 
     @Provides
     @Singleton
     fun provideAuthApi(
-        client: HttpClient
-    ): AuthApi =
-        AuthApi(
-            client = client,
-            baseUrl = BASE_URL
-        )
+        client: HttpClient,
+    ): AuthApi = AuthApi(
+        client = client,
+        baseUrl = BASE_URL,
+    )
 }

@@ -12,67 +12,67 @@ import io.ktor.http.HttpStatusCode
 import jakarta.inject.Inject
 
 class AuthRepositoryImpl @Inject constructor(
-    private val authApi: AuthApi
+    private val authApi: AuthApi,
 ) : AuthRepository {
     override suspend fun register(
         login: String,
         name: String,
-        password: String
-    ): Result<AuthRepository.AuthResult> =
-        runCatching {
-            val response = authApi.register(
-                RegisterRequestDto(
-                    email = login,
-                    name = name,
-                    password = password
-                )
-            )
-            AuthRepository.AuthResult(
-                user = User(
-                    id = response.id,
-                    login = response.email,
-                    name = response.name
-                ),
-                token = response.token
-            )
-        }.recoverCatching { error ->
-            if (
-                error is ClientRequestException &&
-                error.response.status == HttpStatusCode.Conflict
-            ) {
-                throw AuthException(AuthError.UserAlreadyExists)
-            }
-            throw error
+        password: String,
+    ): Result<AuthRepository.AuthResult> = runCatching {
+        val response = authApi.register(
+            RegisterRequestDto(
+                email = login,
+                name = name,
+                password = password,
+            ),
+        )
+
+        AuthRepository.AuthResult(
+            user = User(
+                id = response.id,
+                login = response.email,
+                name = response.name,
+            ),
+            token = response.token,
+        )
+    }.recoverCatching { error ->
+
+        if (
+            error is ClientRequestException &&
+            error.response.status == HttpStatusCode.Conflict
+        ) {
+            throw AuthException(AuthError.UserAlreadyExists)
         }
+        throw error
+    }
 
     override suspend fun login(
         login: String,
-        password: String
-    ): Result<AuthRepository.AuthResult> =
-        runCatching {
-            val response = authApi.login(
-                LoginRequestDto(
-                    email = login,
-                    password = password
-                )
-            )
+        password: String,
+    ): Result<AuthRepository.AuthResult> = runCatching {
+        val response = authApi.login(
+            LoginRequestDto(
+                email = login,
+                password = password,
+            ),
+        )
 
-            AuthRepository.AuthResult(
-                user = User(
-                    id = response.id,
-                    login = response.email,
-                    name = response.name
-                ),
-                token = response.token
-            )
+        AuthRepository.AuthResult(
+            user = User(
+                id = response.id,
+                login = response.email,
+                name = response.name,
+            ),
+            token = response.token,
+        )
+    }.recoverCatching { error ->
 
-        }.recoverCatching { error ->
-            if (
-                error is ClientRequestException &&
-                error.response.status == HttpStatusCode.Unauthorized
-            ) {
-                throw AuthException(AuthError.InvalidCredentials)
-            }
-            throw error
+        if (
+            error is ClientRequestException &&
+            error.response.status == HttpStatusCode.Unauthorized
+        ) {
+            throw AuthException(AuthError.InvalidCredentials)
         }
+        throw error
+    }
 }

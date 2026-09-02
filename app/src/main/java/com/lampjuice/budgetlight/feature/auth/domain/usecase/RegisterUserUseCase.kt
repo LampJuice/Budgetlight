@@ -18,25 +18,24 @@ class RegisterUserUseCase @Inject constructor(
         login: String,
         name: String,
         password: String,
-    ): Result<User> =
-        authRepository
-            .register(
-                login = login,
-                name = name,
-                password = password,
+    ): Result<User> = authRepository
+        .register(
+            login = login,
+            name = name,
+            password = password,
+        )
+        .mapCatching { result ->
+            val localUser = userRepository.createUser(
+                login = result.user.login,
+                name = result.user.name,
             )
-            .mapCatching { result ->
-                val localUser = userRepository.createUser(
-                    login = result.user.login,
-                    name = result.user.name,
-                )
-                initializeUserDataUseCase(localUser.id)
+            initializeUserDataUseCase(localUser.id)
 
-                authSession.setSession(
-                    userId = localUser.id,
-                    token = result.token
-                )
+            authSession.setSession(
+                userId = localUser.id,
+                token = result.token,
+            )
 
-                localUser
-            }
+            localUser
+        }
 }
