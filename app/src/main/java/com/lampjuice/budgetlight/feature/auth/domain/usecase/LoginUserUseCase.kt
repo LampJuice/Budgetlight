@@ -1,51 +1,29 @@
 package com.lampjuice.budgetlight.feature.auth.domain.usecase
 
-import com.lampjuice.budgetlight.feature.auth.domain.error.AuthError
-import com.lampjuice.budgetlight.feature.auth.domain.error.AuthException
 import com.lampjuice.budgetlight.feature.auth.domain.model.User
-import com.lampjuice.budgetlight.feature.auth.domain.repository.UserRepository
-import com.lampjuice.budgetlight.feature.auth.domain.security.PasswordHasher
+import com.lampjuice.budgetlight.feature.auth.domain.repository.AuthRepository
 import com.lampjuice.budgetlight.feature.auth.domain.session.AuthSession
 import jakarta.inject.Inject
 
 class LoginUserUseCase @Inject constructor(
-    private val userRepository: UserRepository,
+    private val authRepository: AuthRepository,
     private val authSession: AuthSession,
-    private val passwordHasher: PasswordHasher,
 
-) {
+    ) {
     suspend operator fun invoke(
         login: String,
         password: String,
-    ): Result<User> {
-        val user = userRepository.getUserByLogin(login)
-        val passwordHash = user?.let {
-            userRepository.getPassHashByLogin(login)
-        }
-        val result = when {
-            user == null -> {
-                Result.failure(
-                    AuthException(AuthError.UserNotFound),
+    ): Result<User> =
+        authRepository
+            .login(
+                login = login,
+                password = password
+            )
+            .onSuccess { result ->
+                authSession.setSession(
+                    userId = result.user.id,
+                    token = result.token
                 )
             }
-
-            passwordHash == null -> {
-                Result.failure(
-                    AuthException(AuthError.PasswordNotFound),
-                )
-            }
-
-            !passwordHasher.verify(password, passwordHash) -> {
-                Result.failure(
-                    AuthException(AuthError.InvalidCredentials),
-                )
-            }
-
-            else -> {
-                authSession.setUserId(user.id)
-                Result.success(user)
-            }
-        }
-        return result
-    }
+            .map { it.user }
 }

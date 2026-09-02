@@ -6,11 +6,9 @@ import kotlinx.coroutines.flow.Flow
 interface UserRepository {
     suspend fun getUserByLogin(login: String): User?
 
-    suspend fun getPassHashByLogin(login: String): String?
     suspend fun createUser(
         login: String,
         name: String,
-        passwordHash: String,
     ): User
     suspend fun getCurrentUser(): User?
 

@@ -7,7 +7,7 @@ interface AuthRepository {
         login: String,
         name: String,
         password: String
-    ): Result<User>
+    ): Result<AuthResult>
 
     suspend fun login(
         login: String,

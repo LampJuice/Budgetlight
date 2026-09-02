@@ -14,7 +14,7 @@ class AuthRepositoryImpl @Inject constructor(
         login: String,
         name: String,
         password: String
-    ): Result<User> =
+    ): Result<AuthRepository.AuthResult> =
         runCatching {
             val response = authApi.register(
                 RegisterRequestDto(
@@ -23,10 +23,13 @@ class AuthRepositoryImpl @Inject constructor(
                     password = password
                 )
             )
-            User(
-                id = response.id,
-                login = response.email,
-                name = name
+            AuthRepository.AuthResult(
+                user = User(
+                    id = response.id,
+                    login = response.email,
+                    name = response.name
+                ),
+                token = response.token
             )
         }
 

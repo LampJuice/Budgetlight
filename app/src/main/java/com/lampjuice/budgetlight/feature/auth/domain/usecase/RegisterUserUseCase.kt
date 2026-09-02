@@ -3,8 +3,8 @@ package com.lampjuice.budgetlight.feature.auth.domain.usecase
 import com.lampjuice.budgetlight.feature.auth.domain.error.AuthError
 import com.lampjuice.budgetlight.feature.auth.domain.error.AuthException
 import com.lampjuice.budgetlight.feature.auth.domain.model.User
+import com.lampjuice.budgetlight.feature.auth.domain.repository.AuthRepository
 import com.lampjuice.budgetlight.feature.auth.domain.repository.UserRepository
-import com.lampjuice.budgetlight.feature.auth.domain.security.PasswordHasher
 import com.lampjuice.budgetlight.feature.auth.domain.session.AuthSession
 import com.lampjuice.budgetlight.feature.budget.domain.usecase.InitializeUserDataUseCase
 import jakarta.inject.Inject
@@ -12,7 +12,7 @@ import jakarta.inject.Inject
 class RegisterUserUseCase @Inject constructor(
     private val userRepository: UserRepository,
     private val authSession: AuthSession,
-    private val passwordHasher: PasswordHasher,
+    private val authRepository: AuthRepository,
     private val initializeUserDataUseCase: InitializeUserDataUseCase,
 ) {
 
@@ -21,23 +21,33 @@ class RegisterUserUseCase @Inject constructor(
         name: String,
         password: String,
     ): Result<User> {
-        if (userRepository.getUserByLogin(login) != null) {
+        val existingUser = userRepository.getUserByLogin(login)
+        if (existingUser != null) {
             return Result.failure(
                 AuthException(AuthError.UserAlreadyExists),
             )
         }
 
-        val passwordHash = passwordHasher.hash(password)
+        return authRepository
+            .register(
+                login = login,
+                name = name,
+                password = password,
+            )
+            .mapCatching { result ->
+                val localUser = userRepository.createUser(
+                    login = result.user.login,
+                    name = result.user.name,
+                )
+                initializeUserDataUseCase(localUser.id)
 
-        val user = userRepository.createUser(
-            login = login,
-            name = name,
-            passwordHash = passwordHash,
-        )
-        initializeUserDataUseCase(user.id)
+                authSession.setSession(
+                    userId = localUser.id,
+                    token = result.token
+                )
 
-        authSession.setUserId(user.id)
+                localUser
+            }
 
-        return Result.success(user)
     }
 }

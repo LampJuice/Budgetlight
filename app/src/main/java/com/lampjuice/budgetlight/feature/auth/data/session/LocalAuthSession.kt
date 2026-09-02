@@ -3,6 +3,7 @@ package com.lampjuice.budgetlight.feature.auth.data.session
 import android.content.Context
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.longPreferencesKey
+import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import com.lampjuice.budgetlight.feature.auth.domain.session.AuthSession
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -20,16 +21,22 @@ class LocalAuthSession @Inject constructor(
 
     private companion object {
         val USER_ID = longPreferencesKey("user_id")
+        val TOKEN = stringPreferencesKey("access_token")
     }
 
     override val currentUserId: Flow<Long?> =
         context.authDataStore.data.map { preferences ->
             preferences[USER_ID]
         }
+    override val token: Flow<String?> =
+        context.authDataStore.data.map { preferences ->
+            preferences[TOKEN]
+        }
 
-    override suspend fun setUserId(userId: Long) {
+    override suspend fun setSession(userId: Long, token: String) {
         context.authDataStore.edit { preferences ->
             preferences[USER_ID] = userId
+            preferences[TOKEN] = token
         }
     }
 

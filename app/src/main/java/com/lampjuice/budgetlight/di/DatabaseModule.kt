@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Room
 import com.lampjuice.budgetlight.database.BudgetDatabase
 import com.lampjuice.budgetlight.database.MIGRATION_3_4
+import com.lampjuice.budgetlight.database.MIGRATION_4_5
 import com.lampjuice.budgetlight.feature.auth.data.local.dao.UserDao
 import com.lampjuice.budgetlight.feature.budget.data.local.dao.AccountDao
 import com.lampjuice.budgetlight.feature.budget.data.local.dao.BudgetCategoryDao
@@ -32,6 +33,7 @@ object DatabaseModule {
         )
         .addMigrations(
             MIGRATION_3_4,
+            MIGRATION_4_5,
         )
         .build()
 

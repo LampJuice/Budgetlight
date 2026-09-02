@@ -4,6 +4,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface AuthSession {
     val currentUserId: Flow<Long?>
-    suspend fun setUserId(userId: Long)
+    val token: Flow<String?>
+    suspend fun setSession(userId: Long, token: String)
     suspend fun clear()
 }

@@ -19,19 +19,13 @@ constructor(
         .getUserByLogin(login)
         ?.toDomain()
 
-    override suspend fun getPassHashByLogin(login: String): String? = userDao
-        .getUserByLogin(login)
-        ?.passwordHash
-
     override suspend fun createUser(
         login: String,
         name: String,
-        passwordHash: String,
     ): User {
         val entity = UserEntity(
             login = login,
             name = name,
-            passwordHash = passwordHash,
         )
         val id = userDao.insertUser(entity)
         return entity
